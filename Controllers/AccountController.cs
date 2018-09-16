@@ -44,6 +44,12 @@ namespace MASdemo.Controllers
                     string myemail = reader["email"].ToString();
                     string mytel = reader["tel"].ToString();
 
+                    TempData["myname"] = myname;
+                    TempData["mysurname"] = mysurname;
+                    TempData["myemail"] = myemail;
+                    TempData["mytel"] = mytel;
+                    TempData["log"] = "1";
+
                     HttpContext.Session.SetString(SessionName, myname);
                     HttpContext.Session.SetString(SessionSurname, mysurname);
                     HttpContext.Session.SetString(SessionEmail, myemail);
@@ -59,6 +65,7 @@ namespace MASdemo.Controllers
             }
             else
             {
+                TempData["log"] = "0";
                 HttpContext.Session.SetString(SessionLog, "0");
                 ViewBag.myLog = HttpContext.Session.GetString(SessionLog);
                 if (ViewBag.myLog == null)
