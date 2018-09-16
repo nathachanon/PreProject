@@ -31,3 +31,4 @@ E:\PreProject\obj\Release\netcoreapp2.1\MASdemo.Views.pdb
 E:\PreProject\obj\Release\netcoreapp2.1\MASdemo.dll
 E:\PreProject\obj\Release\netcoreapp2.1\MASdemo.pdb
 E:\PreProject\obj\Release\netcoreapp2.1\MASdemo.csproj.CopyComplete
+E:\PreProject\obj\Release\netcoreapp2.1\Razor\Views\Account\Register.g.cshtml.cs

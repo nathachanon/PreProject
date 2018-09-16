@@ -64,3 +64,4 @@ E:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.pdb
 E:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.csproj.CopyComplete
 E:\PreProject\obj\Debug\netcoreapp2.1\Razor\Views\Account\Index.g.cshtml.cs
 E:\PreProject\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+E:\PreProject\obj\Debug\netcoreapp2.1\Razor\Views\Account\Register.g.cshtml.cs

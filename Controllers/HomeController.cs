@@ -14,6 +14,7 @@ namespace MASdemo.Controllers
         public string SessionName = "_Name", SessionSurname = "_Surname", SessionTel = "_Tel", SessionEmail = "_Email", SessionLog = "0";
         public IActionResult Index()
         {
+            ViewBag.active = "Index";
             ViewBag.myName = HttpContext.Session.GetString(SessionName);
             ViewBag.mySurname = HttpContext.Session.GetString(SessionSurname);
             ViewBag.myTel = HttpContext.Session.GetString(SessionTel);
@@ -28,6 +29,7 @@ namespace MASdemo.Controllers
 
         public IActionResult About()
         {
+            ViewBag.active = "About";
             ViewData["Message"] = "Your application description page.";
             ViewBag.myName = HttpContext.Session.GetString(SessionName);
             ViewBag.mySurname = HttpContext.Session.GetString(SessionSurname);
@@ -43,6 +45,7 @@ namespace MASdemo.Controllers
 
         public IActionResult Contact()
         {
+            ViewBag.active = "Contact";
             ViewData["Message"] = "Your contact page.";
             ViewBag.myName = HttpContext.Session.GetString(SessionName);
             ViewBag.mySurname = HttpContext.Session.GetString(SessionSurname);
