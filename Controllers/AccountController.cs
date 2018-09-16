@@ -22,7 +22,7 @@ namespace MASdemo.Controllers
             string myEmail = email;
             string myPass = password;
 
-            string strConnString = "Server=localhost; User Id=root; Password=; Database=masdb; SslMode=none";
+            string strConnString = "Server=sql12.freesqldatabase.com; User Id=sql12257039; Password=c5wFd5f1up; Database=sql12257039; SslMode=none";
             MySqlConnection mysql = new MySqlConnection(strConnString);
             mysql.Open();
             string query = "select * from account where email = '" + myEmail + "' and password ='" + myPass + "'";
