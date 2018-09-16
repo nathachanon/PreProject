@@ -14,6 +14,7 @@ namespace MASdemo.Controllers
         public string SessionName = "_Name", SessionSurname = "_Surname", SessionTel = "_Tel", SessionEmail = "_Email", SessionLog = "0";
         public IActionResult Index()
         {
+            ViewBag.Log = TempData["log"];
             ViewBag.active = "Index";
             ViewBag.myName = HttpContext.Session.GetString(SessionName);
             ViewBag.mySurname = HttpContext.Session.GetString(SessionSurname);

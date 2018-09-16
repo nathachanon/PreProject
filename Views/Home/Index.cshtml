@@ -2,6 +2,10 @@
     ViewData["Title"] = "Home Page";
 }
 @{
+    if (ViewBag.Log == "1")
+    {
+        <h1>Status Login Log : Success</h1>
+    }
     if (ViewBag.myLog == "0")
     {
         <h1>Status Login : Unsuccessful</h1>
