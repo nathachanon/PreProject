@@ -62,4 +62,4 @@ E:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.Views.pdb
 E:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.dll
 E:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.pdb
 E:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.csproj.CopyComplete
-E:\PreProject\obj\Debug\netcoreapp2.1\Razor\Views\Login\Index.g.cshtml.cs
+E:\PreProject\obj\Debug\netcoreapp2.1\Razor\Views\Account\Index.g.cshtml.cs

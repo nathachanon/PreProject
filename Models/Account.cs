@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MASdemo.Models
 {
-    public class LoginClass
+    public class Account
     {
         public string email { get; set; }
 
