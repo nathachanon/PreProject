@@ -12,7 +12,7 @@ namespace MASdemo.Controllers
 {
     public class UserController : Controller
     {
-        public string SessionName,SessionSurname,SessionTel,SessionEmail,SessionLog,SessionReg;
+        public string SessionName = "_Name", SessionSurname = "_Surname", SessionTel = "_Tel", SessionEmail = "_Email", SessionLog = "0", SessionReg = "0";
         MySqlConnection mysqlconnect = new MySqlConnection("Server = sql12.freesqldatabase.com; User Id = sql12257039; Password=c5wFd5f1up; Database=sql12257039; SslMode=none");
 
         public void MysqlConnection(int myconfig)
