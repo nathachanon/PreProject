@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using MASdemo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
@@ -10,66 +12,56 @@ namespace MASdemo.Controllers
 {
     public class UserController : Controller
     {
-        public string SessionName = "_Name", SessionSurname = "_Surname", SessionTel = "_Tel", SessionEmail = "_Email", SessionLog = "0", SessionReg = "0";
+        public string SessionName,SessionSurname,SessionTel,SessionEmail,SessionLog,SessionReg;
+        MySqlConnection mysqlconnect = new MySqlConnection("Server = sql12.freesqldatabase.com; User Id = sql12257039; Password=c5wFd5f1up; Database=sql12257039; SslMode=none");
 
+        public void MysqlConnection(int myconfig)
+        {
+            if(myconfig == 1)
+            {
+                mysqlconnect.Open();
+            }else if(myconfig == 0)
+            {
+                mysqlconnect.Close();
+            }
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
-            ViewBag.Register = HttpContext.Session.GetString(SessionReg);
-            ViewBag.myLog = HttpContext.Session.GetString(SessionLog);
-            ViewBag.myName = HttpContext.Session.GetString(SessionName);
-            ViewBag.mySurname = HttpContext.Session.GetString(SessionSurname);
-            ViewBag.myTel = HttpContext.Session.GetString(SessionTel);
-            ViewBag.myEmail = HttpContext.Session.GetString(SessionEmail);
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login(LoginViewModel lvm)
         {
-            string myEmail = email;
-            string myPass = password;
-
-            string strConnString = "Server=sql12.freesqldatabase.com; User Id=sql12257039; Password=c5wFd5f1up; Database=sql12257039; SslMode=none";
-            MySqlConnection mysql = new MySqlConnection(strConnString);
-            mysql.Open();
-            string query = "select * from account where email = '" + myEmail + "' and password ='" + myPass + "'";
-            MySqlCommand comm = new MySqlCommand(query);
-            comm.Connection = mysql;
-            MySqlDataReader reader = comm.ExecuteReader();
-            if (reader.HasRows)
+            if (ModelState.IsValid)
             {
-                while (reader.Read())
-                {
-                    string myname = reader["name"].ToString();
-                    string mysurname = reader["surname"].ToString();
-                    string myemail = reader["email"].ToString();
-                    string mytel = reader["tel"].ToString();
+                    MysqlConnection(1);
+                    string query = "select * from account where email = '" + lvm.email + "' and password ='" + lvm.password + "'";
+                    MySqlCommand comm = new MySqlCommand(query);
+                    comm.Connection = mysqlconnect;
+                    MySqlDataReader reader = comm.ExecuteReader();
+                    if (reader.Read())
+                    {
 
-                    HttpContext.Session.SetString(SessionName, myname);
-                    HttpContext.Session.SetString(SessionSurname, mysurname);
-                    HttpContext.Session.SetString(SessionEmail, myemail);
-                    HttpContext.Session.SetString(SessionTel, mytel);
-
-                    ViewBag.myName = HttpContext.Session.GetString(SessionName);
-                    ViewBag.mySurname = HttpContext.Session.GetString(SessionSurname);
-                    ViewBag.myTel = HttpContext.Session.GetString(SessionTel);
-                    ViewBag.myEmail = HttpContext.Session.GetString(SessionEmail);
-                    HttpContext.Session.SetString(SessionLog, "1");
-                    ViewBag.myLog = HttpContext.Session.GetString(SessionLog);
-                }
+                        HttpContext.Session.SetString(SessionName, reader["name"].ToString());
+                        HttpContext.Session.SetString(SessionSurname, reader["surname"].ToString());
+                        HttpContext.Session.SetString(SessionEmail, reader["email"].ToString());
+                        HttpContext.Session.SetString(SessionTel, reader["tel"].ToString());
+                        HttpContext.Session.SetString(SessionLog, "1");
+                        return RedirectToAction("Index", "Manage");
+                    
+                    }
+                    else
+                    {
+                        TempData["msg"] = "Invalid credentials !";
+                        HttpContext.Session.SetString(SessionLog, "0");
+                        MysqlConnection(0);
+                        return RedirectToAction("Login", "User");
+                    }
             }
-            else
-            {
-                HttpContext.Session.SetString(SessionLog, "0");
-                ViewBag.myLog = HttpContext.Session.GetString(SessionLog);
-                if (ViewBag.myLog == null)
-                {
-                    ViewBag.myLog = "0";
-                }
-                return RedirectToAction("Login", "User");
-            }
-            mysql.Close();
-            return RedirectToAction("Index", "Manage");
+            return View("Login", "User");
         }
 
         public IActionResult Register()
@@ -78,35 +70,27 @@ namespace MASdemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(string email, string password, string name, string surname, string tel)
+        public IActionResult Register(RegisterViewModel rvm)
         {
-            string myEmail = email;
-            string myPass = password;
-            string myName = name;
-            string mySurname = surname;
-            string myTel = tel;
 
-            string strConnString = "Server=sql12.freesqldatabase.com; User Id=sql12257039; Password=c5wFd5f1up; Database=sql12257039; SslMode=none";
-            MySqlConnection mysql = new MySqlConnection(strConnString);
-            mysql.Open();
-            string query = "INSERT INTO `account`(`email`, `password`, `name`, `surname`, `tel`) VALUES ('" + myEmail + "','" + myPass + "','" + myName + "','" + mySurname + "','" + myTel + "')";
+            MysqlConnection(1);
+            string query = "INSERT INTO `account`(`email`, `password`, `name`, `surname`, `tel`) VALUES ('" + rvm.email + "','" + rvm.password + "','" + rvm.name + "','" + rvm.surname + "','" + rvm.tel + "')";
             MySqlCommand comm = new MySqlCommand(query);
-            comm.Connection = mysql;
+            comm.Connection = mysqlconnect;
             MySqlDataReader reader = comm.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
                     HttpContext.Session.SetString(SessionReg, "1");
-                    ViewBag.Register = HttpContext.Session.GetString(SessionReg);
+                    return View("Login","User");
                 }
             }
             else
             {
                 HttpContext.Session.SetString(SessionReg, "0");
-                ViewBag.Register = HttpContext.Session.GetString(SessionReg);
             }
-            mysql.Close();
+            MysqlConnection(0);
 
             return View("Login");
         }
