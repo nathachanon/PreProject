@@ -12,7 +12,6 @@ namespace MASdemo.Controllers
 {
     public class UserController : Controller
     {
-        public string SessionName = "_Name", SessionSurname = "_Surname", SessionTel = "_Tel", SessionEmail = "_Email", SessionLog = "0", SessionReg = "0";
         MySqlConnection mysqlconnect = new MySqlConnection("Server = sql12.freesqldatabase.com; User Id = sql12257039; Password=c5wFd5f1up; Database=sql12257039; SslMode=none");
 
         public void MysqlConnection(int myconfig)
@@ -39,29 +38,29 @@ namespace MASdemo.Controllers
             if (ModelState.IsValid)
             {
                 MysqlConnection(1);
-                string query = "select * from account where email = '" + lvm.email + "' and password ='" + lvm.password + "'";
+                string query = "select * from user where email = '" + lvm.email + "' and password ='" + lvm.password + "'";
                 MySqlCommand comm = new MySqlCommand(query);
                 comm.Connection = mysqlconnect;
                 MySqlDataReader reader = comm.ExecuteReader();
                 if (reader.Read())
                 {
-
-                    HttpContext.Session.SetString(SessionName, reader["name"].ToString());
-                    HttpContext.Session.SetString(SessionSurname, reader["surname"].ToString());
-                    HttpContext.Session.SetString(SessionEmail, reader["email"].ToString());
-                    HttpContext.Session.SetString(SessionTel, reader["tel"].ToString());
-                    HttpContext.Session.SetString(SessionLog, "1");
-                    return RedirectToAction("ManageDorm", "Manage");
+                    HttpContext.Session.SetInt32("Uid", reader.GetInt32(reader.GetOrdinal("uid")));
+                    HttpContext.Session.SetString("Name", reader["name"].ToString());
+                    HttpContext.Session.SetString("Surname", reader["surname"].ToString());
+                    HttpContext.Session.SetString("Email", reader["email"].ToString());
+                    HttpContext.Session.SetString("Tel", reader["tel"].ToString());
+                    HttpContext.Session.SetString("Log", "1");
+                    return RedirectToAction("Main", "Manage");
 
                 }
                 else
                 {
-                    TempData["msg"] = "Invalid credentials !";
-                    HttpContext.Session.SetString(SessionLog, "0");
+                    HttpContext.Session.SetString("Log", "0");
                     MysqlConnection(0);
                     return RedirectToAction("Login", "User");
                 }
             }
+            MysqlConnection(0);
             return View("Login", "User");
         }
 
@@ -75,7 +74,7 @@ namespace MASdemo.Controllers
         {
 
             MysqlConnection(1);
-            string query = "INSERT INTO `account`(`email`, `password`, `name`, `surname`, `tel`) VALUES ('" + rvm.email + "','" + rvm.password + "','" + rvm.name + "','" + rvm.surname + "','" + rvm.tel + "')";
+            string query = "INSERT INTO `user`(`email`, `password`, `name`, `surname`, `tel`) VALUES ('" + rvm.email + "','" + rvm.password + "','" + rvm.name + "','" + rvm.surname + "','" + rvm.tel + "')";
             MySqlCommand comm = new MySqlCommand(query);
             comm.Connection = mysqlconnect;
             MySqlDataReader reader = comm.ExecuteReader();
@@ -83,13 +82,11 @@ namespace MASdemo.Controllers
             {
                 while (reader.Read())
                 {
-                    HttpContext.Session.SetString(SessionReg, "1");
                     return View("Login", "User");
                 }
             }
             else
             {
-                HttpContext.Session.SetString(SessionReg, "0");
             }
             MysqlConnection(0);
 
@@ -99,15 +96,15 @@ namespace MASdemo.Controllers
         [HttpPost]
         public IActionResult Logout()
         {
-            HttpContext.Session.SetString(SessionLog, "0");
-            ViewBag.myLog = HttpContext.Session.GetString(SessionLog);
+            HttpContext.Session.SetString("Log", "0");
+            ViewBag.myLog = HttpContext.Session.GetString("Log");
             HttpContext.Session.Clear();
             if (ViewBag.myLog == null)
             {
-                HttpContext.Session.SetString(SessionLog, "0");
-                ViewBag.myLog = HttpContext.Session.GetString(SessionLog);
+                HttpContext.Session.SetString("Log", "0");
+                ViewBag.myLog = HttpContext.Session.GetString("Log");
             }
-            return View("Login");
+            return RedirectToAction("Login", "User");
         }
     }
 }
