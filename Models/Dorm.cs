@@ -13,5 +13,6 @@ namespace MASdemo.Models
         public int Floor { get; set; }
         public int setRates { get; set; }
         public int calRoom { get; set; }
+        public string picture { get; set; }
     }
 }

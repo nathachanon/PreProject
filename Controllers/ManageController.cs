@@ -1,15 +1,25 @@
 ﻿using MASdemo.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 
 namespace MASdemo.Controllers
 {
     public class ManageController : Controller
     {
+        private readonly IHostingEnvironment he;
         MySqlConnection mysqlconnect = new MySqlConnection("Server = sql12.freesqldatabase.com; User Id = sql12257039; Password=c5wFd5f1up; Database=sql12257039; SslMode=none");
+
+
+        public ManageController(IHostingEnvironment e)
+        {
+            he = e;
+        }
 
         public void MysqlConnection(int myconfig)
         {
@@ -101,7 +111,8 @@ namespace MASdemo.Controllers
                             Room = reader.GetInt32(reader.GetOrdinal("setroom")),
                             Floor = reader.GetInt32(reader.GetOrdinal("setfloor")),
                             setRates = reader.GetInt32(reader.GetOrdinal("setrates")),
-                            calRoom = reader.GetInt32(reader.GetOrdinal("setroom")) * reader.GetInt32(reader.GetOrdinal("setfloor"))
+                            calRoom = reader.GetInt32(reader.GetOrdinal("setroom")) * reader.GetInt32(reader.GetOrdinal("setfloor")),
+                            picture = reader["picture"].ToString()
                         });
                         HttpContext.Session.SetInt32("Did", reader.GetInt32(reader.GetOrdinal("did")));
                         HttpContext.Session.SetString("D_name", reader["d_name"].ToString());
@@ -123,14 +134,33 @@ namespace MASdemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddDorm(AddDorm ad)
+        public IActionResult AddDorm(AddDorm ad, IFormFile picture)
         {
+            var fileName = "";
+            if (picture != null)
+            {
+                var uploads = Path.Combine(he.WebRootPath, "uploads\\img_mansion");
+                fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(picture.FileName);
+                picture.CopyTo(new FileStream(Path.Combine(uploads, fileName), FileMode.Create));
+            }
             MysqlConnection(1);
             string query = "INSERT INTO `dorm`(`uid`, `d_name`, `setroom`, `setfloor`, `setrates`, `setelec`, " +
                 "`setwater`, `add_no`, `street`, `zip_code`, `district`, `sub_district`, `province`, `picture`) " +
                 "VALUES ('"+ HttpContext.Session.GetInt32("Uid") + "','"+ ad.d_name +"','"+ ad.setroom + "','"+ ad.setfloor +"'," +
                 "'"+ ad.setrates + "','" + ad.setelec + "','" + ad.setwater + "','" + ad.add_no + "','" + ad.street + "'," +
-                "'" + ad.zip_code + "','" + ad.district + "','" + ad.sub_district + "','" + ad.province + "','" + ad.picture + "')";
+                "'" + ad.zip_code + "','" + ad.district + "','" + ad.sub_district + "','" + ad.province + "','" + fileName + "')";
+            MySqlCommand comm = new MySqlCommand(query);
+            comm.Connection = mysqlconnect;
+            MySqlDataReader reader = comm.ExecuteReader();
+            MysqlConnection(0);
+            return RedirectToAction("ManageDorm", "Manage");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteDorm(int Id_dorm)
+        {
+            MysqlConnection(1);
+            string query = "DELETE FROM `dorm` WHERE `did` = '"+Id_dorm+ "' and `uid` = '"+ HttpContext.Session.GetInt32("Uid") + "'";
             MySqlCommand comm = new MySqlCommand(query);
             comm.Connection = mysqlconnect;
             MySqlDataReader reader = comm.ExecuteReader();
