@@ -26,7 +26,9 @@ E:\PreProject\obj\Release\netcoreapp2.1\MASdemo.Views.pdb
 E:\PreProject\obj\Release\netcoreapp2.1\MASdemo.dll
 E:\PreProject\obj\Release\netcoreapp2.1\MASdemo.pdb
 E:\PreProject\obj\Release\netcoreapp2.1\MASdemo.csproj.CopyComplete
-E:\PreProject\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
-E:\PreProject\obj\Release\netcoreapp2.1\Razor\Views\Manage\Index.g.cshtml.cs
 E:\PreProject\obj\Release\netcoreapp2.1\Razor\Views\User\Login.g.cshtml.cs
 E:\PreProject\obj\Release\netcoreapp2.1\Razor\Views\User\Register.g.cshtml.cs
+E:\PreProject\obj\Release\netcoreapp2.1\Razor\Views\Manage\AddDorm.g.cshtml.cs
+E:\PreProject\obj\Release\netcoreapp2.1\Razor\Views\Manage\Main.g.cshtml.cs
+E:\PreProject\obj\Release\netcoreapp2.1\Razor\Views\Manage\ManageDorm.g.cshtml.cs
+E:\PreProject\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
