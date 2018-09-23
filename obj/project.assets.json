@@ -12362,23 +12362,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Bank\\.nuget\\packages\\": {},
+    "C:\\Users\\Nathachanon\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\PreProject\\MASdemo.csproj",
+      "projectUniqueName": "d:\\PreProject\\MASdemo.csproj",
       "projectName": "MASdemo",
-      "projectPath": "E:\\PreProject\\MASdemo.csproj",
-      "packagesPath": "C:\\Users\\Bank\\.nuget\\packages\\",
-      "outputPath": "E:\\PreProject\\obj\\",
+      "projectPath": "d:\\PreProject\\MASdemo.csproj",
+      "packagesPath": "C:\\Users\\Nathachanon\\.nuget\\packages\\",
+      "outputPath": "d:\\PreProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Bank\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Nathachanon\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
