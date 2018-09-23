@@ -1,4 +1,4 @@
-
+﻿
 @{
   Layout = "_Layout";
 }
@@ -65,8 +65,9 @@
             <a class="dropdown-item">
               Check Inbox
             </a>
-            <a class="dropdown-item" >Sign Out
-            </a>
+            <form asp-controller="User" asp-action="Logout" method="POST">
+                <button type="submit" class="btn btn-danger btn-fw">Logout</button>
+            </form>
           </div>
         </li>
       </ul>
@@ -119,7 +120,7 @@
               <div class="card">
                 <div class="card-body">
                  <h3 class="font-weight-medium text-primary text-center mdi mdi-city mdi-60px">กรุณาระบุข้อมูลหอพัก</h3>
-                  <form class="form-sample">
+                  <form class="form-sample" asp-controller ="Manage" asp-action ="AddDorm" method="POST">
                     <h4 class="card-description text-primary">
                       ข้อมูลหอพัก
                     </h4>
@@ -129,7 +130,7 @@
                               <label class="col-sm-3 col-form-label">ชื่อหอ</label>
                               <div class="col-sm-9">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="ชื่อหอพัก"  >
+                                  <input name="d_name" required type="text" class="form-control" placeholder="ชื่อหอพัก"  >
                                     <div class="input-group-append bg-primary border-primary">
                                       <span class="input-group-text bg-transparent">
                                         <i class="mdi mdi-city mdi-18px text-white"></i>
@@ -141,11 +142,11 @@
                         </div>
                       <div class="col-md-6">
                           <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">อัพโหลดรูปภาพ</label>
+                              <label class="col-sm-3 col-form-label">อัพโหลดรูปภาพ (null)</label>
                               <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="custom-file">
-                                      <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                      <input name="picture" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                                       <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                
@@ -162,7 +163,7 @@
                               <label class="col-sm-3 col-form-label">ระบุชั้น</label>
                               <div class="col-sm-9">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="หอมีกี่ชั้น"  aria-describedby="colored-addon3">
+                                  <input name="setfloor" required type="text" class="form-control" placeholder="หอมีกี่ชั้น"  aria-describedby="colored-addon3">
                                     <div class="input-group-append bg-primary border-primary">
                                       <span class="input-group-text bg-transparent">
                                         <i class="mdi mdi-menu text-white"></i>
@@ -177,7 +178,7 @@
                               <label class="col-sm-3 col-form-label">ระบุห้อง</label>
                               <div class="col-sm-9">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="จำนวนห้องแต่ละชั้น"  aria-describedby="colored-addon3">
+                                  <input name="setroom" required type="text" class="form-control" placeholder="จำนวนห้องแต่ละชั้น"  aria-describedby="colored-addon3">
                                     <div class="input-group-append bg-primary border-primary">
                                       <span class="input-group-text bg-transparent">
                                         <i class="mdi mdi-menu text-white"></i>
@@ -194,7 +195,7 @@
                               <label class="col-sm-3 col-form-label">ราคาเช่า</label>
                               <div class="col-sm-9">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="ราคาต่อเดือน"  aria-describedby="colored-addon3">
+                                  <input name="setrates" required type="text" class="form-control" placeholder="ราคาต่อเดือน"  aria-describedby="colored-addon3">
                                     <div class="input-group-append bg-primary border-primary">
                                       <span class="input-group-text bg-transparent">
                                         <i class="mdi mdi-menu text-white"></i>
@@ -206,10 +207,10 @@
                         </div>
                       <div class= "col-md-6">
                             <div class="form-group row">
-                              <label class="col-sm-3 col-form-label">ระบุค่าน้ำ</label>
+                                <label class="col-sm-3 col-form-label">ระบุค่าน้ำ (null)</label>
                               <div class="col-sm-9">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="ค่าน้ำต่อยูนิต" aria-describedby="colored-addon3">
+                                  <input name="setwater" type="text" class="form-control" placeholder="ค่าน้ำต่อยูนิต" aria-describedby="colored-addon3">
                                     <div class="input-group-append bg-primary border-primary">
                                       <span class="input-group-text bg-transparent">
                                         <i class="mdi mdi-menu text-white"></i>
@@ -223,10 +224,10 @@
                     <div class = "row">
                       <div class= "col-md-6">
                             <div class="form-group row">
-                              <label class="col-sm-3 col-form-label">ระบุค่าไฟ</label>
+                                <label class="col-sm-3 col-form-label">ระบุค่าไฟ (null)</label>
                               <div class="col-sm-9">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="ค่าไปต่อยูนิต"  aria-describedby="colored-addon3">
+                                  <input name="setelec" type="text" class="form-control" placeholder="ค่าไฟต่อยูนิต"  aria-describedby="colored-addon3">
                                     <div class="input-group-append bg-primary border-primary">
                                       <span class="input-group-text bg-transparent">
                                         <i class="mdi mdi-menu text-white"></i>
@@ -240,13 +241,13 @@
                     </div>
 
 
-                    <h4 class="card-description text-primary"> ที่อยู่หอพัก </h4>
+                    <h4 class="card-description text-primary"> ที่อยู่หอพัก (null) </h4>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">เลขที่</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" />
+                            <input name="add_no" type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -254,7 +255,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">ถนน</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" />
+                            <input name="street" type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -264,7 +265,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">ตำบล</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" />
+                            <input name="sub_district" type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -272,7 +273,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">อำเภอ</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" />
+                            <input name="district" type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -282,7 +283,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">จังหวัด</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" />
+                            <input name="province" type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -290,7 +291,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">ไปรษณีย์</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" />
+                            <input name="zip_code" type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -298,7 +299,7 @@
                     </div>
                    
                     
-                    <button type="button" class="btn btn-success btn-fw item-center">
+                    <button type="submit" class="btn btn-success btn-fw item-center">
                     <i class="mdi mdi-check"></i>บันทึก</button>
 
  
