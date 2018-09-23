@@ -129,11 +129,23 @@
                                         <div class="clearfix">
                                             <div class="align-items-center">
                                                 <div class="fluid-container">
-                                                    <h1 class="mdi mdi-library-plus text-success icon-lg text-center"><a asp-area="" asp-controller="Manage" asp-action="AddDorm"></a></h1>
+                                                    @{
+                                                        if (@dorm.picture != "")
+                                                        {
+                                                            <img width="200" height="150" src="~/uploads/img_mansion/@dorm.picture" /><br /><br />
+                                                        }
+                                                        else
+                                                        {
+                                                            <h1 class="mdi mdi-library-plus text-success icon-lg text-center"></h1>
+                                                        }
+                                                    }
                                                     <h4 class="font-weight-medium text-right mb-0 text-center">ชื่อหอ : @dorm.Name</h4>
                                                     <br />
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">มีห้องทั้งหมด : @dorm.calRoom</h5>
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">ราคา : @dorm.setRates</h5>
+                                                    <form asp-controller="Manage" asp-action="DeleteDorm" method="POST">
+                                                        <button name="Id_dorm" value="@dorm.Id" type="submit" class="btn btn-danger btn-fw">ลบหอพัก</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
