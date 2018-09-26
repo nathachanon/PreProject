@@ -12,7 +12,7 @@ namespace MASdemo.Controllers
 {
     public class UserController : Controller
     {
-        MySqlConnection mysqlconnect = new MySqlConnection("Server = sql12.freesqldatabase.com; User Id = sql12257039; Password=c5wFd5f1up; Database=sql12257039; SslMode=none");
+        MySqlConnection mysqlconnect = new MySqlConnection("Server = localhost; User Id = root; Password=; Database=masdatabase; SslMode=none");
 
         public void MysqlConnection(int myconfig)
         {
@@ -93,7 +93,7 @@ namespace MASdemo.Controllers
             return View("Login");
         }
 
-        [HttpPost]
+
         public IActionResult Logout()
         {
             HttpContext.Session.SetString("Log", "0");

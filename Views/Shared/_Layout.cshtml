@@ -8,8 +8,8 @@
  
 
     <environment include="Development">
-    
-
+        
+        <link href="https://fonts.googleapis.com/css?family=Kanit:300" rel="stylesheet">
          <link rel="stylesheet" href="~/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
          <link rel="stylesheet" href="~/vendors/css/vendor.bundle.base.css">
          <link rel="stylesheet" href="~/vendors/css/vendor.bundle.addons.css">
@@ -23,16 +23,100 @@
   
     <partial name="_CookieConsentPartial" />
      <div class="container-scroller">
+         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+        <a class="navbar-brand brand-logo" href="index.html">
+         
+        </a>
+        <a class="navbar-brand brand-logo-mini" href="index.html">
+         
+        </a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center">
+        <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
+          <li class="nav-item">
+            <a  class="nav-link "><h4 >Mansion Assistant System</h4>
+              <span class="badge badge-primary ml-2">New</span>
+            </a>
+          </li>
+
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          
+          <li class="nav-item dropdown d-none d-xl-inline-block">
+            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              <span class="profile-text">Hello, @ViewBag.myName</span>
+              <img class="img-xs rounded-circle" src="~/images/faces-clipart/pic-4.png" alt="Profile image"> 
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+              <a class="dropdown-item p-0">
+          
+              </a>
+              <a class="dropdown-item mt-2">
+                แก้ไขข้อมูล
+              </a>
+              <a class="dropdown-item">
+                เปลี่ยนรหัสผ่าน
+              </a>
+            
+              <a class="dropdown-item" href="@Url.Action("Logout", "User")"> 
+                    ออกจากระบบ 
+                </a> 
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link"  asp-controller="Manage" asp-action="Main" >
+              <i class="menu-icon mdi mdi-home-account"></i>
+              <span class="menu-title">หน้าแรก</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  asp-controller="Manage" asp-action="ManageDorm" >
+              <i class="menu-icon mdi mdi-city"></i>
+              <span class="menu-title">จัดการหอ</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="menu-icon mdi mdi-content-copy"></i>
+              <span class="menu-title">Drop down Test</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="pages/ui-features/buttons.html">Test1</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pages/ui-features/typography.html">Test2</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          
+        
+        </ul>
+      </nav>
         @RenderBody()
         </div>
     <environment include="Development">
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="~/js/chart.js"></script>
-        <script src="~/js/dashboard.js"></script>
+   
         <script src="~/vendors/js/vendor.bundle.base.js"></script>
         <script src="~/vendors/js/vendor.bundle.addons.js"></script>
         <script src="~/js/off-canvas.js"></script>
         <script src="~/js/misc.js"></script>
+        <script src="~/js/sweetalert2.all.min.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"

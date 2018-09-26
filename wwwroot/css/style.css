@@ -746,7 +746,9 @@
     -ms-transform: scale(1) rotate(0);
     -o-transform: scale(1) rotate(0);
     transform: scale(1) rotate(0); } }
-
+    ::-webkit-scrollbar {
+      width: 2px;
+}
 @-webkit-keyframes tada {
   0% {
     -webkit-transform: scale(1, 1);
@@ -13721,8 +13723,8 @@ input:focus {
         transition-timing-function: ease-in; }
         
         .sidebar .nav .nav-item .nav-link i.menu-arrow:before {
-          content: "\f13E";
-          font-family: 'Kanit', sans-serif;
+          content: "\F142"; 
+          font-family: "Material Design Icons";
           font-size: 18px;
           line-height: 1;
           font-style: normal;
@@ -14315,7 +14317,9 @@ pre {
   justify-content: stretch; }
   .stretch-card > .card {
     width: 100%;
-    min-width: 100%; }
+    min-width: 100%; 
+    border-radius: 13px;
+  }
 
 @media (min-width: 576px) {
   .border-right-sm {

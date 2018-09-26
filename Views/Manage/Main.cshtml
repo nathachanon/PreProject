@@ -15,105 +15,9 @@
 </head>
 
 <body>
-  <div class="container-scroller">
+  
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-        <a class="navbar-brand brand-logo" href="index.html">
-          <img src="~/images/logo.svg" alt="logo" />
-        </a>
-        <a class="navbar-brand brand-logo-mini" href="index.html">
-          <img src="~/images/logo-mini.svg" alt="logo" />
-        </a>
-      </div>
-      <div class="navbar-menu-wrapper d-flex align-items-center">
-        <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
-          <li class="nav-item">
-            <a  class="nav-link "><h4 >Mansion Assistant System</h4>
-              <span class="badge badge-primary ml-2">New</span>
-            </a>
-          </li>
-
-        </ul>
-        <ul class="navbar-nav navbar-nav-right">
-          
-          <li class="nav-item dropdown d-none d-xl-inline-block">
-            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <span class="profile-text">Hello, @ViewBag.myName</span>
-              <img class="img-xs rounded-circle" src="~/images/faces/face1.jpg" alt="Profile image">
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-              <a class="dropdown-item p-0">
-                <div class="d-flex border-bottom">
-                  <div class="py-3 px-4 d-flex align-items-center justify-content-center">
-                    <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
-                  </div>
-                  <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
-                    <i class="mdi mdi-account-outline mr-0 text-gray"></i>
-                  </div>
-                  <div class="py-3 px-4 d-flex align-items-center justify-content-center">
-                    <i class="mdi mdi-alarm-check mr-0 text-gray"></i>
-                  </div>
-                </div>
-              </a>
-              <a class="dropdown-item mt-2">
-                Manage Accounts
-              </a>
-              <a class="dropdown-item">
-                Change Password
-              </a>
-              <a class="dropdown-item">
-                Check Inbox
-              </a>
-              <form asp-controller="User" asp-action="Logout" method="POST">
-                  <button type="submit" class="btn btn-danger btn-fw">Logout</button>
-              </form>
-            </div>
-          </li>
-        </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-          <span class="mdi mdi-menu"></span>
-        </button>
-      </div>
-    </nav>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link"  asp-controller="Manage" asp-action="Main" >
-              <i class="menu-icon mdi mdi-home-account"></i>
-              <span class="menu-title">หน้าแรก</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"  asp-controller="Manage" asp-action="ManageDorm" >
-              <i class="menu-icon mdi mdi-city"></i>
-              <span class="menu-title">จัดการหอ</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-content-copy"></i>
-              <span class="menu-title">Basic UI Elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          
-        
-        </ul>
-      </nav>
+    
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -128,7 +32,8 @@
                     <div class="float-right">
                       <p class="mb-0 text-right">รายได้ทั้งหมด</p>
                       <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
+                        <h3 class="font-weight-medium text-right mb-0">฿65,650</h3>
+                        <p class="mb-0 text-right">บาท</p>
                       </div>
                     </div>
                   </div>
@@ -154,7 +59,7 @@
                     </div>
                   </div>
                   <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> Product-wise sales
+                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด
                   </p>
                 </div>
               </div>
@@ -175,7 +80,7 @@
                     </div>
                   </div>
                   <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Weekly Sales
+                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด
                   </p>
                 </div>
               </div>
@@ -188,14 +93,15 @@
                       <i class="mdi mdi-account-location text-info icon-lg"></i>
                     </div>
                     <div class="float-right">
-                      <p class="mb-0 text-right">Employees</p>
+                      <p class="mb-0 text-right">พนักงาน</p>
                       <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">246</h3>
+                        <h3 class="font-weight-medium text-right mb-0">0</h3>
+                        <p class="mb-0 text-right">คน</p>
                       </div>
                     </div>
                   </div>
                   <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Product-wise sales
+                    <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด
                   </p>
                 </div>
               </div>
@@ -205,20 +111,13 @@
             <div class="col-lg-8 grid-margin stretch-card">
               <!--กราฟ-->
                <div class="card">
-                <div class="card-body">
-                  <div class="row d-none d-sm-flex mb-4">
-                    <div class="col-4">
-                      <h5 class="text-primary">Unique Visitors</h5>
-                      <p>34657</p>
-                    </div>
-                    <div class="col-4">
-                      <h5 class="text-primary">Bounce Rate</h5>
-                      <p>45673</p>
-                    </div>
-                    <div class="col-4">
-                      <h5 class="text-primary">Active session</h5>
-                      <p>45673</p>
-                    </div>
+                <div class="card-body text-center">
+                  <div class="row d-none d-sm-flex mb-4 text-center">
+                
+                      <h4 class="text-primary ">กราฟ test Layout</h4>
+                     
+                    
+                 
                   </div>
                   <div class="chart-container">
                     <canvas id="dashboard-area-chart" height="80"></canvas>
@@ -231,10 +130,10 @@
             <div class="col-lg-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h2 class="card-title text-primary mb-5">Performance History</h2>
+                  <h2 class="card-title text-primary mb-5">test test</h2>
                   <div class="wrapper d-flex justify-content-between">
                     <div class="side-left">
-                      <p class="mb-2">The best performance</p>
+                      <p class="mb-2">test test</p>
                       <p class="display-3 mb-4 font-weight-light">+45.2%</p>
                     </div>
                     <div class="side-right">
@@ -243,7 +142,7 @@
                   </div>
                   <div class="wrapper d-flex justify-content-between">
                     <div class="side-left">
-                      <p class="mb-2">Worst performance</p>
+                      <p class="mb-2">test test</p>
                       <p class="display-3 mb-5 font-weight-light">-35.3%</p>
                     </div>
                     <div class="side-right">
@@ -252,7 +151,7 @@
                   </div>
                   <div class="wrapper">
                     <div class="d-flex justify-content-between">
-                      <p class="mb-2">Sales</p>
+                      <p class="mb-2">รายได้</p>
                       <p class="mb-2 text-primary">88%</p>
                     </div>
                     <div class="progress">
@@ -262,7 +161,7 @@
                   </div>
                   <div class="wrapper mt-4">
                     <div class="d-flex justify-content-between">
-                      <p class="mb-2">Visits</p>
+                      <p class="mb-2">รายได้</p>
                       <p class="mb-2 text-success">56%</p>
                     </div>
                     <div class="progress">
@@ -281,7 +180,7 @@
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
-</div>
+
   <!-- plugins:js -->
 
   <!-- End custom js for this page-->

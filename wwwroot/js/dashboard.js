@@ -4,35 +4,35 @@
     if ($('#dashboard-area-chart').length) {
       var lineChartCanvas = $("#dashboard-area-chart").get(0).getContext("2d");
       var data = {
-        labels: ["2013", "2014", "2014", "2015", "2016", "2017","2018"],
+        labels: ["2013", "2014", "2014", "2015", "2016", "2017", "2018"],
         datasets: [{
-            label: 'Product',
-            data: [0, 11, 6, 10, 8, 0, 15],
-            backgroundColor: 'rgba(0, 128, 207, 0.4)',
-            borderWidth: 1,
-            fill: true
-          },
-          {
-            label: 'Product',
-            data: [0, 7, 11, 8, 11, 0,10],
-            backgroundColor: 'rgba(2, 178, 248, 0.4)',
-            borderWidth: 1,
-            fill: true
-          },
-          {
-            label: 'Support',
-            data: [0, 14, 10, 14, 6, 0, 20],
-            backgroundColor: 'rgba(73, 221, 255, 0.4)',
-            borderWidth: 1,
-            fill: true
-          },
-          {
-            label: 'Login',
-            data: [0, 17, 13, 8, 5, 0, 11],
-            backgroundColor: 'rgba(25, 215, 255, 0.4)',
-            borderWidth: 1,
-            fill: true
-          }
+          label: 'Product',
+          data: [0, 11, 6, 10, 8, 0, 15],
+          backgroundColor: 'rgba(0, 128, 207, 0.4)',
+          borderWidth: 1,
+          fill: true
+        },
+        {
+          label: 'Product',
+          data: [0, 7, 11, 8, 11, 0, 10],
+          backgroundColor: 'rgba(2, 178, 248, 0.4)',
+          borderWidth: 1,
+          fill: true
+        },
+        {
+          label: 'Support',
+          data: [0, 14, 10, 14, 6, 0, 20],
+          backgroundColor: 'rgba(73, 221, 255, 0.4)',
+          borderWidth: 1,
+          fill: true
+        },
+        {
+          label: 'Login',
+          data: [0, 17, 13, 8, 5, 0, 11],
+          backgroundColor: 'rgba(25, 215, 255, 0.4)',
+          borderWidth: 1,
+          fill: true
+        }
         ]
       };
       var options = {
