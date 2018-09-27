@@ -63,7 +63,7 @@ using MASdemo.Models;
             WriteLiteral("\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n");
             EndContext();
             BeginContext(73, 190, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2dcbd84343894672b81c6d4e0e4c7314", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "361104623f624cbb88424f237e8fbde7", async() => {
                 BeginContext(79, 177, true);
                 WriteLiteral("\r\n  <!-- Required meta tags -->\r\n  <meta charset=\"utf-8\">\r\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\r\n  <title>หน้าแรก</title>\r\n\r\n");
                 EndContext();
@@ -83,7 +83,7 @@ using MASdemo.Models;
             WriteLiteral("\r\n\r\n");
             EndContext();
             BeginContext(267, 7479, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "31d988efc78945f58f690dfaa82f284e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "69f74a448efe4c6d90b75e57f5ae302e", async() => {
                 BeginContext(273, 7466, true);
                 WriteLiteral(@"
   

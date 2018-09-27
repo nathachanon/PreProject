@@ -72,7 +72,7 @@ using MASdemo.Models;
             WriteLiteral("<!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n");
             EndContext();
             BeginContext(72, 62, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "994f238fc13b41a183f3f17d2b4df393", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7d5b481fd49948609ef362a6e7fe1f75", async() => {
                 BeginContext(78, 9, true);
                 WriteLiteral("\r\n<title>");
                 EndContext();
@@ -102,7 +102,7 @@ using MASdemo.Models;
             WriteLiteral("\r\n\r\n");
             EndContext();
             BeginContext(138, 4095, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "afe5172a27fd486f8cbc5ce417d2d05f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b21d21d32a3f48888c186621abf4996b", async() => {
                 BeginContext(144, 345, true);
                 WriteLiteral(@"
   <div class=""container-scroller"">
@@ -114,7 +114,7 @@ using MASdemo.Models;
               ");
                 EndContext();
                 BeginContext(489, 3493, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9486f11f92734c33a68b5e0c4c518fc6", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6bca742fc7d34695988099bf12eb3352", async() => {
                     BeginContext(556, 3236, true);
                     WriteLiteral(@"
                 <div class=""form-group"">
@@ -187,7 +187,7 @@ using MASdemo.Models;
                     WriteLiteral("           <div class=\"text-block text-center my-3\">\r\n                  <span class=\"text-small font-weight-semibold\">หากคุณมีบัญชีแล้ว ?</span>\r\n                  ");
                     EndContext();
                     BeginContext(3792, 103, false);
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "868286e821674c4996cb1d835d1ead52", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0a1cade9fbe449d287072a9fc91773a4", async() => {
                         BeginContext(3880, 11, true);
                         WriteLiteral("เข้าสู่ระบบ");
                         EndContext();

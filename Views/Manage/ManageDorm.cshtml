@@ -25,25 +25,30 @@
                         { 
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
                                 <div class="card card-statistics"> 
-                                    <div class="card-body"> 
+                                    <div class="card-body-M"> 
                                         <div class="clearfix"> 
                                             <div class="align-items-center"> 
                                                 <div class="fluid-container"> 
                                                     @{ 
                                                         if (@dorm.picture != "") 
                                                         { 
-                                                            <img width="200" height="150" src="~/uploads/img_mansion/@dorm.picture" /><br /><br /> 
+                                                            <img class="Cir"width="100%" height="100%" src="~/uploads/img_mansion/@dorm.picture" /><br /><br /> 
                                                         } 
                                                         else 
                                                         { 
-                                                            <img width="200" height="150" src="~/uploads/blank_img.png" /><br /><br /> 
+                                                            <img class="Cir" width="100%" height="100%" src="~/uploads/blank_img.png" /><br /><br /> 
                                                         } 
                                                     } 
                                                     <h4 class="font-weight-medium text-right mb-0 text-center display-4">@dorm.Name</h4> 
                                                     <br /> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">มีห้องทั้งหมด : @dorm.calRoom</h5> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ราคา : @dorm.setRates</h5> 
+                                                    <h5 class="font-weight-medium text-black mb-0 text-black">มีห้องทั้งหมด : @dorm.calRoom ห้อง</h5> 
+                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ราคา : @dorm.setRates บาท</h5> 
                                                     <br /> 
+                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ที่อยู่ : @dorm.Add_no</h5> 
+                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ถนน : @dorm.Street</h5> 
+                                                    <h5 class="font-weight-medium text-black mb-0 text-black">อำเภอ : @dorm.District</h5> 
+                                                    <h5 class="font-weight-medium text-black mb-0 text-black">จังหวัด : @dorm.Province</h5> 
+                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ไปรษณีย์ : @dorm.Zip_code</h5> 
                                                     <a class="dropdown-item font-weight-medium display-5 text-warning text-center" href="#@dorm.Id"> 
                                                         แก้ไข 
                                                     </a> 
@@ -61,7 +66,7 @@
                             <div class="card card-statistics"> 
                                 <div class="card-body"> 
                                     <div class="clearfix"> 
-                                        <div class="align-items-center"> 
+                                        <div class="align-items-center align-items-lg-center"> 
                                             <div class="fluid-container"> 
                                                 <h1 class="mdi mdi-library-plus text-success icon-lg text-center"></h1> 
                                                 <a class="dropdown-item display-3 text-center text-success" href="@Url.Action("AddDorm", "Manage")">เพิ่มหอพัก</a> 

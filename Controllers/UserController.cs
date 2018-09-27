@@ -12,7 +12,7 @@ namespace MASdemo.Controllers
 {
     public class UserController : Controller
     {
-        MySqlConnection mysqlconnect = new MySqlConnection("Server = localhost; User Id = root; Password=; Database=masdatabase; SslMode=none");
+        MySqlConnection mysqlconnect = new MySqlConnection("Server = localhost; User Id = root; Password=; Database=masdatabase; SslMode=none; CharacterSet=utf8;");
 
         public void MysqlConnection(int myconfig)
         {

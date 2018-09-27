@@ -13,7 +13,7 @@ namespace MASdemo.Controllers
     public class ManageController : Controller
     {
         private readonly IHostingEnvironment he;
-        MySqlConnection mysqlconnect = new MySqlConnection("Server = localhost; User Id = root; Password=; Database=masdatabase; SslMode=none");
+        MySqlConnection mysqlconnect = new MySqlConnection("Server = localhost; User Id = root; Password=; Database=masdatabase; SslMode=none; CharacterSet=utf8;");
 
 
         public ManageController(IHostingEnvironment e)
@@ -149,7 +149,7 @@ namespace MASdemo.Controllers
             if (picture != null)
             {
                 var uploads = Path.Combine(he.WebRootPath, "uploads\\img_mansion");
-                fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(picture.FileName);
+                fileName = Guid.NewGuid().ToString().Substring(0, 10) + Path.GetExtension(picture.FileName);
                 picture.CopyTo(new FileStream(Path.Combine(uploads, fileName), FileMode.Create));
             }
             MysqlConnection(1);
@@ -184,7 +184,7 @@ namespace MASdemo.Controllers
             {
                 var fileName = "";
                 var uploads = Path.Combine(he.WebRootPath, "uploads\\img_mansion");
-                fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(picture.FileName);
+                fileName = Guid.NewGuid().ToString().Substring(0, 10) + Path.GetExtension(picture.FileName);
                 picture.CopyTo(new FileStream(Path.Combine(uploads, fileName), FileMode.Create));
 
                 if (ad.picture != null)
