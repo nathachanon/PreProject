@@ -35,7 +35,7 @@ namespace MASdemo
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(3);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(10);//You can set Time   
             });
         }
 

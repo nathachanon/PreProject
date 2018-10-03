@@ -1,189 +1,181 @@
-﻿
-@{
-    Layout = "_Layout";
-}
+﻿ 
+@{ 
+    Layout = "_Layout"; 
+} 
+ 
+<!DOCTYPE html> 
+<html lang="en"> 
+ 
+<head> 
+  <!-- Required meta tags --> 
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+  <title>หน้าแรก</title> 
+ 
+</head> 
+ 
+<body> 
+    @Html.Raw(TempData["loginSuccessful"]) 
+    <!-- partial:partials/_navbar.html --> 
+    <!-- partial --> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="row"> 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="clearfix"> 
+                                <div class="float-left"> 
+                                    <i class="mdi mdi-cube text-danger icon-lg"></i> 
+                                </div> 
+                                <div class="float-right"> 
+                                    <p class="mb-0 text-right">รายได้ทั้งหมด</p> 
+                                    <div class="fluid-container"> 
+                                        <h3 class="font-weight-medium text-right mb-0">฿65,650</h3> 
+                                        <p class="mb-0 text-right">บาท</p> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <p class="text-muted mt-3 mb-0"> 
+                                <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> เพิ่มขึ้น 65% 
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="clearfix"> 
+                                <div class="float-left"> 
+                                    <i class="mdi mdi-account-card-details text-success icon-lg"></i> 
+                                </div> 
+                                <div class="float-right"> 
+                                    <p class="mb-0 text-right">จำนวน ผู้เช่า</p> 
+                                    <div class="fluid-container"> 
+                                        <h3 class="font-weight-medium text-right mb-0">45</h3> 
+                                        <p class="mb-0 text-right">คน</p> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <p class="text-muted mt-3 mb-0"> 
+                                <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="clearfix"> 
+                                <div class="float-left"> 
+                                    <i class="mdi mdi-poll-box text-success icon-lg"></i> 
+                                </div> 
+                                <div class="float-right"> 
+                                    <p class="mb-0 text-right">จำนวน ห้องว่าง</p> 
+                                    <div class="fluid-container"> 
+                                        <h3 class="font-weight-medium text-right mb-0">23</h3> 
+                                        <p class="mb-0 text-right">ห้อง</p> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <p class="text-muted mt-3 mb-0"> 
+                                <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="clearfix"> 
+                                <div class="float-left"> 
+                                    <i class="mdi mdi-account-location text-info icon-lg"></i> 
+                                </div> 
+                                <div class="float-right"> 
+                                    <p class="mb-0 text-right">พนักงาน</p> 
+                                    <div class="fluid-container"> 
+                                        <h3 class="font-weight-medium text-right mb-0">0</h3> 
+                                        <p class="mb-0 text-right">คน</p> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <p class="text-muted mt-3 mb-0"> 
+                                <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="row"> 
+                <div class="col-lg-8 grid-margin stretch-card"> 
+                    <!--กราฟ--> 
+                    <div class="card"> 
+                        <div class="card-body text-center"> 
+                            <div class="row d-none d-sm-flex mb-4 text-center"> 
+ 
+                                <h4 class="text-primary ">กราฟ test Layout</h4> 
+ 
+ 
+ 
+                            </div> 
+                            <div class="chart-container"> 
+                                <canvas id="dashboard-area-chart" height="80"></canvas> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+                <!--กราฟ จบ--> 
+ 
+                <div class="col-lg-4 grid-margin stretch-card"> 
+                    <div class="card"> 
+                        <div class="card-body"> 
+                            <h2 class="card-title text-primary mb-5">test test</h2> 
+                            <div class="wrapper d-flex justify-content-between"> 
+                                <div class="side-left"> 
+                                    <p class="mb-2">test test</p> 
+                                    <p class="display-3 mb-4 font-weight-light">+45.2%</p> 
+                                </div> 
+                                <div class="side-right"> 
+                                    <small class="text-muted">2017</small> 
+                                </div> 
+                            </div> 
+                            <div class="wrapper d-flex justify-content-between"> 
+                                <div class="side-left"> 
+                                    <p class="mb-2">test test</p> 
+                                    <p class="display-3 mb-5 font-weight-light">-35.3%</p> 
+                                </div> 
+                                <div class="side-right"> 
+                                    <small class="text-muted">2015</small> 
+                                </div> 
+                            </div> 
+                            <div class="wrapper"> 
+                                <div class="d-flex justify-content-between"> 
+                                    <p class="mb-2">รายได้</p> 
+                                    <p class="mb-2 text-primary">88%</p> 
+                                </div> 
+                                <div class="progress"> 
+                                    <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 88%" aria-valuenow="88" 
+                                         aria-valuemin="0" aria-valuemax="100"></div> 
+                                </div> 
+                            </div> 
+                            <div class="wrapper mt-4"> 
+                                <div class="d-flex justify-content-between"> 
+                                    <p class="mb-2">รายได้</p> 
+                                    <p class="mb-2 text-success">56%</p> 
+                                </div> 
+                                <div class="progress"> 
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 56%" aria-valuenow="56" 
+                                         aria-valuemin="0" aria-valuemax="100"></div> 
+                                </div> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
 
-<!DOCTYPE html>
-<html lang="en">
+    </div> 
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>หน้าแรก</title>
-
-</head>
-
-<body>
-  
-    <!-- partial:partials/_navbar.html -->
-    
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-              <div class="card card-statistics">
-                <div class="card-body">
-                  <div class="clearfix">
-                    <div class="float-left">
-                      <i class="mdi mdi-cube text-danger icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                      <p class="mb-0 text-right">รายได้ทั้งหมด</p>
-                      <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">฿65,650</h3>
-                        <p class="mb-0 text-right">บาท</p>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> เพิ่มขึ้น 65% 
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-              <div class="card card-statistics">
-                <div class="card-body">
-                  <div class="clearfix">
-                    <div class="float-left">
-                      <i class="mdi mdi-account-card-details text-success icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                      <p class="mb-0 text-right">จำนวน ผู้เช่า</p>
-                      <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">45</h3>
-                        <p class="mb-0 text-right">คน</p>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-              <div class="card card-statistics">
-                <div class="card-body">
-                  <div class="clearfix">
-                    <div class="float-left">
-                      <i class="mdi mdi-poll-box text-success icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                      <p class="mb-0 text-right">จำนวน ห้องว่าง</p>
-                      <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">23</h3>
-                        <p class="mb-0 text-right">ห้อง</p>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-              <div class="card card-statistics">
-                <div class="card-body">
-                  <div class="clearfix">
-                    <div class="float-left">
-                      <i class="mdi mdi-account-location text-info icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                      <p class="mb-0 text-right">พนักงาน</p>
-                      <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">0</h3>
-                        <p class="mb-0 text-right">คน</p>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-8 grid-margin stretch-card">
-              <!--กราฟ-->
-               <div class="card">
-                <div class="card-body text-center">
-                  <div class="row d-none d-sm-flex mb-4 text-center">
-                
-                      <h4 class="text-primary ">กราฟ test Layout</h4>
-                     
-                    
-                 
-                  </div>
-                  <div class="chart-container">
-                    <canvas id="dashboard-area-chart" height="80"></canvas>
-                  </div>
-                </div>
-              </div>
-              </div>
-              <!--กราฟ จบ-->
-           
-            <div class="col-lg-4 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h2 class="card-title text-primary mb-5">test test</h2>
-                  <div class="wrapper d-flex justify-content-between">
-                    <div class="side-left">
-                      <p class="mb-2">test test</p>
-                      <p class="display-3 mb-4 font-weight-light">+45.2%</p>
-                    </div>
-                    <div class="side-right">
-                      <small class="text-muted">2017</small>
-                    </div>
-                  </div>
-                  <div class="wrapper d-flex justify-content-between">
-                    <div class="side-left">
-                      <p class="mb-2">test test</p>
-                      <p class="display-3 mb-5 font-weight-light">-35.3%</p>
-                    </div>
-                    <div class="side-right">
-                      <small class="text-muted">2015</small>
-                    </div>
-                  </div>
-                  <div class="wrapper">
-                    <div class="d-flex justify-content-between">
-                      <p class="mb-2">รายได้</p>
-                      <p class="mb-2 text-primary">88%</p>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 88%" aria-valuenow="88"
-                        aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                  <div class="wrapper mt-4">
-                    <div class="d-flex justify-content-between">
-                      <p class="mb-2">รายได้</p>
-                      <p class="mb-2 text-success">56%</p>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 56%" aria-valuenow="56"
-                        aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-         
-      <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-
-  <!-- plugins:js -->
-
-  <!-- End custom js for this page-->
-</body>
-
-</html>
+</body> 
+ 
+</html> 

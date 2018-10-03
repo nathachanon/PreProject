@@ -1,31 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using MASdemo.Context;
 using MASdemo.Models;
+using MASdemo.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
 
 namespace MASdemo.Controllers
 {
     public class UserController : Controller
     {
-        MySqlConnection mysqlconnect = new MySqlConnection("Server = localhost; User Id = root; Password=; Database=masdatabase; SslMode=none; CharacterSet=utf8;");
-
-        public void MysqlConnection(int myconfig)
-        {
-            if (myconfig == 1)
-            {
-                mysqlconnect.Open();
-            }
-            else if (myconfig == 0)
-            {
-                mysqlconnect.Close();
-            }
-        }
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -33,34 +16,30 @@ namespace MASdemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel lvm)
+        public IActionResult Login(LoginViewModel user)
         {
+            string loginSuccessful = "เข้าสู่ระบบสำเร็จ !";
+            string loginFail = "Email หรือ Password ผิดพลาดกรุณาลองใหม่อีกครั้ง !";
             if (ModelState.IsValid)
             {
-                MysqlConnection(1);
-                string query = "select * from user where email = '" + lvm.email + "' and password ='" + lvm.password + "'";
-                MySqlCommand comm = new MySqlCommand(query);
-                comm.Connection = mysqlconnect;
-                MySqlDataReader reader = comm.ExecuteReader();
-                if (reader.Read())
+                var context = new masdatabaseContext();
+                string enpass = Encryption.EncryptedPass(user.password);
+                var query = from p in context.Owner where p.Email == user.email & p.Password == enpass select p;
+                foreach (var a in query)
                 {
-                    HttpContext.Session.SetInt32("Uid", reader.GetInt32(reader.GetOrdinal("uid")));
-                    HttpContext.Session.SetString("Name", reader["name"].ToString());
-                    HttpContext.Session.SetString("Surname", reader["surname"].ToString());
-                    HttpContext.Session.SetString("Email", reader["email"].ToString());
-                    HttpContext.Session.SetString("Tel", reader["tel"].ToString());
+                    HttpContext.Session.SetInt32("Oid", a.Oid);
+                    HttpContext.Session.SetString("Name", a.Name);
+                    HttpContext.Session.SetString("Surname", a.Surname);
+                    HttpContext.Session.SetString("Email", a.Email);
+                    HttpContext.Session.SetString("Tel", a.Tel);
                     HttpContext.Session.SetString("Log", "1");
+                    TempData["loginSuccessful"] = "<script>alert('" + loginSuccessful + "');</script>";
                     return RedirectToAction("Main", "Manage");
-
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Log", "0");
-                    MysqlConnection(0);
-                    return RedirectToAction("Login", "User");
                 }
             }
-            MysqlConnection(0);
+
+            HttpContext.Session.SetString("Log", "0");
+            TempData["loginFail"] = "<script>alert('" + loginFail + "');</script>";
             return View("Login", "User");
         }
 
@@ -70,30 +49,15 @@ namespace MASdemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterViewModel rvm)
+        public IActionResult Register(RegisterViewModel auser)
         {
-
-            MysqlConnection(1);
-            string query = "INSERT INTO `user`(`email`, `password`, `name`, `surname`, `tel`) VALUES ('" + rvm.email + "','" + rvm.password + "','" + rvm.name + "','" + rvm.surname + "','" + rvm.tel + "')";
-            MySqlCommand comm = new MySqlCommand(query);
-            comm.Connection = mysqlconnect;
-            MySqlDataReader reader = comm.ExecuteReader();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    return View("Login", "User");
-                }
-            }
-            else
-            {
-            }
-            MysqlConnection(0);
-
+            var context = new masdatabaseContext();
+            string enpass = Encryption.EncryptedPass(auser.password);
+            var adduser = new Owner { Email = auser.email, Password = enpass, Name = auser.name, Surname = auser.surname, Tel = auser.tel };
+            context.Add(adduser);
+            context.SaveChanges();
             return View("Login");
         }
-
-
         public IActionResult Logout()
         {
             HttpContext.Session.SetString("Log", "0");

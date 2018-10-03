@@ -99,4 +99,4 @@ D:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.Views.pdb
 D:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.dll
 D:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.pdb
 D:\PreProject\obj\Debug\netcoreapp2.1\MASdemo.csproj.CopyComplete
-D:\PreProject\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout2.g.cshtml.cs
+D:\PreProject\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_LoginLayout.g.cshtml.cs

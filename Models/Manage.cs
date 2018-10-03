@@ -8,7 +8,7 @@ namespace MASdemo.Models
 {
     public class Manage
     {
-        
+
     }
 
     public class AddDorm
@@ -55,6 +55,49 @@ namespace MASdemo.Models
 
         [Display(Name = "picture")]
         public string picture { get; set; }
+        [Required]
+        [Display(Name = "floor")]
+        public int floor { get; set; }
+
+        [Required]
+        [Display(Name = "floor1")]
+        public int floor1 { get; set; }
+
+        [Required]
+        [Display(Name = "floor2")]
+        public int floor2 { get; set; }
+
+        [Required]
+        [Display(Name = "floor3")]
+        public int floor3 { get; set; }
+
+        [Required]
+        [Display(Name = "floor4")]
+        public int floor4 { get; set; }
+
+        [Required]
+        [Display(Name = "floor5")]
+        public int floor5 { get; set; }
+
+        [Required]
+        [Display(Name = "floor6")]
+        public int floor6 { get; set; }
+
+        [Required]
+        [Display(Name = "floor7")]
+        public int floor7 { get; set; }
+
+        [Required]
+        [Display(Name = "floor8")]
+        public int floor8 { get; set; }
+
+        [Required]
+        [Display(Name = "floor9")]
+        public int floor9 { get; set; }
+
+        [Required]
+        [Display(Name = "floor10")]
+        public int floor10 { get; set; }
 
     }
 }

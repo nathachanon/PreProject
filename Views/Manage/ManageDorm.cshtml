@@ -15,6 +15,7 @@
 </head> 
  
 <body> 
+     @Html.Raw(TempData["msg"]) 
             <div class="main-panel"> 
                 <div class="content-wrapper"> 
                     <div class="row purchace-popup"> 
@@ -41,18 +42,15 @@
                                                     } 
                                                     <h4 class="font-weight-medium text-right mb-0 text-center display-4">@dorm.Name</h4> 
                                                     <br /> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">มีห้องทั้งหมด : @dorm.calRoom ห้อง</h5> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ราคา : @dorm.setRates บาท</h5> 
-                                                    <br /> 
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">ที่อยู่ : @dorm.Add_no</h5> 
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">ถนน : @dorm.Street</h5> 
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">อำเภอ : @dorm.District</h5> 
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">จังหวัด : @dorm.Province</h5> 
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">ไปรษณีย์ : @dorm.Zip_code</h5> 
-                                                    <a class="dropdown-item font-weight-medium display-5 text-warning text-center" href="#@dorm.Id"> 
+                                                    <a class="dropdown-item font-weight-medium display-5 text-warning text-center" href="#@dorm.Did">  
                                                         แก้ไข 
                                                     </a> 
-                                                    <a class="dropdown-item font-weight-medium display-5 text-danger text-center" href="@Url.Action("DeleteDorm", "Manage",new { Id_dorm = dorm.Id })"> 
+                                                    <a class="dropdown-item font-weight-medium display-5 text-danger text-center" href="@Url.Action("DeleteDorm", "Manage",new { Id_dorm = dorm.Did })">  
                                                         ลบหอพัก 
                                                     </a> 
                                                 </div> 
@@ -79,13 +77,13 @@
                     </div> 
                 </div> 
             </div> 
-        </div> 
+       
     
  
  
     @foreach (var dorm in ViewBag.dorms) 
     { 
-        <div id="@dorm.Id" class="overlay"> 
+        <div id="@dorm.Did" class="overlay"> 
             <div class="popup"> 
                 <a class="close" href="#">&times;</a> 
                 <div class="col-12 grid-margin"> 
@@ -129,54 +127,9 @@
                                 </div> 
  
  
+                            
                                 <div class="row"> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ระบุชั้น</label> 
-                                            <div class="col-sm-9"> 
-                                                <div class="input-group"> 
-                                                    <input value="@dorm.Floor" name="setfloor" required type="text" class="form-control" placeholder="หอมีกี่ชั้น" aria-describedby="colored-addon3"> 
-                                                    <div class="input-group-append bg-primary border-primary"> 
-                                                        <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-menu text-white"></i> 
-                                                        </span> 
-                                                    </div> 
-                                                </div> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ระบุห้อง</label> 
-                                            <div class="col-sm-9"> 
-                                                <div class="input-group"> 
-                                                    <input value="@dorm.Room" name="setroom" required type="text" class="form-control" placeholder="จำนวนห้องแต่ละชั้น" aria-describedby="colored-addon3"> 
-                                                    <div class="input-group-append bg-primary border-primary"> 
-                                                        <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-menu text-white"></i> 
-                                                        </span> 
-                                                    </div> 
-                                                </div> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                </div> 
-                                <div class="row"> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ราคาเช่า</label> 
-                                            <div class="col-sm-9"> 
-                                                <div class="input-group"> 
-                                                    <input value="@dorm.setRates" name="setrates" required type="text" class="form-control" placeholder="ราคาต่อเดือน" aria-describedby="colored-addon3"> 
-                                                    <div class="input-group-append bg-primary border-primary"> 
-                                                        <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-menu text-white"></i> 
-                                                        </span> 
-                                                    </div> 
-                                                </div> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
+                              
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
                                             <label class="col-sm-3 col-form-label">ระบุค่าน้ำ*</label> 
@@ -192,8 +145,7 @@
                                             </div> 
                                         </div> 
                                     </div> 
-                                </div> 
-                                <div class="row"> 
+                               
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
                                             <label class="col-sm-3 col-form-label">ระบุค่าไฟ*</label> 
@@ -267,7 +219,7 @@
                                             </div> 
                                         </div> 
                                     </div> 
-                                    <input value="@dorm.Id" name="Id_dorm" hidden="hidden" /> 
+                                    <input value="@dorm.Did" name="Id_dorm" hidden="hidden" />  
                                 </div> 
  
  
