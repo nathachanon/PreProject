@@ -56,6 +56,7 @@ namespace MASdemo
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
+            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

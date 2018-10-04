@@ -115,6 +115,10 @@ namespace MASdemo.Controllers
         [HttpPost]
         public IActionResult AddDorm(AddDorm ad, IFormFile picture)
         {
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var fileName = "";
             if (picture != null)
             {
@@ -1718,6 +1722,10 @@ namespace MASdemo.Controllers
 
         public IActionResult DeleteDorm(int Id_dorm)
         {
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             MySqlConnection mysqlconnect = new MySqlConnection("Server = localhost; User Id = root; Password=; Database=masdatabase; SslMode=none; CharacterSet=utf8;");
 
             string query = "DELETE FROM `renter` WHERE Ren_Id like @instemail ";
@@ -1755,6 +1763,10 @@ namespace MASdemo.Controllers
 
         public IActionResult EditDorm(AddDorm ad, IFormFile picture, int Id_dorm)
         {
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var context = new masdatabaseContext();
 
             if (picture != null)

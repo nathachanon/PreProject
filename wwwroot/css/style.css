@@ -9017,6 +9017,24 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
   line-height: 1;
   border-radius: 0.1875rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
+  
+  .btn-bt {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.3rem 1.025rem;
+    font-size: 1rem;
+    line-height: 1;
+    transition: color 0.15s 
+    ease-in-out, background-color 0.15s 
+    ease-in-out, border-color 0.15s 
+    ease-in-out, box-shadow 0.15s 
+    ease-in-out; }
+  
   .btn:hover, .btn:focus {
     text-decoration: none; }
   .btn:focus, .btn.focus {
@@ -9028,6 +9046,18 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
     cursor: pointer; }
   .btn:not(:disabled):not(.disabled):active, .btn:not(:disabled):not(.disabled).active {
     background-image: none; }
+
+    .btn-bt:hover, .btn-bt:focus {
+      text-decoration: none; }
+    .btn-bt:focus, .btn-bt.focus {
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+    .btn-bt.disabled, .btn-bt:disabled {
+      opacity: 0.65; }
+    .btn-bt:not(:disabled):not(.disabled) {
+      cursor: pointer; }
+    .btn-bt:not(:disabled):not(.disabled):active, .btn-bt:not(:disabled):not(.disabled).active {
+      background-image: none; }
 
 a.btn.disabled,
 fieldset:disabled a.btn {
@@ -9582,22 +9612,22 @@ tbody.collapse.show {
 .dropdown-item {
   display: block;
   width: 100%;
-  padding: 0.25rem 1.5rem;
+  padding: 0.15rem 0.5rem;
   clear: both;
   font-weight: 400;
   color: #212529;
-  text-align: inherit;
+  text-align: center;
   white-space: nowrap;
   background-color: transparent;
   border: 0; }
   .dropdown-item:hover, .dropdown-item:focus {
     color: #16181b;
     text-decoration: none;
-    background-color: #f8f9fa; }
+    background-color: rgba(255, 255, 255, 0); }
   .dropdown-item.active, .dropdown-item:active {
     color: #fff;
     text-decoration: none;
-    background-color: #007bff; }
+    background-color: #007bff00; }
   .dropdown-item.disabled, .dropdown-item:disabled {
     color: #6c757d;
     background-color: transparent; }
@@ -10353,6 +10383,19 @@ tbody.collapse.show {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem; }
+
+  .card-cir {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    word-wrap: break-word;
+    background-color: #e8e8e8;
+    background-clip: border-box;
+    border: 10px solid rgba(0, 0, 0, 0.125);
+    border-radius: 50%; }
   .card > hr {
     margin-right: 0;
     margin-left: 0; }
@@ -14788,6 +14831,14 @@ pre {
   font-size: 0.875rem;
   line-height: 1;
   font-family: 'Kanit', sans-serif;}
+  .btn-1 {
+    font-size: 1.1rem;
+    line-height: 1;
+    font-family: 'Kanit', sans-serif;}
+    .btn-3 {
+      font-size: 1.3rem;
+      line-height: 1;
+      font-family: 'Kanit', sans-serif;}
   .btn i {
     margin-right: 0.3125rem; }
   .btn .btn-label:before {
@@ -14809,7 +14860,7 @@ pre {
     .btn.btn-icons i {
       margin: auto;
       line-height: initial; }
-  .btn.btn-fw {
+  .btn.dropdown-item {
     min-width: 120px; }
   .btn.icon-btn i {
     margin-right: 0; }
@@ -15370,7 +15421,15 @@ pre {
 /* Cards */
 .card {
   border: 0;
-  border-radius: 2px; }
+  border-radius: 2px; 
+
+}
+
+.card-20 {
+  border: 0;
+  border-radius: 15px; 
+
+}
   .card .card-body {
     padding: 1.88rem 1.81rem; }
     .card .card-body-M {
@@ -15682,6 +15741,7 @@ pre {
 .input-group-prepend {
   background: #ffffff;
   color: #c9c8c8;
+  border-radius: 6px;
   width: auto;
   border: none; }
   .input-group-append .input-group-text,
@@ -15694,6 +15754,7 @@ pre {
   font-family: 'Kanit', sans-serif;
   font-size: 1rem;
   padding: 0.56rem 0.75rem;
+  border-radius: 5px;
   line-height: 14px;
   font-weight: 300;
  

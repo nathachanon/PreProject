@@ -19,29 +19,21 @@ namespace MASdemo.Controllers
         public IActionResult Login(LoginViewModel user)
         {
 
-            string loginFail = "Email หรือ Password ผิดพลาดกรุณาลองใหม่อีกครั้ง !";
-            if (ModelState.IsValid)
+            var context = new masdatabaseContext();
+            string result = "Fail";
+            string enpass = Encryption.EncryptedPass(user.password);
+            var DataItem = context.Owner.Where(x => x.Email == user.email && x.Password == enpass).SingleOrDefault();
+            if (DataItem != null)
             {
-                var context = new masdatabaseContext();
-                string enpass = Encryption.EncryptedPass(user.password);
-                var query = from p in context.Owner where p.Email == user.email & p.Password == enpass select p;
-                foreach (var a in query)
-                {
-                    HttpContext.Session.SetInt32("Oid", a.Oid);
-                    HttpContext.Session.SetString("Name", a.Name);
-                    HttpContext.Session.SetString("Surname", a.Surname);
-                    HttpContext.Session.SetString("Email", a.Email);
-                    HttpContext.Session.SetString("Tel", a.Tel);
-                    HttpContext.Session.SetString("Log", "1");
-                    TempData["loginSuccessful"] = "<script>swal({type: 'success', title: 'เข้าสู่ระบบสำเร็จ',text: 'ยินดีต้อนรับคุณ " + a.Name + "!', showConfirmButton: false,  timer: 3500,backdrop: 'rgba(0,0, 26,0.8)'})</script>";
-                    return RedirectToAction("Main", "Manage");
-                }
+                HttpContext.Session.SetInt32("Oid", DataItem.Oid);
+                HttpContext.Session.SetString("Name", DataItem.Name);
+                HttpContext.Session.SetString("Email", DataItem.Email);
+                HttpContext.Session.SetString("Surname", DataItem.Surname);
+                HttpContext.Session.SetString("Tel", DataItem.Tel);
+                HttpContext.Session.SetString("Log", "1");
+                result = "Success";
             }
-
-            HttpContext.Session.SetString("Log", "0");
-
-            TempData["loginFail"] = "<script>alert('" + loginFail + "');</script>";
-            return View("Login", "User");
+            return Json(result);
         }
 
         public IActionResult Register()
@@ -52,12 +44,22 @@ namespace MASdemo.Controllers
         [HttpPost]
         public IActionResult Register(RegisterViewModel auser)
         {
+            string result = "Success";
             var context = new masdatabaseContext();
-            string enpass = Encryption.EncryptedPass(auser.password);
-            var adduser = new Owner { Email = auser.email, Password = enpass, Name = auser.name, Surname = auser.surname, Tel = auser.tel };
-            context.Add(adduser);
-            context.SaveChanges();
-            return View("Login");
+            var DataItem = context.Owner.Where(x => x.Email == auser.email).SingleOrDefault();
+            if (DataItem != null)
+            {
+                result = "Fail";
+            }
+            else
+            {
+                string enpass = Encryption.EncryptedPass(auser.password);
+                var adduser = new Owner { Email = auser.email, Password = enpass, Name = auser.name, Surname = auser.surname, Tel = auser.tel };
+                context.Add(adduser);
+                context.SaveChanges();
+            }
+
+            return Json(result);
         }
         public IActionResult Logout()
         {

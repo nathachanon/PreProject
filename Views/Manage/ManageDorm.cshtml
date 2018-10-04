@@ -8,8 +8,8 @@
  
 <head> 
     <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css">
+    <script src="~/js/sweetalert2.all.min.js"></script>
     <script src="~/js/sweetalert2.min.js"></script>
-    <!-- Required meta tags --> 
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
     <title>จัดการหอพัก</title> 
@@ -17,8 +17,8 @@
 </head> 
  
 <body> 
-     @Html.Raw(TempData["AddSuccessful"]) 
-      @Html.Raw(TempData["EditSuccessful"]) 
+      @Html.Raw(TempData["AddSuccessful"]) 
+    @Html.Raw(TempData["EditSuccessful"])  
             <div class="main-panel"> 
                 <div class="content-wrapper"> 
                     <div class="row purchace-popup"> 
@@ -50,12 +50,15 @@
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">อำเภอ : @dorm.District</h5> 
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">จังหวัด : @dorm.Province</h5> 
                                                     <h5 class="font-weight-medium text-black mb-0 text-black">ไปรษณีย์ : @dorm.Zip_code</h5> 
-                                                    <a class="dropdown-item font-weight-medium display-5 text-warning text-center" href="#@dorm.Did">  
-                                                        แก้ไข 
-                                                    </a> 
-                                                    <a class="dropdown-item font-weight-medium display-5 text-danger text-center" href="@Url.Action("DeleteDorm", "Manage",new { Id_dorm = dorm.Did })">  
-                                                        ลบหอพัก 
-                                                    </a> 
+                                                    <br>
+                                                    <a class ="dropdown-item display-5" href="#@dorm.Did">
+                                                        <button type="button" class="btn btn-1 btn-outline-success btn-rounded display-5 btn-block btn-fw">แก้ไข</button>
+                                                    </a>
+                                                    <a class ="dropdown-item display-5" href="@Url.Action("DeleteDorm", "Manage",new { Id_dorm = dorm.Did })">
+                                                        <button type="button" class="btn btn-1 btn-outline-danger  btn-rounded display-5 btn-block btn-fw">ลบหอพัก</button>
+                                                    </a>
+                                                   
+                                                   
                                                 </div> 
                                             </div> 
                                         </div> 
@@ -68,9 +71,11 @@
                                 <div class="card-body"> 
                                     <div class="clearfix"> 
                                         <div class="align-items-center align-items-lg-center"> 
-                                            <div class="fluid-container"> 
+                                            <div class="fluid-container "> 
+                                                <a href="@Url.Action("AddDorm", "Manage")">
                                                 <h1 class="mdi mdi-library-plus text-success icon-lg text-center"></h1> 
-                                                <a class="dropdown-item display-3 text-center text-success" href="@Url.Action("AddDorm", "Manage")">เพิ่มหอพัก</a> 
+                                                <a class="dropdown-item display-3 text-success"  href="@Url.Action("AddDorm", "Manage")">เพิ่มหอพัก</a> 
+                                                </a>
                                             </div> 
                                         </div> 
                                     </div> 
@@ -92,7 +97,13 @@
                 <div class="col-12 grid-margin"> 
                     <div class="card"> 
                         <div class="card-body"> 
-                            <h3 class="font-weight-medium text-primary text-center mdi mdi-city mdi-60px">แก้ไขข้อมูลหอพัก @dorm.Name</h3> 
+                             
+                            <h3 class="font-weight-medium text-primary text-center "> 
+                                <i class="mdi mdi-city mdi-48px text-info"></i>
+                                แก้ไขข้อมูลหอพัก @dorm.Name
+                                <i class="mdi mdi-city mdi-48px text-info"></i>
+                            </h3> 
+                             
                             <form class="form-sample" asp-controller="Manage" asp-action="EditDorm" method="POST" enctype="multipart/form-data"> 
                                 <h4 class="card-description text-primary"> 
                                     ข้อมูลหอพัก 
@@ -104,9 +115,9 @@
                                             <div class="col-sm-9"> 
                                                 <div class="input-group"> 
                                                     <input value="@dorm.Name" name="d_name" required type="text" class="form-control" placeholder="ชื่อหอพัก"> 
-                                                    <div class="input-group-append bg-primary border-primary"> 
+                                                    <div class="input-group-append bg-info border-primary"> 
                                                         <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-city mdi-18px text-white"></i> 
+                                                            <i class="mdi mdi-city mdi-24px text-white"></i> 
                                                         </span> 
                                                     </div> 
                                                 </div> 
@@ -115,7 +126,7 @@
                                     </div> 
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">อัูปภาพ</label> 
+                                            <label class="col-sm-3 col-form-label">รูปภาพ</label> 
                                             <div class="col-sm-9"> 
                                                 <div class="input-group"> 
                                                     <div class="custom-file"> 
@@ -139,9 +150,9 @@
                                             <div class="col-sm-9"> 
                                                 <div class="input-group"> 
                                                     <input value="@dorm.setWater" name="setwater" type="text" class="form-control" placeholder="ค่าน้ำต่อยูนิต" aria-describedby="colored-addon3"> 
-                                                    <div class="input-group-append bg-primary border-primary"> 
+                                                    <div class="input-group-append bg-info border-primary"> 
                                                         <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-menu text-white"></i> 
+                                                            <i class="mdi mdi-water mdi-24px text-white"></i> 
                                                         </span> 
                                                     </div> 
                                                 </div> 
@@ -155,9 +166,9 @@
                                             <div class="col-sm-9"> 
                                                 <div class="input-group"> 
                                                     <input value="@dorm.setElec" name="setelec" type="text" class="form-control" placeholder="ค่าไฟต่อยูนิต" aria-describedby="colored-addon3"> 
-                                                    <div class="input-group-append bg-primary border-primary"> 
+                                                    <div class="input-group-append bg-info border-primary"> 
                                                         <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-menu text-white"></i> 
+                                                            <i class="mdi mdi-speedometer mdi-24px text-white"></i> 
                                                         </span> 
                                                     </div> 
                                                 </div> 
@@ -168,7 +179,7 @@
                                 </div> 
  
  
-                                <h4 class="card-description text-primary"> ที่อยู่หอพัก (null) </h4> 
+                                <h4 class="card-description text-primary"> ที่อยู่หอพัก </h4> 
                                 <div class="row"> 
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
@@ -225,10 +236,11 @@
                                     <input value="@dorm.Did" name="Id_dorm" hidden="hidden" />  
                                 </div> 
  
- 
-                                <button type="submit" class="btn btn-success btn-fw item-center"> 
-                                    <i class="mdi dormi-check"></i>บันทึก 
+                                <div class="text-center">
+                                <button type="submit" class="btn btn-outline-success  btn-block btn-rounded  btn-3 btn-fw item-center"> 
+                                    <i class="mdi mdi-check"></i>บันทึก 
                                 </button> 
+                                </div>
  
  
  
