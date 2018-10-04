@@ -5,7 +5,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- 
 
     <environment include="Development">
         
@@ -18,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="~/vendors/animsition/css/animsition.min.css">
 	<link rel="stylesheet" type="text/css" href="~/vendors/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="~/vendors/daterangepicker/daterangepicker.css">
-
+    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css">
 	<link rel="stylesheet" type="text/css" href="~/css/util.css">
 	<link rel="stylesheet" type="text/css" href="~/css/mainLog.css">
  
@@ -33,7 +32,8 @@
         @RenderBody()
         
     <environment include="Development">
-   
+   <script src="~/js/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
     <link href="https://fonts.googleapis.com/css?family=Kanit:300" rel="stylesheet">
 	<script src="~/vendors/jquery/jquery-3.2.1.min.js"></script>
 	<script src="~/vendors/animsition/js/animsition.min.js"></script>
@@ -44,6 +44,7 @@
 	<script src="~/vendors/daterangepicker/daterangepicker.js"></script>
 	<script src="~/vendors/countdowntime/countdowntime.js"></script>
 	<script src="~/js/main.js"></script>
+
 
     </environment>
     <environment exclude="Development">

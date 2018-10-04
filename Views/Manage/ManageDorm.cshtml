@@ -7,6 +7,8 @@
 <html lang="en"> 
  
 <head> 
+    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css">
+    <script src="~/js/sweetalert2.min.js"></script>
     <!-- Required meta tags --> 
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
@@ -15,7 +17,8 @@
 </head> 
  
 <body> 
-     @Html.Raw(TempData["msg"]) 
+     @Html.Raw(TempData["AddSuccessful"]) 
+      @Html.Raw(TempData["EditSuccessful"]) 
             <div class="main-panel"> 
                 <div class="content-wrapper"> 
                     <div class="row purchace-popup"> 

@@ -18,7 +18,7 @@ namespace MASdemo.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel user)
         {
-            string loginSuccessful = "เข้าสู่ระบบสำเร็จ !";
+
             string loginFail = "Email หรือ Password ผิดพลาดกรุณาลองใหม่อีกครั้ง !";
             if (ModelState.IsValid)
             {
@@ -33,12 +33,13 @@ namespace MASdemo.Controllers
                     HttpContext.Session.SetString("Email", a.Email);
                     HttpContext.Session.SetString("Tel", a.Tel);
                     HttpContext.Session.SetString("Log", "1");
-                    TempData["loginSuccessful"] = "<script>alert('" + loginSuccessful + "');</script>";
+                    TempData["loginSuccessful"] = "<script>swal({type: 'success', title: 'เข้าสู่ระบบสำเร็จ',text: 'ยินดีต้อนรับคุณ " + a.Name + "!', showConfirmButton: false,  timer: 3500,backdrop: 'rgba(0,0, 26,0.8)'})</script>";
                     return RedirectToAction("Main", "Manage");
                 }
             }
 
             HttpContext.Session.SetString("Log", "0");
+
             TempData["loginFail"] = "<script>alert('" + loginFail + "');</script>";
             return View("Login", "User");
         }
@@ -68,6 +69,7 @@ namespace MASdemo.Controllers
                 HttpContext.Session.SetString("Log", "0");
                 ViewBag.myLog = HttpContext.Session.GetString("Log");
             }
+
             return RedirectToAction("Login", "User");
         }
     }

@@ -171,7 +171,7 @@ namespace MASdemo.Controllers
             int floor9 = ad.floor9;
             int floor10 = ad.floor10;
             int room;
-            string msg = "เพิ่มหอพักสำเร็จ !";
+
 
             if (floor == 1)
             {
@@ -1712,7 +1712,7 @@ namespace MASdemo.Controllers
                 }
             }
 
-            TempData["msg"] = "<script>alert('" + msg + "');</script>";
+            TempData["AddSuccessful"] = "<script>swal({type: 'success', title: 'เพิ่มหอพักสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
             return RedirectToAction("ManageDorm", "Manage");
         }
 
@@ -1777,6 +1777,7 @@ namespace MASdemo.Controllers
                     editDorm.SubDistrict = ad.sub_district;
                     editDorm.Province = ad.province;
                     context.SaveChanges();
+                    TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
                     return RedirectToAction("ManageDorm", "Manage");
                 }
                 else
@@ -1793,6 +1794,7 @@ namespace MASdemo.Controllers
                     editDorm.Province = ad.province;
                     editDorm.Picture = fileName;
                     context.SaveChanges();
+                    TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
                     return RedirectToAction("ManageDorm", "Manage");
                 }
             }
@@ -1811,6 +1813,7 @@ namespace MASdemo.Controllers
                     editDorm.SubDistrict = ad.sub_district;
                     editDorm.Province = ad.province;
                     context.SaveChanges();
+                    TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
                     return RedirectToAction("ManageDorm", "Manage");
                 }
                 else
@@ -1826,6 +1829,7 @@ namespace MASdemo.Controllers
                     editDorm.SubDistrict = ad.sub_district;
                     editDorm.Province = ad.province;
                     context.SaveChanges();
+                    TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
                     return RedirectToAction("ManageDorm", "Manage");
                 }
             }
