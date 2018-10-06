@@ -46,6 +46,25 @@ namespace MASdemo.Controllers
                 {
                     return RedirectToAction("AddDorm", "Manage");
                 }
+                List<myDorm> dorms = new List<myDorm>();
+                foreach (var t in sdorm)
+                {
+                    dorms.Add(new myDorm()
+                    {
+                        Did = t.Did,
+                        Name = t.Dname,
+                        picture = t.Picture,
+                        setWater = t.SetWaterUnit,
+                        setElec = t.SetElecUnit,
+                        Add_no = t.AddNo,
+                        Street = t.Street,
+                        sub_District = t.SubDistrict,
+                        District = t.District,
+                        Province = t.Province,
+                        Zip_code = t.ZipCode
+                    });
+                    ViewBag.dorms = dorms;
+                }
             }
             return View();
         }

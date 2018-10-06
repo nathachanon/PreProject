@@ -18,9 +18,6 @@
 </head> 
  
 <body> 
-
- 
-
     <div class="main-panel"> 
         <div class="content-wrapper"> 
             <div class="row"> 
@@ -110,70 +107,88 @@
                 </div> 
             </div> 
 
-        
-              <div class="row">
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card"> 
-                    <div class="card card-statistics"> 
-                        <div class="card-body"> 
-                            <div class="clearfix">     
-                                <div class="align-items-center"> 
-                                            <div class="fluid-container"> 
-                                                <img class="Cir" width="100%" height="100%" src="~/uploads/blank_img.png" /><br /><br /> 
-                                                    <h4 class="font-weight-medium text-right mb-0 text-center display-4">ชื่อหอ</h4> 
-                                                    <br /> 
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <h5 class="template-demo">ที่อยู่ : </h5> 
-                                                        </div>
-                                                         <div class="col-md-6">
-                                                            <h5 class="template-demo">ถนน : </h5> 
-                                                        </div>
-                                                    </div>
-                                                     <div class="row">
-                                                        <div class="col-md-6">
-                                                            <h5 class="template-demo">ตำบล : </h5> 
-                                                        </div>
-                                                         <div class="col-md-6">
-                                                            <h5 class="template-demo">อำภอ : </h5> 
-                                                        </div>
-                                                    </div>
-                                                      <div class="row">
-                                                        <div class="col-md-6">
-                                                            <h5 class="template-demo">จังหวัด : </h5> 
-                                                        </div>
-                                                         <div class="col-md-6">
-                                                            <h5 class="template-demo">ไปรษณีย์ : </h5> 
-                                                        </div>
-                                                    </div>
-                                                  
-                                                    <div class="text-center template-demo">
-                                                        <a class ="dropdown-item display-5" href="@Url.Action("ShowRoom", "Renter")">
-                                                            <button type="button" class="btn btn-1 btn-primary btn-rounded btn-block btn-fw">ดูข้อมูลผู้เช่า</button>
-                                                        </a>
-                                                        <button type="button" class="btn btn-success btn-rounded btn-block btn-fw">ดูรายได้ย้อนหลัง</button>
-                                                        <button type="button" class="btn btn-danger btn-rounded btn-block btn-fw">ดูคาดการณ์รายได้</button>
+ 
+            <div class="row"> 
+                @foreach (var dorm in ViewBag.dorms) 
+                { 
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card"> 
+                        <div class="card card-statistics"> 
+                            <div class="card-body"> 
+                                <div class="clearfix"> 
+                                    <div class="align-items-center"> 
+                                        <div class="fluid-container"> 
+                                            @{ 
+                                                if (@dorm.picture != "") 
+                                                { 
+                                                    <img class="Cir" width="100%" height="100%" src="~/uploads/img_mansion/@dorm.picture" /><br /><br /> 
+                                                } 
+                                                else 
+                                                { 
+                                                    <img class="Cir" width="100%" height="100%" src="~/uploads/blank_img.png" /><br /><br /> 
+                                                } 
+                                            } 
+                                            <h4 class="font-weight-medium text-right mb-0 text-center display-4">@dorm.Name</h4> 
+                                            <br /> 
 
-                                                      
-                                                    </div> 
+                                            <div class="row"> 
+                                                <div class="col-md-6"> 
+                                                    <h5 class="template-demo">ที่อยู่ :@dorm.Add_no</h5> 
+                                                </div> 
+                                                <div class="col-md-6"> 
+                                                    <h5 class="template-demo">ถนน : @dorm.Street</h5> 
+                                                </div> 
                                             </div> 
+                                            <div class="row"> 
+                                                <div class="col-md-6"> 
+                                                    <h5 class="template-demo">ตำบล : @dorm.sub_District</h5> 
+                                                </div> 
+                                                <div class="col-md-6"> 
+                                                    <h5 class="template-demo">อำภอ : @dorm.District</h5> 
+                                                </div> 
+                                            </div> 
+                                            <div class="row"> 
+                                                <div class="col-md-6"> 
+                                                    <h5 class="template-demo">จังหวัด : @dorm.Province</h5> 
+                                                </div> 
+                                                <div class="col-md-6"> 
+                                                    <h5 class="template-demo">ไปรษณีย์ : @dorm.Zip_code</h5> 
+                                                </div> 
+                                            </div> 
+ 
+                                            <div class="text-center template-demo"> 
+                                                <form method="post"> 
+                                                    <input type="text" name="did" hidden="hidden" value="@dorm.Did"/> 
+                                                    <button type="submit" class="btn btn-1 btn-primary btn-rounded btn-block btn-fw" asp-controller="Renter" asp-action="ShowRoom">ดูข้อมูลผู้เช่า</button> 
+                                                    <button type="button" class="btn btn-success btn-rounded btn-block btn-fw">ดูรายได้ย้อนหลัง</button> 
+                                                    <button type="button" class="btn btn-danger btn-rounded btn-block btn-fw">ดูคาดการณ์รายได้</button> 
+                                                </form> 
+ 
+                                            </div> 
+                                        </div> 
+                                    </div> 
                                 </div> 
+ 
                             </div> 
-  
                         </div> 
+ 
                     </div> 
-                    
+                } 
+ 
+ 
+ 
+ 
+ 
                 </div> 
-
-
-        
-
-
-              </div>
-            
+ 
         </div> 
-
+ 
     </div> 
-
+        <script> 
+        function showRoom() { 
+                window.location.href = '@Url.Action("ShowRoom", "Renter")' 
+        } 
+    </script> 
 </body> 
  
 </html> 
+
