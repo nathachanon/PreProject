@@ -1,0 +1,196 @@
+ 
+@{ 
+    Layout = null; 
+} 
+ 
+<!DOCTYPE html> 
+ 
+<html> 
+<head> 
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" /> 
+    <meta charset="utf-8"> 
+    <script src="~/js/sweetalert2.all.min.js"></script> 
+    <script src="~/js/sweetalert2.min.js"></script> 
+    <meta name="viewport" content="width=device-width" /> 
+    <title>AddRT</title> 
+</head> 
+<body> 
+    <a class="close" href="#" onclick="reloads()">&times;</a> 
+    <table id="tblRoomtype" class="table table-bordered table-striped table-responsive table-hover"> 
+        <thead> 
+            <tr> 
+                <th align="left" class="productth">ประเภทห้อง</th> 
+                <th align="left" class="productth">ราคา</th> 
+                <th align="left" class="productth">ปรับปรุง</th> 
+            </tr> 
+        </thead> 
+        <tbody></tbody> 
+    </table> 
+    @if (ViewBag.rts != null) 
+    { 
+        @foreach (var rt in ViewBag.rts) 
+        { 
+            <script> 
+                function gotomanage() { 
+                setTimeout(function () { 
+                    location.reload(); 
+                }, 2000); 
+            } 
+                function DeleteRT_@rt.Tid () { 
+                    window.location.href = '@Url.Action("DeleteRT", "Manage", new { tid = rt.Tid })' 
+                    gotomanage(); 
+            } 
+            </script> 
+        } 
+    } 
+    <br /> 
+    <form id="rtForm"> 
+        <input name="did" hidden="hidden" value="@ViewBag.mydata" /> 
+        <div class="row"> 
+            <div class="col-md-6"> 
+                <div class="form-group row"> 
+                    <label class="col-sm-8 col-form-label">ระบุจำนวนประเภทห้องที่ต้องการ</label> 
+                    <div class="col-sm-9"> 
+                        <div class="input-group"> 
+                            <input required id="myrt" name="myrt" type="text" class="form-control" maxlength="2" placeholder="ห้องมีทั้งหมดกี่ประเภท" aria-describedby="colored-addon3" autocomplete="off"> 
+                            <div class="input-group-append bg-info border-primary"> 
+                                <span class="input-group-text bg-transparent"> 
+                                    <i class="mdi mdi-table-column-plus-after mdi-24px text-white"></i> 
+                                </span> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+        <div class="row"> 
+            @for (int i = 1; i <= 10; i++) 
+            { 
+                <div class="col-md-6"> 
+                    <div id="rt_@i" class="form-group row" style="display: none"> 
+                        <label class="col-sm-3 col-form-label aj">ประเภท @i</label> 
+                        <div class="col-sm-5"> 
+                            <div class="input-group"> 
+                                <input class="form-control" type="text" name="rt_type_@i" autocomplete="off" value="" placeholder="ระบุรายละเอียด"> 
+                            </div> 
+                        </div> 
+                        <div class="col-sm-4"> 
+                            <div class="input-group"> 
+                                <input class="form-control" type="text" name="rt_price_@i" autocomplete="off" value="" placeholder="ราคาห้อง"> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            } 
+        </div> 
+        <div class=" text-center"> 
+            <button type="button" onclick="AddRT()" class="btn btn-outline-success   btn-block btn-rounded  btn-3 btn-fw item-center"> 
+                <i class="mdi mdi-check"></i>บันทึก 
+            </button> 
+        </div> 
+    </form> 
+    <script src="~/js/roomtype.js"></script> 
+    <script> 
+        $(document).ready(function () { 
+            LoadData(); 
+        }) 
+            var AddRT = function () { 
+                var data = $("#rtForm").serialize(); 
+                $.ajax({ 
+                    type: "post", 
+                    url: '@Url.Action("AddRT", "Manage")', 
+                    data: data, 
+                    success: function (result) { 
+                        if (result == "Success") { 
+                            swal({ 
+                                position: 'center', 
+                                type: 'success', 
+                                title: 'กำหนดประเภทห้องสำเร็จ', 
+                                showConfirmButton: false, 
+                                timer: 2000 
+                            }) 
+                            document.getElementById("rtForm").reset(); 
+                            $("#rt_1").hide("slow");
+                            $("#rt_2").hide("slow");
+                            $("#rt_3").hide("slow");
+                            $("#rt_4").hide("slow");
+                            $("#rt_5").hide("slow");
+                            $("#rt_6").hide("slow");
+                            $("#rt_7").hide("slow");
+                            $("#rt_8").hide("slow");
+                            $("#rt_9").hide("slow");
+                            $("#rt_10").hide("slow"); 
+                            LoadData(); 
+                        } else { 
+                            swal({ 
+                                position: 'center', 
+                                type: 'error', 
+                                title: 'ระบบขัดข้อง' + result, 
+                                showConfirmButton: false 
+                            }) 
+                        } 
+                    } 
+                }) 
+            } 
+ 
+        var DeleteRoomtype = function (tid) { 
+                $.ajax({ 
+                    type: "post", 
+                    url: '@Url.Action("DeleteRT", "Manage")', 
+                    data: { tid }, 
+                    success: function (result) { 
+                        if (result == "Success") { 
+                            swal({ 
+                                position: 'center', 
+                                type: 'success', 
+                                title: 'ลบประเภทห้องสำเร็จ', 
+                                showConfirmButton: false, 
+                                timer: 2000 
+                            }) 
+                            LoadData(); 
+                        } else { 
+                            swal({ 
+                                position: 'center', 
+                                type: 'error', 
+                                title: 'ระบบขัดข้อง' + result, 
+                                showConfirmButton: false 
+                            }) 
+                        } 
+                    } 
+                }) 
+        } 
+ 
+        function LoadData() { 
+            $("#tblRoomtype tbody tr").remove(); 
+        $.ajax({ 
+            type: 'post', 
+            url: '@Url.Action("getRoomtype", "Manage")', 
+            dataType: 'json', 
+            data: {did: @ViewBag.mydata}, 
+            success: function (rts) { 
+                var items = ''; 
+                $.each(rts, function (i, item) { 
+                        var rows = "<tr>" 
+                        + "<td class='prtoducttd'>" + item.getType + "</td>" 
+                        + "<td class='prtoducttd'>" + item.getPrice + "</td>" 
+                        + "<td class='prtoducttd'><a href='#rt_"+@ViewBag.mydata+"' onclick='DeleteRoomtype(" + item.getTid + ")'>ลบ</a></td>" 
+                    + "</tr>"; 
+                    $('#tblRoomtype tbody').append(rows); 
+                }); 
+            }, 
+            error: function (ex) { 
+                var r = jQuery.parseJSON(response.responseText); 
+                alert("Message: " + r.Message); 
+                alert("StackTrace: " + r.StackTrace); 
+                alert("ExceptionType: " + r.ExceptionType); 
+            } 
+        }); 
+        return false; 
+        } 
+ 
+            function reloads() { 
+                window.location.href = '@Url.Action("ManageDorm", "Manage")' 
+            } 
+    </script> 
+</body> 
+</html> 

@@ -161,7 +161,7 @@ namespace MASdemo.Controllers
             }
             else
             {
-                mydid = (1000 * HttpContext.Session.GetInt32("Oid")) + 1;
+                mydid = (100 * HttpContext.Session.GetInt32("Oid")) + 1;
             }
             var addDorm = new Dorm
             {
@@ -200,7 +200,7 @@ namespace MASdemo.Controllers
             {
                 for (var i = 1; i <= floor1; i++)
                 {
-                    int rid = (100000 * did) + ((floor * 100) + i);
+                    int rid = (1000 * did) + ((floor * 100) + i);
 
                     var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((floor * 100) + i), Tid = 0 };
                     context.Add(addroom);
@@ -231,7 +231,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -258,7 +258,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -291,7 +291,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -318,7 +318,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -345,7 +345,7 @@ namespace MASdemo.Controllers
                         room = floor3;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -378,7 +378,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -405,7 +405,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -432,7 +432,7 @@ namespace MASdemo.Controllers
                         room = floor3;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -459,7 +459,7 @@ namespace MASdemo.Controllers
                         room = floor4;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -492,7 +492,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -519,7 +519,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -546,7 +546,7 @@ namespace MASdemo.Controllers
                         room = floor3;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -573,7 +573,7 @@ namespace MASdemo.Controllers
                         room = floor4;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -600,7 +600,7 @@ namespace MASdemo.Controllers
                         room = floor5;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -633,7 +633,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -660,7 +660,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -687,7 +687,7 @@ namespace MASdemo.Controllers
                         room = floor3;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -714,7 +714,7 @@ namespace MASdemo.Controllers
                         room = floor4;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -741,7 +741,7 @@ namespace MASdemo.Controllers
                         room = floor5;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -768,7 +768,7 @@ namespace MASdemo.Controllers
                         room = floor6;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -801,7 +801,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -828,7 +828,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -855,7 +855,7 @@ namespace MASdemo.Controllers
                         room = floor3;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -882,7 +882,7 @@ namespace MASdemo.Controllers
                         room = floor4;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -909,7 +909,7 @@ namespace MASdemo.Controllers
                         room = floor5;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -936,7 +936,7 @@ namespace MASdemo.Controllers
                         room = floor6;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -963,7 +963,7 @@ namespace MASdemo.Controllers
                         room = floor7;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -996,7 +996,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1023,7 +1023,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1050,7 +1050,7 @@ namespace MASdemo.Controllers
                         room = floor3;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1077,7 +1077,7 @@ namespace MASdemo.Controllers
                         room = floor4;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1104,7 +1104,7 @@ namespace MASdemo.Controllers
                         room = floor5;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1131,7 +1131,7 @@ namespace MASdemo.Controllers
                         room = floor6;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1158,7 +1158,7 @@ namespace MASdemo.Controllers
                         room = floor7;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1185,7 +1185,7 @@ namespace MASdemo.Controllers
                         room = floor8;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1218,7 +1218,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1245,7 +1245,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1272,7 +1272,7 @@ namespace MASdemo.Controllers
                         room = floor3;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1299,7 +1299,7 @@ namespace MASdemo.Controllers
                         room = floor4;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1326,7 +1326,7 @@ namespace MASdemo.Controllers
                         room = floor5;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1353,7 +1353,7 @@ namespace MASdemo.Controllers
                         room = floor6;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1380,7 +1380,7 @@ namespace MASdemo.Controllers
                         room = floor7;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1407,7 +1407,7 @@ namespace MASdemo.Controllers
                         room = floor8;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1434,7 +1434,7 @@ namespace MASdemo.Controllers
                         room = floor9;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1467,7 +1467,7 @@ namespace MASdemo.Controllers
                         room = floor1;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1494,7 +1494,7 @@ namespace MASdemo.Controllers
                         room = floor2;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1521,7 +1521,7 @@ namespace MASdemo.Controllers
                         room = floor3;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1548,7 +1548,7 @@ namespace MASdemo.Controllers
                         room = floor4;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1575,7 +1575,7 @@ namespace MASdemo.Controllers
                         room = floor5;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1602,7 +1602,7 @@ namespace MASdemo.Controllers
                         room = floor6;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1629,7 +1629,7 @@ namespace MASdemo.Controllers
                         room = floor7;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1656,7 +1656,7 @@ namespace MASdemo.Controllers
                         room = floor8;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1683,7 +1683,7 @@ namespace MASdemo.Controllers
                         room = floor9;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1710,7 +1710,7 @@ namespace MASdemo.Controllers
                         room = floor10;
                         for (var j = 1; j <= room; j++)
                         {
-                            int rid = (100000 * did) + ((i * 100) + j);
+                            int rid = (1000 * did) + ((i * 100) + j);
 
                             var addroom = new Room { Rid = rid, Did = did, RoomNumber = ((i * 100) + j), Tid = 0 };
                             context.Add(addroom);
@@ -1749,6 +1749,7 @@ namespace MASdemo.Controllers
 
             string query = "DELETE FROM `renter` WHERE Ren_Id like @instemail ";
             string query2 = "DELETE FROM `room` WHERE did = '" + Id_dorm + "' ";
+            string query1 = "DELETE FROM `roomtype` WHERE did = '" + Id_dorm + "' ";
             string query3 = "DELETE FROM `set_floor_room` WHERE did = '" + Id_dorm + "' ";
             string query4 = "DELETE FROM `dorm` WHERE did = '" + Id_dorm + "' and oid = " + HttpContext.Session.GetInt32("Oid") + " ";
 
@@ -1763,6 +1764,12 @@ namespace MASdemo.Controllers
             MySqlCommand comm2 = new MySqlCommand(query2);
             comm2.Connection = mysqlconnect;
             MySqlDataReader reader2 = comm2.ExecuteReader();
+            mysqlconnect.Close();
+
+            mysqlconnect.Open();
+            MySqlCommand comm1 = new MySqlCommand(query1);
+            comm1.Connection = mysqlconnect;
+            MySqlDataReader reader1 = comm1.ExecuteReader();
             mysqlconnect.Close();
 
             mysqlconnect.Open();
@@ -1863,6 +1870,215 @@ namespace MASdemo.Controllers
                     TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
                     return RedirectToAction("ManageDorm", "Manage");
                 }
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AddRT(int did)
+        {
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                ViewBag.mydata = did;
+                var context = new masdatabaseContext();
+                IQueryable<Roomtype> roomtypes = from rt in context.Roomtype where rt.Did == did select rt;
+                List<Roomtype> rts = new List<Roomtype>();
+                if (roomtypes != null)
+                {
+                    foreach (var t in roomtypes)
+                    {
+                        rts.Add(new Roomtype()
+                        {
+                            Tid = t.Tid,
+                            Type = t.Type,
+                            Price = t.Price
+                        });
+                        ViewBag.rts = rts;
+                    }
+                }
+
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddRT(Roomtypes rt)
+        {
+            string result = "Fail";
+            var context = new masdatabaseContext();
+            int didcount = 0;
+            int realTid = 0;
+            int myrts = 0;
+            int oldrt = (rt.Did * 100) + 1;
+            IQueryable<Roomtype> srt = from Roomtype in context.Roomtype where Roomtype.Did == rt.Did select Roomtype;
+            foreach (var Roomtype in srt)
+            {
+                realTid = Roomtype.Tid;
+                didcount = 1;
+            }
+            if (didcount == 1)
+            {
+                myrts = realTid + 1;
+            }
+            else
+            {
+                myrts = (rt.Did * 100) + 1; ;
+            }
+            int allrt = rt.myrt;
+            int did = rt.Did;
+            int rtp1 = rt.rt_price_1;
+            int rtp2 = rt.rt_price_2;
+            int rtp3 = rt.rt_price_3;
+            int rtp4 = rt.rt_price_4;
+            int rtp5 = rt.rt_price_5;
+            int rtp6 = rt.rt_price_6;
+            int rtp7 = rt.rt_price_7;
+            int rtp8 = rt.rt_price_8;
+            int rtp9 = rt.rt_price_9;
+            int rtp10 = rt.rt_price_10;
+            string rt1 = rt.rt_type_1;
+            string rt2 = rt.rt_type_2;
+            string rt3 = rt.rt_type_3;
+            string rt4 = rt.rt_type_4;
+            string rt5 = rt.rt_type_5;
+            string rt6 = rt.rt_type_6;
+            string rt7 = rt.rt_type_7;
+            string rt8 = rt.rt_type_8;
+            string rt9 = rt.rt_type_9;
+            string rt10 = rt.rt_type_10;
+
+            if (allrt > 0)
+            {
+                var addroomtype = new Roomtype { Tid = myrts, Did = did, Type = rt1, Price = rtp1 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 1)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 1, Did = did, Type = rt2, Price = rtp2 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 2)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 2, Did = did, Type = rt3, Price = rtp3 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 3)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 3, Did = did, Type = rt4, Price = rtp4 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 4)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 4, Did = did, Type = rt5, Price = rtp5 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 5)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 5, Did = did, Type = rt6, Price = rtp6 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 6)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 6, Did = did, Type = rt7, Price = rtp7 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 7)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 7, Did = did, Type = rt8, Price = rtp8 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 8)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 8, Did = did, Type = rt9, Price = rtp9 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 9)
+            {
+                var addroomtype = new Roomtype { Tid = myrts + 9, Did = did, Type = rt10, Price = rtp10 };
+                context.Add(addroomtype);
+                context.SaveChanges();
+                result = "Success";
+            }
+            if (allrt > 10)
+            {
+                result = "allrt " + allrt + " myrts " + myrts.ToString() + " did " + did.ToString() + " rt " + rt1 + " price " + rtp1.ToString();
+            }
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteRT(int tid)
+        {
+            string result = "FAIL";
+            var context = new masdatabaseContext();
+            var x = (from y in context.Roomtype
+                     where y.Tid == tid
+                     select y).FirstOrDefault();
+            if (x != null)
+            {
+                context.Room.Where(u => u.Tid == tid).ToList()
+                    .ForEach(a =>
+                    {
+                        a.Tid = 0;
+                    }
+                );
+                context.SaveChanges();
+                context.Roomtype.Remove(x);
+                context.SaveChanges();
+                result = "Success";
+            }
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult getRoomtype(int did)
+        {
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return Json("FAIL");
+            }
+            else
+            {
+                ViewBag.mydata = did;
+                var context = new masdatabaseContext();
+                var roomtypes = from rt in context.Roomtype where rt.Did == did select rt;
+                List<MyRoomType> rts = new List<MyRoomType>();
+                if (roomtypes != null)
+                {
+                    foreach (var t in roomtypes)
+                    {
+                        rts.Add(new MyRoomType()
+                        {
+                            getTid = t.Tid,
+                            getPrice = t.Price,
+                            getType = t.Type
+                        });
+                    }
+                }
+                return Json(rts);
             }
         }
     }

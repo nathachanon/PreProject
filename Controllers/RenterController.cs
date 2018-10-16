@@ -82,12 +82,26 @@ namespace MASdemo.Controllers
                         });
                         ViewBag.renters = renters;
                     }
+                    var countrt = context.Roomtype.Count(me => me.Did == mydid || me.Tid == 0);
+                    ViewBag.rt_count = countrt;
+                    var rts = context.Roomtype.Where(my => my.Did == mydid || my.Tid == 0);
+                    List<Roomtype> roomtypes = new List<Roomtype>();
+                    foreach (var rta in rts)
+                    {
+                        roomtypes.Add(new Roomtype()
+                        {
+                            Tid = rta.Tid,
+                            Type = rta.Type,
+                            Price = rta.Price
+                        });
+                        ViewBag.roomtypes = roomtypes;
+                    }
                 }
             }
             return View();
         }
 
-        public IActionResult EditRenter(Renter renter, int did)
+        public IActionResult EditRenter(Renter renter, int did, int tid)
         {
             if (HttpContext.Session.GetInt32("Oid") == null)
             {
@@ -97,6 +111,9 @@ namespace MASdemo.Controllers
             {
                 int mydid = did;
                 var context = new masdatabaseContext();
+                var editroomtype = context.Room.First(b => b.Rid == renter.Rid);
+                editroomtype.Tid = tid;
+                context.SaveChanges();
                 var editrenter = context.Renter.First(a => a.RenId == renter.RenId);
                 editrenter.RenName = renter.RenName;
                 editrenter.RenSurename = renter.RenSurename;
@@ -106,6 +123,61 @@ namespace MASdemo.Controllers
                 TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลผู้เช่าสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
                 return RedirectToAction("ShowRoom", "Renter", new { did = mydid });
             }
+        }
+
+        [HttpPost]
+        public IActionResult set0Status(int status, int did)
+        {
+            string result = "Fail";
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                var context = new masdatabaseContext();
+                if (status != 0)
+                {
+                    var editstatus = context.Room.First(a => a.Rid == status);
+                    editstatus.Tid = 0;
+                    editstatus.Status = "0";
+                    context.SaveChanges();
+                    var editrenter = context.Renter.First(a => a.Rid == status);
+                    editrenter.RenName = null;
+                    editrenter.RenSurename = null;
+                    editrenter.RenTel = null;
+                    editrenter.RenAge = null;
+                    editrenter.RenSsnPicture = null;
+                    editrenter.StartElecMeter = null;
+                    editrenter.StartWaterMeter = null;
+                    editrenter.RenAgreement = null;
+                    context.SaveChanges();
+                    result = "Update OK";
+                }
+            }
+            return Json(result);
+        }
+
+        [HttpPost]
+        public IActionResult set1Status(int status)
+        {
+            string result = "Fail";
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                var context = new masdatabaseContext();
+                if (status != 0)
+                {
+                    var editstatus = context.Room.First(a => a.Rid == status);
+                    editstatus.Status = "1";
+                    context.SaveChanges();
+                    result = "Update OK";
+                }
+            }
+            return Json(result);
         }
     }
 }

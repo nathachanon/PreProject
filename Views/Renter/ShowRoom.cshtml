@@ -1,509 +1,1538 @@
+ 
+@{ 
+    Layout = "_Layout"; 
+} 
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" /> 
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <title>ข้อมูลผู้เช่า</title> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script src="~/js/sweetalert2.all.min.js"></script> 
+    <script src="~/js/sweetalert2.min.js"></script> 
+    <script src="~/js/showroom.js"></script> 
+    <link href="~/css/modelrenter.css" rel="stylesheet" /> 
+    <link href="~/css/switch.css" rel="stylesheet" /> 
+</head> 
+<body> 
+    @Html.Raw(TempData["EditSuccessful"]) 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="row"> 
+                <div class="col-md-12 grid-margin"> 
+                    <div class="card card-20 card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="text-center"> 
+                                <h1 class="text-primary"> 
+                                    <i class="mdi mdi-city mdi-48px"></i> 
+                                    หอพัก : @ViewBag.dorm_name 
+                                    <i class="mdi mdi-city mdi-48px"></i> 
+                                </h1> 
+                            </div> 
+                            <div class="row col-md-12 "> 
+                                <span class="mt-2 mr-3 h3">ชั้น : </span> 
+                                <div class=" template-demo  "> 
+                                    <div class="btn-toolbar text-right" role="toolbar"> 
+                                        @{ 
+                                            <button id="floor_1" type="button" class="btn-bt btn-success active">1</button> 
+                                            for (int i = 2; i <= ViewBag.allFloor; i++) 
+                                            { 
+                                                <button id="floor_@i" type="button" class="btn-bt btn-success">@i</button> 
+                                            } 
+                                        } 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <br> 
+                            <div id="floor1" class="row"> 
+                                @foreach (var rooms in ViewBag.rooms) 
+                                
+                                { 
+                                    @if (rooms.RoomNumber > 100 & rooms.RoomNumber < 200) 
+                                    { 
+                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                            @if (rooms.Status == "0") 
+                                            { 
+                                                <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                    <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                    <div class="card-body2"> 
+                                                        <div class="clearfix"> 
+                                                            <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                            <div class="float-left "> 
+                                                                <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href ="#" onclick="nodata()"> 
+                                                                        <h4 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h4> 
+                                                                    </a> 
+                                                                </div> 
+                                                                <form id="mystatus_@rooms.Rid"> 
+                                                                    <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                </form> 
+                                                                <label class="switch"> 
+                                                                    <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                    <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                    <span class="switch-handle"></span> 
+                                                                </label> 
+                                                            </div> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                                <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                    <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                    <div class="card-body2"> 
+                                                        <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                            <div class="clearfix"> 
+                                                                <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                <div class="float-left "> 
+                                                                    <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                    <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                </div> 
+                                                                <div class="float-right"> 
+                                                                    <div class="fluid-container"> 
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3> 
+                                                                    </div> 
+                                                                    <label class="switch"> 
+                                                                        <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                        <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                        <span class="switch-handle"></span> 
+                                                                    </label> 
+                                                                </div> 
+                                                            </div> 
+                                                        </a> 
+                                                    </div> 
+                                                </div> 
+                                            } 
+                                            else 
+                                            { 
+                                                <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                    <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                    <div class="card-body2"> 
+                                                        <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                            <div class="clearfix"> 
+                                                                <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                <div class="float-left "> 
+                                                                    <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                    <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                </div> 
+                                                                <div class="float-right"> 
+                                                                    <div class="fluid-container"> 
+                                                                        <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                    </div> 
+                                                                    <form id="mystatus_@rooms.Rid"> 
+                                                                        <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                    </form> 
+                                                                    <label class="switch"> 
+                                                                        <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                        <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                        <span class="switch-handle"></span> 
+                                                                    </label> 
+                                                                </div> 
+                                                            </div> 
+                                                        </a> 
+                                                    </div> 
+                                                </div> 
+                                                <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                    <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                    <div class="card-body2"> 
+                                                        <div class="clearfix"> 
+                                                            <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                            <div class="float-left "> 
+                                                                <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item"  href ="#" onclick="nodata()"> 
+                                                                        <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                    </a> 
+                                                                </div> 
+                                                                <label class="switch"> 
+                                                                    <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                    <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                    <span class="switch-handle"></span> 
+                                                                </label> 
+                                                            </div> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            } 
+                                        </div> 
+                                    } 
+                                } 
+                            </div> 
+                            @for (var i = 2; i <= 10; i++) 
+                            { 
+                                if (i == 2) 
+                                { 
+                                    <div id="floor2" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+                                } 
+                                else if (i == 3) 
+                                { 
+                                    <div id="floor3" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+ 
+                                } 
+                                else if (i == 4) 
+                                { 
+                                    <div id="floor4" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+ 
+                                } 
+                                else if (i == 5) 
+                                { 
+                                    <div id="floor5" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+ 
+                                } 
+                                else if (i == 6) 
+                                { 
+                                    <div id="floor6" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+ 
+                                } 
+                                else if (i == 7) 
+                                { 
+                                    <div id="floor7" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+ 
+                                } 
+                                else if (i == 8) 
+                                { 
+                                    <div id="floor8" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+ 
+                                } 
+                                else if (i == 9) 
+                                { 
+                                    <div id="floor9" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+ 
+                                } 
+                                else if (i == 10) 
+                                { 
+                                    <div id="floor10" class="row" style="display: none"> 
+                                        @foreach (var rooms in ViewBag.rooms) 
+                                        { 
+                                            @if (rooms.RoomNumber > i * 100 & rooms.RoomNumber < (i * 100) + 100) 
+                                            { 
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                                                    @if (rooms.Status == "0") 
+                                                    { 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <form id="mystatus_@rooms.Rid"> 
+                                                                            <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                        </form> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="checkbox_off_@rooms.Rid" onclick="check_off_@rooms.Rid ()" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <div class="card-unavai card-statistics green" id="renter_off_@rooms.Rid"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <a class="dropdown-item" href="#@rooms.Rid"> 
+                                                                    <div class="clearfix"> 
+                                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                        <div class="float-left "> 
+                                                                            <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </div> 
+                                                                            <form id="mystatus_@rooms.Rid"> 
+                                                                                <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                                                            </form> 
+                                                                            <label class="switch"> 
+                                                                                <input class="switch-input" type="checkbox" checked="checked" id="checkbox_off_@rooms.Rid" name="status" onclick="check_off_@rooms.Rid ()" value="@rooms.Rid" /> 
+                                                                                <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                                <span class="switch-handle"></span> 
+                                                                            </label> 
+                                                                        </div> 
+                                                                    </div> 
+                                                                </a> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="card-avai card-statistics green" id="renter_on_@rooms.Rid" style="display: none"> 
+                                                            <!-- ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง --> 
+                                                            <div class="card-body2"> 
+                                                                <div class="clearfix"> 
+                                                                    <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
+                                                                    <div class="float-left "> 
+                                                                        <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                    </div> 
+                                                                    <div class="float-right"> 
+                                                                        <div class="fluid-container"> 
+                                                                            <a class="dropdown-item" href = "#" onclick="nodata()"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                            </a> 
+                                                                        </div> 
+                                                                        <label class="switch"> 
+                                                                            <input class="switch-input" type="checkbox" id="checkbox_on_@rooms.Rid" name="checkbox_on_@rooms.Rid" onclick="check_on_@rooms.Rid ()" /> 
+                                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
+                                                                            <span class="switch-handle"></span> 
+                                                                        </label> 
+                                                                    </div> 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    } 
+                                                </div> 
+                                            } 
+                                        } 
+                                    </div> 
+ 
+                                } 
+ 
+                            } 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+    @foreach (var renter in ViewBag.renters) 
+    { 
+        <div id="@renter.Rid" class="overlay"> 
+            <div class="popup"> 
+                <a class="close" href="#">&times;</a> 
+                <div class="col-12 grid-margin"> 
+                    <div class="card"> 
+                        <div class="card-body-edit" id="viewinfo_@renter.Rid"> 
 
-@{
-    Layout = "_Layout";
-}
+                            
+                                <div class="leftcolumn col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"> 
+                                    <div class=" card-ren-id card-statistics"> 
+                                        <div class="mt-2 card-body-M"> 
+                                            <div class="clearfix text-center"> 
+                                                <h3 class="text-success">รหัสผู้เช่า : @renter.RenId</h3>
+                                                    @foreach (var rooms in ViewBag.rooms) 
+                                                        { 
+                                                            if (rooms.Rid == renter.Rid) 
+                                                            { 
+                                                                @foreach (var rt in ViewBag.roomtypes) 
+                                                                { 
+                                                                    if (rooms.Tid == rt.Tid) 
+                                                                    { 
+                                                                         <div class="float-left "> 
+                                                                            
+                                                                            <h4 class="mt-2 ml-2  text-left"><i class="mdi  mdi-altimeter text-danger icon-sm "></i> ประเภทห้อง : </h4>
+                                                                            <h4 class="mt-2 ml-2 text-left"> <i class="mdi mdi-bitcoin text-danger icon-sm "></i> ราคา : </h4>  
+                                                                       
+                                                                        </div> 
+                                                                         <div class="float-right "> 
+                                                                            <h4 class="mt-2 mr-2 text-right">@rt.Type</h4> 
+                                                                            <h4 class="mt-2 mr-2 text-right">@rt.Price</h4>
+                                                                            
+                                                                        </div> 
+                                                                    
+                                                                    } 
+                                                                } 
+                                                            } 
+                                                        } 
+                                            </div> 
+                            
+                                        </div> 
+                                    </div> 
+                               
+                                    
+                                </div> 
+                                <div class="rightcolumn col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"> 
+                                    <div class="card-renter-fx card-statistics"> 
+                                        <div class="card-body-M"> 
+                                            <div class="clearfix"> 
+                                                <h4>รูปบัตร ปชช</h4>
+                                                 <h4>รูปบัตร ปชช</h4>
+                                                  <h4>รูปบัตร ปชช</h4>
+                                                   <h4>รูปบัตร ปชช</h4>
+                                                    <h4>รูปบัตร ปชช</h4>
+                                                     <h4>รูปบัตร ปชช</h4>
+                                                    
 
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css">
-    <script src="~/js/sweetalert2.all.min.js"></script>
-    <script src="~/js/sweetalert2.min.js"></script>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ข้อมูลผู้เช่า</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link href="~/css/modelrenter.css" rel="stylesheet" />
-      <link href="~/css/switch.css" rel="stylesheet" />
-</head>
-<body>
-    @Html.Raw(TempData["EditSuccessful"])
-    <div class="main-panel">
-        <div class="content-wrapper">
-
-            <div class="row">
-
-                <div class="col-md-12 grid-margin">
-                    <div class="card card-20 card-statistics">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <h1 class="text-primary">
-                                    <i class="mdi mdi-city mdi-48px"></i>
-                                    หอพัก : @ViewBag.dorm_name
-                                    <i class="mdi mdi-city mdi-48px"></i>
-                                </h1>
-                            </div>
-                            <div class="row col-md-12 ">
-                                <span class="mt-2 mr-3 h3" >ชั้น : </span>
-                                <div class=" template-demo  ">
-
-                                    <div class="btn-toolbar text-right" role="toolbar">
-                                        @{
-                                            <button id="floor_1" type="button" class="btn-bt btn-success active">1</button>
-                                            for (int i = 2; i <= ViewBag.allFloor; i++)
-                                            {
-                                                <button id="floor_@i" type="button" class="btn-bt btn-success">@i</button>
-                                            }
-                                        }
-
+                                            </div> 
+                            
+                                        </div> 
+                                    </div> 
+                                </div> 
+                          
+                             
+                                <div class="rightcolumn col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"> 
+                                    <div class="card-ren-info card-statistics"> 
+                                        <div class="card-body2"> 
+                                            <div class="clearfix "> 
+                                               
+                                                     <h3 class="text-center text-success"> ข้อมูลผู้เช่า </h3> 
+                                                     <div class="row">
+                                                         <div class="col-md-6">
+                                                         <h4 class="ml-2 "><i class="mr-2 mdi mdi-account-check text-danger icon-md "></i>ชื่อ : </h4> 
+                                                    </div>
+                                                         <div class="col-md-6">
+                                                         <h5 class="mt-2 ml-2"> @renter.RenName</h5>
+                                                        </div>
+                                                         
+                                                     </div>
+                                                     <div class="row">
+                                                         <div class="col-md-6">
+                                                        <h4 class="ml-1 " ><i class="mr-2 mdi mdi-account-edit text-danger icon-md "></i>นามสกุล : </h4>
+                                                       </div>
+                                                        <div class="col-md-6">
+                                                        <h4 class="mt-2 ml-2"> @renter.RenSurename</h4>
+                                                       </div>
+                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4 class="ml-1 " ><i class="mr-2 mdi mdi-emoticon text-danger icon-md "></i>อายุ : </h4> 
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4 class="mt-2 ml-2"> @renter.RenAge</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4 class="ml-1 "><i class="mr-2 mdi mdi-cellphone-android text-danger icon-md "></i>เบอร์โทร : </h4> 
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4 class="mt-2 ml-2"> @renter.RenTel</h4>
+                                                    </div>
+                                                    </div>
+                                            </div> 
+                            
+                                        </div> 
+                                    </div> 
+                                </div> 
+ 
+                      
+                        </div> 
+                        <div class="card-body2" id="edit_@renter.Rid" style="display: none"> 
+                            <form class="form-sample" asp-controller="Renter" asp-action="EditRenter" method="POST" enctype="multipart/form-data"> 
+                                <h3 class="text-center text-success"> แก้ไขข้อมูลผู้เช่า </h3> 
+                                 @if (ViewBag.roomtypes != null) 
+                                { 
+                                    <div class="mt-5 row">
+                                        <div class="col-md-12"> 
+                                    <div class="form-group row"> 
+                                        <label for="exampleSelect1" class="col-sm-2 col-form-label">ประเภทห้อง</label> 
+                                        <div class="col-sm-9">
+                                        <select class="form-control " id="exampleSelect1" name="tid"> 
+                                            @foreach (var rt in ViewBag.roomtypes) 
+                                            { 
+                                                <option value="@rt.Tid">ประเภท : @rt.Type    ราคา : @rt.Price</option> 
+                                            } 
+                                        </select> 
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <br>
-
-
-                        <div id="floor1" class="row">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 100 & rooms.RoomNumber < 200)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green">   //ตรงนี้  card-avai  คือกรอบสีเขียว,  card-unavai  คือสีแดง
-                                                <div class="card-body"> 
-                                                    <div class="clearfix"> 
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3>
-                                                        <div class="float-left "> 
-                                                            
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg ">ห้อง</i>   // ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง
-                                                            <h4 class="mt-2 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                        
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor2" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 200 & rooms.RoomNumber < 300)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix"> 
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3>
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor3" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 300 & rooms.RoomNumber < 400)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix"> 
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3>
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-Success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor4" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 400 & rooms.RoomNumber < 500)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix">
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor5" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 500 & rooms.RoomNumber < 600)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix"> 
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3>
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor6" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 600 & rooms.RoomNumber < 700)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix"> 
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3>
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor7" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 700 & rooms.RoomNumber < 800)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix"> 
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3>
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor8" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 800 & rooms.RoomNumber < 900)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix"> 
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3>
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor9" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 900 & rooms.RoomNumber < 1000)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix"> 
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3>
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div id="floor10" class="row" style="display: none">
-                                @foreach (var rooms in ViewBag.rooms)
-                                {
-                                    @if (rooms.RoomNumber > 1000 & rooms.RoomNumber < 1100)
-                                    {
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                            <div class="card-avai card-statistics green"> 
-                                                <div class="card-body"> 
-                                                    <div class="clearfix">
-                                                        <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
-                                                        <div class="float-left "> 
-                                                            <i class="mdi mdi-account-card-details text-success icon-lg">ห้อง</i> 
-                                                            <h4 class="mt-1 text-left">สถานะห้อง</h4> 
-                                                        </div> 
-                                                        <div class="float-right"> 
-                                                            <div class="fluid-container"> 
-                                                            <a class="dropdown-item" href="#@rooms.Rid">
-                                                            <h1 class="font-weight-medium display-3 text-right mb-2">@rooms.RoomNumber</h1>
-                                                            </a> 
-                                                        </div> 
-                                                            <label class="switch">
-                                                            <input class="switch-input" type="checkbox" />
-                                                            <span class="switch-label" data-on="ว่าง" data-off="ไม่ว่าง"></span> 
-                                                            <span class="switch-handle"></span> 
-                                                            </label>
-                                                        </div> 
-                                                    </div>  
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                    }
-                                }
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-
-    @foreach (var renter in ViewBag.renters)
-    {
-        <div id="@renter.Rid" class="overlay">
-            <div class="popup">
-                <a class="close" href="#">&times;</a>
-                <div class="col-12 grid-margin">
-                    <div class="card">
-                        <div class="card-body" id="viewinfo_@renter.Rid">
-                            <h1>Renter ID : @renter.RenId</h1>
-                            <h4 class="card-description text-primary"> แสดงข้อมูลผู้เช่า </h4>
-                            <h1>ชื่อ : @renter.RenName</h1>
-                            <h1>นามสกุล : @renter.RenSurename</h1>
-                            <h1>อายุ : @renter.RenAge</h1>
-                            <h1>เบอร์โทร : @renter.RenTel</h1>
-                        </div>
-                        <div class="card-body" id="edit_@renter.Rid" style="display: none">
-                            <form class="form-sample" asp-controller="Renter" asp-action="EditRenter" method="POST" enctype="multipart/form-data">
-                                <h4 class="card-description text-primary"> แก้ไขข้อมูลผู้เช่า </h4>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">ชื่อ</label>
-                                            <div class="col-sm-9">
-                                                <input value="@renter.RenName" name="renname" type="text" class="form-control" />
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">นามสกุล</label>
-                                            <div class="col-sm-9">
-                                                <input value="@renter.RenSurename" name="RenSurename" type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">อายุ</label>
-                                            <div class="col-sm-9">
-                                                <input value="@renter.RenAge" name="RenAge" type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">เบอร์โทร</label>
-                                            <div class="col-sm-9">
-                                                <input value="@renter.RenTel" name="RenTel" type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <input name="RenId" value="@renter.RenId" hidden="hidden" />
-                                <input value="@ViewBag.did" name="did" hidden="hidden" />
-                                <button type="submit" class="btn-bt btn-danger">บันทึก</button>
-                            </form>
-                        </div>
-                        <button id="infobutton_@renter.Rid" type="button" class="btn-bt btn-danger" onclick="info_@renter.Rid ()" style="display: none">ย้อนกลับ</button>
-                        <br />
-                        <button id="editbutton_@renter.Rid" type="button" class="btn-bt btn-primary" onclick="edit_@renter.Rid ()">แก้ไขข้อมูล</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-                function info_@renter.Rid () {
-                    $("#edit_@renter.Rid").hide("slow");
-                    $("#infobutton_@renter.Rid").hide("slow");
-                    $("#viewinfo_@renter.Rid").show("slow");
-                }
-                function edit_@renter.Rid () {
-                    $("#viewinfo_@renter.Rid").hide("slow");
-                    $("#infobutton_@renter.Rid").show("slow");
-                    $("#edit_@renter.Rid").show("slow");
-            }
-        </script>
-    }
-    <script src="~/js/showroom.js"></script>
-</body>
-</html>
+                                    </div> 
+                                } 
+                                <div class="row"> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-3 col-form-label">ชื่อ</label> 
+                                            <div class="col-sm-9"> 
+                                                <input value="@renter.RenName" name="renname" type="text" class="form-control" /> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-3 col-form-label">นามสกุล</label> 
+                                            <div class="col-sm-9"> 
+                                                <input value="@renter.RenSurename" name="RenSurename" type="text" class="form-control" /> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="row"> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-3 col-form-label">อายุ</label> 
+                                            <div class="col-sm-9"> 
+                                                <input value="@renter.RenAge" name="RenAge" type="text" class="form-control" /> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-3 col-form-label">เบอร์โทร</label> 
+                                            <div class="col-sm-9"> 
+                                                <input value="@renter.RenTel" name="RenTel" type="text" class="form-control" /> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <input name="Rid" value="@renter.Rid" hidden="hidden" /> 
+                                <input name="RenId" value="@renter.RenId" hidden="hidden" /> 
+                                <input value="@ViewBag.did" name="did" hidden="hidden" /> 
+                                <button type="submit" class="btn btn-1 btn-success btn-rounded btn-block btn-fw">บันทึก</button> 
+                                <button id="infobutton_@renter.Rid" type="button" class="btn btn-1 btn-danger btn-rounded btn-block btn-fw" onclick="info_@renter.Rid ()" style="display: none">ย้อนกลับ</button>
 
-/*
-        alert ยืนยันก่อนลบข้อมูลผู้เช่า
-swal({
-  title: 'คุณแน่ใจหรือไม่?',
-  text: "ว่าคุณจะลบข้อมูลผู้เช่าห้องนี้",
-  type: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  cancelButtonText: 'ยกเลิก',
-  confirmButtonText: 'ใช่, แน่ใจ',
-  backdrop: 'rgba(0,0, 26,0.8)'
-}).then((result) => {
-  if (result.value) {
-    swal({
-        type: 'success', 
-        title: 'สำเร็จ', 
-        text: 'คุณได้ลบข้อมูลผู้เช่าห้อง 101',
-        showConfirmButton: false,  
-        timer: 2000,
-        backdrop: 'rgba(0,0, 26,0.8)'
-    })
-  }
-})
-
-*/
+                                 
+                            </form> 
+                        </div> 
+ 
+                        <button id="editbutton_@renter.Rid" type="button" class="btn btn-1 btn-primary btn-rounded btn-block btn-fw" onclick="edit_@renter.Rid ()">แก้ไขข้อมูล</button> 
+                    </div> 
+                </div> 
+            </div> 
+    </div> 
+        <script> 
+                function info_@renter.Rid () { 
+                  
+                    $("#edit_@renter.Rid").hide("fast"); 
+                    $("#editbutton_@renter.Rid").show("fast"); 
+                    $("#infobutton_@renter.Rid").hide("fast"); 
+                    $("#viewinfo_@renter.Rid").show("fast"); 
+                } 
+                function edit_@renter.Rid () { 
+                    $("#viewinfo_@renter.Rid").hide("fast"); 
+                    $("#editbutton_@renter.Rid").hide("fast"); 
+                    $("#infobutton_@renter.Rid").show("fast"); 
+                    $("#edit_@renter.Rid").show("fast"); 
+            } 
+            function check_on_@renter.Rid () { 
+                if (document.getElementById('checkbox_on_@renter.Rid').checked == true) { 
+                    var data = $("#mystatus_@renter.Rid").serialize();
+                    $.ajax({
+                        type: "post",
+                        url: "/Renter/set1Status",
+                        data: data,
+                        success: function (result) {
+                            if (result == "Fail") {
+                                alert("เกิดปัญหาในการเชื่อมต่อระบบ");
+                                $("#checkbox_on_@renter.Rid").prop("checked", true);
+                            } else {
+                                $("#renter_on_@renter.Rid").hide(); 
+                                $("#renter_off_@renter.Rid").show(); 
+                                $("#checkbox_off_@renter.Rid").prop("checked", true);
+                                window.location.href = '#@renter.Rid'
+                            }
+                        }
+                    }) 
+                } 
+            } 
+            function check_off_@renter.Rid () { 
+                if (document.getElementById('checkbox_off_@renter.Rid').checked == false) {
+                    var data = $("#mystatus_@renter.Rid").serialize();
+                    $.ajax({
+                        type: "post",
+                        url: "/Renter/set0Status",
+                        data: data,
+                        success: function (result) {
+                            if (result == "Fail") {
+                                alert("เกิดปัญหาในการเชื่อมต่อระบบ");
+                                $("#checkbox_off_@renter.Rid").prop("checked", true);
+                            } else if(result == "Update OK"){
+                               swal({
+                   type: 'error', 
+                   title: 'OK!',
+                   text: 'โปรดเปลี่ยนสถานะห้องพื่อกำหนดข้อมูลผู้เช่าผู้เช่า', 
+                   showConfirmButton: false,  
+                   timer: 1500,
+                   backdrop: 'rgba(0,0, 26,0.8)' 
+                   })
+                                $("#renter_off_@renter.Rid").hide(); 
+                                $("#renter_on_@renter.Rid").show(); 
+                                $("#checkbox_on_@renter.Rid").prop("checked", false);
+                                window.location.href = '/Renter/ShowRoom?did=@ViewBag.did'
+                            }
+                        }
+                    }) 
+                } 
+            } 
+            function nodata() { 
+               swal({
+                   type: 'error', 
+                   title: 'ห้องนี้ไม่มีผู้เช่า!',
+                   text: 'โปรดเปลี่ยนสถานะห้องพื่อกำหนดข้อมูลผู้เช่าผู้เช่า', 
+                   showConfirmButton: false,  
+                   timer: 5000,
+                   backdrop: 'rgba(0,0, 26,0.8)' 
+                   })
+            } 
+         
+            
+        </script> 
+    } 
+</body> 
+</html> 

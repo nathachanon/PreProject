@@ -12,7 +12,7 @@ namespace MASdemo.Context
 
         public int Tid { get; set; }
         public int Did { get; set; }
-        public int Type { get; set; }
+        public string Type { get; set; }
         public int Price { get; set; }
 
         public virtual Dorm D { get; set; }

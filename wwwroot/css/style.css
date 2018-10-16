@@ -10411,6 +10411,58 @@ tbody.collapse.show {
     border: 2px solid rgba(212, 3, 3, 0.86);
     border-radius: 10px; 
   }
+
+  .card-ren-id {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    word-wrap: break-word;
+    background-color: #f1fff8ab;
+    background-clip: border-box;
+    border: 2px solid #00a051;
+    border-radius: 10px; 
+  }
+
+  .card-renter-fx {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    word-wrap: break-word;
+    background-color: #ffffff2b;
+    background-clip: border-box;
+    border: 2px solid rgba(130, 130, 130, 0.96);
+    border-radius: 10px; 
+  }
+
+  .card-ren-info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    word-wrap: break-word;
+    background-color: #f1fff8ab;
+    background-clip: border-box;
+    border: 2px solid #00a051;
+    border-radius: 10px; 
+  }
+
+  .rightcolumn {
+    float: right;
+}
+
+.leftcolumn {
+  float: left;
+}
+
+
   .card > hr {
     margin-right: 0;
     margin-left: 0; }
@@ -10423,7 +10475,26 @@ tbody.collapse.show {
 
 .card-body {
   flex: 1 1 auto;
-  padding: 1.25rem; }
+  padding: 1.25rem; 
+}
+
+.card-body2 {
+
+  padding-top: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 20px;
+
+}
+
+.card-body-edit {
+
+  padding-top: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+
+}
 
 .card-title {
   margin-bottom: 0.75rem; }
@@ -12343,6 +12414,12 @@ button.bg-dark:focus {
 .my-1 {
   margin-top: 0.25rem !important; }
 
+  .mt-50,
+  .my-50 {
+    margin-top: 70% !important; 
+    margin-bottom: 50% !important;
+  }
+
 .mr-1,
 .mx-1 {
   margin-right: 0.25rem !important; }
@@ -13766,7 +13843,7 @@ input:focus {
     .sidebar .nav .nav-item .nav-link {
       align-items: center;
       display: flex;
-      padding: 16px 35px;
+      padding: 16px 25px;
       white-space: nowrap;
       height: 52px;
       color: #4a4a4a; }

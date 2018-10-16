@@ -266,7 +266,9 @@ namespace MASdemo.Context
 
                 entity.Property(e => e.Price).HasColumnType("int(11)");
 
-                entity.Property(e => e.Type).HasColumnType("int(11)");
+                entity.Property(e => e.Type)
+                    .HasColumnName("Type")
+                    .HasColumnType("varchar(20)");
 
                 entity.HasOne(d => d.D)
                     .WithMany(p => p.Roomtype)

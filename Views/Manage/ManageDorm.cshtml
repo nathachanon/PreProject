@@ -1,83 +1,85 @@
-﻿ 
-@{ 
-  Layout = "_Layout"; 
-} 
- 
-<!DOCTYPE html> 
-<html lang="en"> 
- 
+﻿  
+@{  
+  Layout = "_Layout";  
+}  
+  
+<!DOCTYPE html>  
+<html lang="en">  
+  
 <head> 
-    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css">
-    <script src="~/js/sweetalert2.all.min.js"></script>
-    <script src="~/js/sweetalert2.min.js"></script>
+    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css"> 
+    <script src="~/js/sweetalert2.all.min.js"></script> 
+    <script src="~/js/sweetalert2.min.js"></script> 
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
     <title>จัดการหอพัก</title> 
     <link href="~/css/models.css" rel="stylesheet" /> 
-</head> 
- 
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
+</head>  
+  
 <body> 
-      @Html.Raw(TempData["AddSuccessful"]) 
-    @Html.Raw(TempData["EditSuccessful"])  
-            <div class="main-panel"> 
-                <div class="content-wrapper"> 
-                    <div class="row purchace-popup"> 
+    @Html.Raw(TempData["AddSuccessful"]) 
+    @Html.Raw(TempData["EditSuccessful"]) 
  
-                    </div> 
-                    <div class="row"> 
-                        @foreach (var dorm in ViewBag.dorms) 
-                        { 
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                                <div class="card card-statistics"> 
-                                    <div class="card-body-M"> 
-                                        <div class="clearfix"> 
-                                            <div class="align-items-center"> 
-                                                <div class="fluid-container"> 
-                                                    @{ 
-                                                        if (@dorm.picture != "") 
-                                                        { 
-                                                            <img class="Cir"width="100%" height="100%" src="~/uploads/img_mansion/@dorm.picture" /><br /><br /> 
-                                                        } 
-                                                        else 
-                                                        { 
-                                                            <img class="Cir" width="100%" height="100%" src="~/uploads/blank_img.png" /><br /><br /> 
-                                                        } 
-                                                    } 
-                                                    <h4 class="font-weight-medium text-right mb-0 text-center display-4">@dorm.Name</h4> 
-                                                    <br /> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ที่อยู่ : @dorm.Add_no</h5> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ถนน : @dorm.Street</h5> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">อำเภอ : @dorm.District</h5> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">จังหวัด : @dorm.Province</h5> 
-                                                    <h5 class="font-weight-medium text-black mb-0 text-black">ไปรษณีย์ : @dorm.Zip_code</h5> 
-                                                    <br>
-                                                    <a class ="dropdown-item display-5" href="#@dorm.Did">
-                                                        <button type="button" class="btn btn-1 btn-outline-success btn-rounded display-5 btn-block btn-fw">แก้ไข</button>
-                                                    </a>
-                                                    <a class ="dropdown-item display-5" href="@Url.Action("DeleteDorm", "Manage",new { Id_dorm = dorm.Did })">
-                                                        <button type="button" class="btn btn-1 btn-outline-danger  btn-rounded display-5 btn-block btn-fw">ลบหอพัก</button>
-                                                    </a>
-                                                   
-                                                   
-                                                </div> 
-                                            </div> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="row purchace-popup"> 
+            </div> 
+            <div class="row"> 
+                @foreach (var dorm in ViewBag.dorms) 
+                { 
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                        <div class="card card-statistics"> 
+                            <div class="card-body-M"> 
+                                <div class="clearfix"> 
+                                    <div class="align-items-center"> 
+                                        <div class="fluid-container"> 
+                                            @{ 
+                                                if (@dorm.picture != "") 
+                                                { 
+                                                    <img class="Cir" width="100%" height="100%" src="~/uploads/img_mansion/@dorm.picture" /><br /><br /> 
+                                                } 
+                                                else 
+                                                { 
+                                                    <img class="Cir" width="100%" height="100%" src="~/uploads/blank_img.png" /><br /><br /> 
+                                                } 
+                                            } 
+                                            <h4 class="font-weight-medium text-right mb-0 text-center display-4">@dorm.Name</h4> 
+                                            <br /> 
+                                            <h5 class="font-weight-medium text-black mb-0 text-black">ที่อยู่ : @dorm.Add_no</h5> 
+                                            <h5 class="font-weight-medium text-black mb-0 text-black">ถนน : @dorm.Street</h5> 
+                                            <h5 class="font-weight-medium text-black mb-0 text-black">อำเภอ : @dorm.District</h5> 
+                                            <h5 class="font-weight-medium text-black mb-0 text-black">จังหวัด : @dorm.Province</h5> 
+                                            <h5 class="font-weight-medium text-black mb-0 text-black">ไปรษณีย์ : @dorm.Zip_code</h5> 
+                                            <br> 
+                                            <a class="dropdown-item display-5" href="#rt_@dorm.Did"> 
+                                                <button onclick="myload_@dorm.Did ()" type="button" class="btn btn-1 btn-outline-dark btn-rounded display-5 btn-block btn-fw">เพิ่ม/ลด ประเภทห้อง</button> 
+                                            </a> 
+                                            <a class="dropdown-item display-5" href="#@dorm.Did"> 
+                                                <button type="button" class="btn btn-1 btn-outline-success btn-rounded display-5 btn-block btn-fw">แก้ไข</button> 
+                                            </a> 
+                                            <a class="dropdown-item display-5" href="@Url.Action("DeleteDorm", "Manage",new { Id_dorm = dorm.Did })"> 
+                                                <button type="button" class="btn btn-1 btn-outline-danger  btn-rounded display-5 btn-block btn-fw">ลบหอพัก</button> 
+                                            </a> 
+ 
+ 
                                         </div> 
                                     </div> 
                                 </div> 
                             </div> 
-                        } 
-                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                            <div class="card card-statistics"> 
-                                <div class="card-body"> 
-                                    <div class="clearfix"> 
-                                        <div class="align-items-center align-items-lg-center"> 
-                                            <div class="fluid-container "> 
-                                                <a href="@Url.Action("AddDorm", "Manage")">
-                                                <h1 class="mdi mdi-library-plus text-success icon-lg text-center"></h1> 
-                                                <a class="dropdown-item display-3 text-success"  href="@Url.Action("AddDorm", "Manage")">เพิ่มหอพัก</a> 
-                                                </a>
-                                            </div> 
-                                        </div> 
+                        </div> 
+                    </div> 
+                } 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="mt-50 clearfix"> 
+                                <div class="align-items-center align-items-lg-center"> 
+                                    <div class="fluid-container "> 
+                                        <a href="@Url.Action("AddDorm", "Manage")"> 
+                                            <h1 class="mdi mdi-library-plus text-success icon-lg text-center"></h1> 
+                                            <a class="dropdown-item display-3 text-success" href="@Url.Action("AddDorm", "Manage")">เพิ่มหอพัก</a> 
+                                        </a> 
                                     </div> 
                                 </div> 
                             </div> 
@@ -85,25 +87,36 @@
                     </div> 
                 </div> 
             </div> 
-       
-    
- 
+        </div> 
+    </div> 
  
     @foreach (var dorm in ViewBag.dorms) 
     { 
+    <div id="rt_@dorm.Did" class="overlay"> 
+        <div class="popup" id="rt_@dorm.Did"> 
+            <div id="load_@dorm.Did"> 
+            </div> 
+        </div> 
+    </div> 
+        <script> 
+            function myload_@dorm.Did () { 
+                    $("#load_@dorm.Did").load('@Url.Action("AddRT", "Manage", new { did = dorm.Did })'); 
+            } 
+        </script> 
+ 
         <div id="@dorm.Did" class="overlay"> 
             <div class="popup"> 
                 <a class="close" href="#">&times;</a> 
                 <div class="col-12 grid-margin"> 
                     <div class="card"> 
                         <div class="card-body"> 
-                             
+ 
                             <h3 class="font-weight-medium text-primary text-center "> 
-                                <i class="mdi mdi-city mdi-48px text-info"></i>
-                                แก้ไขข้อมูลหอพัก @dorm.Name
-                                <i class="mdi mdi-city mdi-48px text-info"></i>
+                                <i class="mdi mdi-city mdi-48px text-info"></i> 
+                                แก้ไขข้อมูลหอพัก @dorm.Name 
+                                <i class="mdi mdi-city mdi-48px text-info"></i> 
                             </h3> 
-                             
+ 
                             <form class="form-sample" asp-controller="Manage" asp-action="EditDorm" method="POST" enctype="multipart/form-data"> 
                                 <h4 class="card-description text-primary"> 
                                     ข้อมูลหอพัก 
@@ -141,9 +154,9 @@
                                 </div> 
  
  
-                            
+ 
                                 <div class="row"> 
-                              
+ 
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
                                             <label class="col-sm-3 col-form-label">ระบุค่าน้ำ*</label> 
@@ -159,7 +172,7 @@
                                             </div> 
                                         </div> 
                                     </div> 
-                               
+ 
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
                                             <label class="col-sm-3 col-form-label">ระบุค่าไฟ*</label> 
@@ -233,14 +246,14 @@
                                             </div> 
                                         </div> 
                                     </div> 
-                                    <input value="@dorm.Did" name="Id_dorm" hidden="hidden" />  
+                                    <input value="@dorm.Did" name="Id_dorm" hidden="hidden" /> 
                                 </div> 
  
-                                <div class="text-center">
-                                <button type="submit" class="btn btn-outline-success  btn-block btn-rounded  btn-3 btn-fw item-center"> 
-                                    <i class="mdi mdi-check"></i>บันทึก 
-                                </button> 
-                                </div>
+                                <div class="text-center"> 
+                                    <button type="submit" class="btn btn-outline-success  btn-block btn-rounded  btn-3 btn-fw item-center"> 
+                                        <i class="mdi mdi-check"></i>บันทึก 
+                                    </button> 
+                                </div> 
  
  
  
@@ -253,8 +266,7 @@
             </div> 
         </div> 
     } 
-    
-   
-</body> 
- 
-</html> 
+    <script src="~/js/roomtype.js"></script> 
+</body>  
+  
+</html>  
