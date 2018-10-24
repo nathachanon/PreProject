@@ -8,16 +8,16 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor2").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor1").show("slow");
+        $("#floor2").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor9").hide();
+        $("#floor10").hide();
+        $("#floor1").show();
     });
     $("#floor_2").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -27,16 +27,16 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor2").show("slow");
+        $("#floor1").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor9").hide();
+        $("#floor10").hide();
+        $("#floor2").show();
     });
     $("#floor_3").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -46,16 +46,16 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor2").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor3").show("slow");
+        $("#floor1").hide();
+        $("#floor2").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor9").hide();
+        $("#floor10").hide();
+        $("#floor3").show();
     });
     $("#floor_4").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -65,17 +65,17 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor2").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor4").show("slow");
+        $("#floor1").hide();
+        $("#floor2").hide();
+        $("#floor3").hide();
+        $("#floor3").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor9").hide();
+        $("#floor10").hide();
+        $("#floor4").show();
     });
     $("#floor_5").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -85,18 +85,18 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor2").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor5").show("slow");
+        $("#floor1").hide();
+        $("#floor2").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor9").hide();
+        $("#floor10").hide();
+        $("#floor5").show();
     });
     $("#floor_6").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -106,19 +106,19 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor2").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor6").show("slow");
+        $("#floor1").hide();
+        $("#floor2").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor9").hide();
+        $("#floor10").hide();
+        $("#floor6").show();
     });
     $("#floor_7").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -128,20 +128,20 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor2").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor7").show("slow");
+        $("#floor1").hide();
+        $("#floor2").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor8").hide();
+        $("#floor9").hide();
+        $("#floor10").hide();
+        $("#floor7").show();
     });
     $("#floor_8").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -151,21 +151,21 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor2").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor8").show("slow");
+        $("#floor1").hide();
+        $("#floor2").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor9").hide();
+        $("#floor10").hide();
+        $("#floor8").show();
     });
     $("#floor_9").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -175,22 +175,22 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor2").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor10").hide("slow");
-        $("#floor9").show("slow");
+        $("#floor1").hide();
+        $("#floor2").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor10").hide();
+        $("#floor9").show();
     });
     $("#floor_10").click(function () {
         for (i = 1; i <= 10; i++) {
@@ -200,15 +200,15 @@ $(document).ready(function () {
                 $("#floor_" + i).removeClass("active")
             }
         }
-        $("#floor1").hide("slow");
-        $("#floor2").hide("slow");
-        $("#floor3").hide("slow");
-        $("#floor4").hide("slow");
-        $("#floor5").hide("slow");
-        $("#floor6").hide("slow");
-        $("#floor7").hide("slow");
-        $("#floor8").hide("slow");
-        $("#floor9").hide("slow");
-        $("#floor10").show("slow");
+        $("#floor1").hide();
+        $("#floor2").hide();
+        $("#floor3").hide();
+        $("#floor4").hide();
+        $("#floor5").hide();
+        $("#floor6").hide();
+        $("#floor7").hide();
+        $("#floor8").hide();
+        $("#floor9").hide();
+        $("#floor10").show();
     });
 });

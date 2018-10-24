@@ -1,0 +1,72 @@
+.image-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #fff;
+    height: 45px;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.file-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #fff;
+    height: 45px;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.file-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+img.sq {
+	vertical-align: middle;
+	border-style: none;
+	border-radius: 5%; 
+}
+
+.text-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #fff;
+    height: 45px;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.text-preview-input input[type=text] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.img-title {
+    padding-left: 21px;
+    padding-right: 21px;
+}

@@ -14,7 +14,33 @@
   <meta charset="utf-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
   <title>หน้าแรก</title> 
+  <script> 
+        $(document).ready(function () { 
+            var currentdate = new Date(); 
+            var getdate = "วันที่ " + currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " " + currentdate.getHours() + ":" 
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds() + " น." 
+            $.ajax({
+                type: "post",
+                url: "../Renter/getRenter?oid=" + @ViewBag.Oid,
+                dataType: 'json',
+                success: function (result) {
+                    $("#Renter").text(result);
+                    $("#renter1update").text(getdate);
+                }
+            }); 
  
+            $.ajax({
+                type: "post",
+                url: "../Renter/getRenter0?oid=" + @ViewBag.Oid,
+                dataType: 'json',
+                success: function (result) {
+                    $("#Renter0").text(result);
+                    $("#renter0update").text(getdate);
+                }
+            }); 
+        }); 
+    </script> 
 </head> 
  
 <body> 
@@ -52,13 +78,15 @@
                                 <div class="float-right"> 
                                     <p class="mb-0 text-right">จำนวน ผู้เช่า</p> 
                                     <div class="fluid-container"> 
-                                        <h3 class="font-weight-medium text-right mb-0">45</h3> 
+                                        <h3 id="Renter" class="font-weight-medium text-right mb-0">0</h3> 
                                         <p class="mb-0 text-right">คน</p> 
                                     </div> 
                                 </div> 
                             </div> 
                             <p class="text-muted mt-3 mb-0"> 
                                 <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                                  </p> 
+                            <p id="renter1update" class="text-muted mt-3 mb-0"> 
                             </p> 
                         </div> 
                     </div> 
@@ -73,13 +101,16 @@
                                 <div class="float-right"> 
                                     <p class="mb-0 text-right">จำนวน ห้องว่าง</p> 
                                     <div class="fluid-container"> 
-                                        <h3 class="font-weight-medium text-right mb-0">23</h3> 
+                                        <h3 id="Renter0" class="font-weight-medium text-right mb-0">0</h3> 
                                         <p class="mb-0 text-right">ห้อง</p> 
                                     </div> 
                                 </div> 
                             </div> 
                             <p class="text-muted mt-3 mb-0"> 
                                 <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                                  </p> 
+                            <p id="renter0update" class="text-muted mt-3 mb-0"> 
+
                             </p> 
                         </div> 
                     </div> 
@@ -101,6 +132,7 @@
                             </div> 
                             <p class="text-muted mt-3 mb-0"> 
                                 <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                    
                             </p> 
                         </div> 
                     </div> 
@@ -159,7 +191,7 @@
                                                 <form method="post"> 
                                                     <input type="text" name="did" hidden="hidden" value="@dorm.Did"/> 
                                                     <button type="submit" class="btn btn-1 btn-primary btn-rounded btn-block btn-fw" asp-controller="Renter" asp-action="ShowRoom">ดูข้อมูลผู้เช่า</button> 
-                                                    <button type="button" class="btn btn-success btn-rounded btn-block btn-fw">ดูรายได้ย้อนหลัง</button> 
+                                                    <button type="submit" class="btn btn-1 btn-success btn-rounded btn-block btn-fw" asp-controller="Income" asp-action="RevenueDorm">ดูรายได้ย้อนหลัง</button> 
                                                     <button type="button" class="btn btn-danger btn-rounded btn-block btn-fw">ดูคาดการณ์รายได้</button> 
                                                 </form> 
  
@@ -183,7 +215,7 @@
         </div> 
  
     </div> 
-        <script> 
+    <script> 
         function showRoom() { 
                 window.location.href = '@Url.Action("ShowRoom", "Renter")' 
         } 

@@ -1,0 +1,80 @@
+ 
+@{ 
+    Layout = "_Layout"; 
+} 
+ 
+<!DOCTYPE html> 
+ 
+<html> 
+<head> 
+    <meta name="viewport" content="width=device-width" /> 
+    <title>Meter</title> 
+    <meta charset="utf-8"> 
+</head> 
+<body> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="col-12 grid-margin"> 
+                <div class="card"> 
+                    <div class="card-body"> 
+                        <h1>กรอกข้อมูลการใช้น้ำ - ไฟ</h1> 
+                        <div id="months"> 
+                            <p>เลือกเดือนที่ต้องการกรอก</p> 
+                            <input type="month" class="input100" name="month" id="month" value="month" /> 
+                            <button id="next1" class="btn-outline-primary">ตกลง</button> 
+ 
+                        </div> 
+                        <br /> 
+                        <br /> 
+                        <div style="display: none;" id="div1"> 
+                            <h3 id="showmonth"></h3> 
+                            <h3>ห้องที่มีผู้เช่า</h3> 
+                            <div id="divadds"></div> 
+                            <br /> 
+                            <br /> 
+                            <div class="row"> 
+                                <div class="col-md-4"> 
+                                    <div class="form-group row"> 
+                                        <label class="col-sm-5 col-form-label">เลขห้อง</label> 
+                                        <div class="col-sm-6"> 
+                                            <div class="input-group"> 
+                                                <input id="roomid" name="roomid" type="text" class="form-control col-lg-8 text-center" placeholder="เลขห้อง" aria-describedby="colored-addon3" autocomplete="off" disabled="disabled"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-4"> 
+                                    <div class="form-group row"> 
+                                        <label class="col-sm-5 col-form-label">มิเตอร์น้ำ</label> 
+                                        <div class="col-sm-6"> 
+                                            <div class="input-group"> 
+                                                <input id="water" name="water" type="text" class="form-control col-lg-8" placeholder="มิเตอร์น้ำ" aria-describedby="colored-addon3" autocomplete="off" data-toggle="popover" data-trigger="focus" data-placement="top"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-4"> 
+                                    <div class="form-group row"> 
+                                        <label class="col-sm-5 col-form-label">มิเตอร์ไฟ</label> 
+                                        <div class="col-sm-6"> 
+                                            <div class="input-group"> 
+                                                <input id="elec" name="elec" type="text" class="form-control col-lg-8" placeholder="มิเตอร์ไฟ" aria-describedby="colored-addon3" autocomplete="off" data-toggle="popover" data-trigger="focus" data-placement="top"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <button id="add" class="btn-outline-info col-lg-12">เพิ่ม</button> 
+                        </div> 
+                    </div>
+                </div> 
+            </div> 
+        
+        </div> 
+    </div> 
+     
+</body> 
+</html> 
+<script src="~/js/Meter.js"></script>
+
+

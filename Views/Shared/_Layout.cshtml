@@ -15,6 +15,7 @@
          <link rel="stylesheet" href="~/css/style.css">
         <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css">
          <link rel="shortcut icon" href="~/images/favicon.png" />
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     </environment>
    
 </head>
@@ -52,7 +53,7 @@
               <a class="dropdown-item mt-2">
                 แก้ไขข้อมูล
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")"> 
                 เปลี่ยนรหัสผ่าน
               </a>
             
@@ -85,7 +86,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  asp-controller="Manage" asp-action="ManageDorm" >
+            <a class="nav-link"  asp-controller="Income" asp-action="Revenue" >
               <i class="menu-icon mdi mdi-coin mdi-36px"></i>
               <span class="menu-title ml-4">รายได้ย้อนหลัง</span>
             </a>

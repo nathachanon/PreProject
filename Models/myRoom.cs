@@ -9,4 +9,15 @@ namespace MASdemo.Models
     {
         public int Rid { get; set; }
     }
+
+    public class Meters
+    {
+        public int Water { get; set; }
+        public int Elec { get; set; }
+    }
+
+    public class RoomId
+    {
+        public int Roomid { get; set; }
+    }
 }

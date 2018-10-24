@@ -14,7 +14,9 @@
     <script src="~/js/sweetalert2.min.js"></script> 
     <script src="~/js/showroom.js"></script> 
     <link href="~/css/modelrenter.css" rel="stylesheet" /> 
+    <link href="~/css/imgFile.css" rel="stylesheet" /> 
     <link href="~/css/switch.css" rel="stylesheet" /> 
+    <script src="~/js/imgFile.js"></script> 
 </head> 
 <body> 
     @Html.Raw(TempData["EditSuccessful"]) 
@@ -1266,6 +1268,8 @@
                                 } 
  
                             } 
+                                 <button id="meter" class="btn-outline-primary col-lg-12">กรอก ค่าน้ำ ค่าไฟ</button></div> 
+
                         </div> 
                     </div> 
                 </div> 
@@ -1299,45 +1303,56 @@
                                                                             
                                                                             <h4 class="mt-2 ml-2  text-left"><i class="mdi  mdi-altimeter text-danger icon-sm "></i> ประเภทห้อง : </h4>
                                                                             <h4 class="mt-2 ml-2 text-left"> <i class="mdi mdi-bitcoin text-danger icon-sm "></i> ราคา : </h4>  
+                                                                           
                                                                        
                                                                         </div> 
                                                                          <div class="float-right "> 
                                                                             <h4 class="mt-2 mr-2 text-right">@rt.Type</h4> 
-                                                                            <h4 class="mt-2 mr-2 text-right">@rt.Price</h4>
-                                                                            
-                                                                        </div> 
-                                                                    
+                                                                            <h4 class="mt-2 mr-2 text-right">@rt.Price</h4>                                                                           
+                                                                        </div>                                                                 
                                                                     } 
                                                                 } 
                                                             } 
                                                         } 
-                                            </div> 
-                            
+                                            </div>                            
                                         </div> 
-                                    </div> 
-                               
-                                    
+                                    </div>                                 
                                 </div> 
+                                
+
+                            
                                 <div class="rightcolumn col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"> 
                                     <div class="card-renter-fx card-statistics"> 
                                         <div class="card-body-M"> 
-                                            <div class="clearfix"> 
-                                                <h4>รูปบัตร ปชช</h4>
-                                                 <h4>รูปบัตร ปชช</h4>
-                                                  <h4>รูปบัตร ปชช</h4>
-                                                   <h4>รูปบัตร ปชช</h4>
-                                                    <h4>รูปบัตร ปชช</h4>
-                                                     <h4>รูปบัตร ปชช</h4>
-                                                    
+                                            @{ 
+                                                if (@renter.RenSsnPicture != null )
+                                                { 
+                                                    <div class="clearfix "> 
+                                                        <img class="sq" src="~/uploads/img_ssn/@renter.RenSsnPicture" width="100%" height="195px" /> 
+                                                    </div> 
+                                                } 
+                                                else 
+                                                { 
+                                                    <div class="clearfix"> 
+                                                        <img class="sq" src="~/uploads/ssn.jpg" width="100%" height="195px" /> 
+                                                    </div> 
+                                                } 
+                                            }  
 
-                                            </div> 
-                            
+                                                @if(renter.RenAgreement != null )
+                                                { 
+                                                       <a target="_blank" rel="noopener noreferrer" href="~/uploads/agreement/@renter.RenAgreement"><h4 class="text-center">โหลดสัญญาเช่า</h4></a> 
+                                                }else{
+                                                       <a target="_blank"  ><h4 class="text-center">ยังไม่มีสัญญาเช่า</h4></a> 
+                                                }                 
                                         </div> 
                                     </div> 
-                                </div> 
+                                </div>
+
+                                
                           
                              
-                                <div class="rightcolumn col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"> 
+                                <div class="leftcolumn col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"> 
                                     <div class="card-ren-info card-statistics"> 
                                         <div class="card-body2"> 
                                             <div class="clearfix "> 
@@ -1375,12 +1390,30 @@
                                                         <div class="col-md-6">
                                                             <h4 class="mt-2 ml-2"> @renter.RenTel</h4>
                                                     </div>
-                                                    </div>
-                                            </div> 
-                            
+                                                    </div>   
+                                            </div>                             
                                         </div> 
                                     </div> 
                                 </div> 
+
+                                <div class="leftcolumn col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"> 
+                                    <div class=" card-ren-id card-statistics"> 
+                                        <div class="mt-2 card-body-M"> 
+                                            <div class="clearfix text-center"> 
+                                                <h3 class="text-success">มิเตอร์เริ่มต้น</h3>
+                                                  <div class="float-left ">     
+                                                        <h4 class="mt-2 ml-2  text-left"><i class="mdi  mdi-altimeter text-danger icon-sm "></i> น้ำ : </h4>
+                                                        <h4 class="mt-2 ml-2 text-left"> <i class="mdi mdi-bitcoin text-danger icon-sm "></i> ไฟ : </h4>  
+                                                    </div> 
+                                                    <div class="float-right "> 
+                                                        <h4 class="mt-2 mr-2 text-right">@renter.StartWaterMeter</h4> 
+                                                        <h4 class="mt-2 mr-2 text-right">@renter.StartElecMeter</h4>                                                                           
+                                                  </div>           
+                                            </div>                            
+                                        </div> 
+                                    </div>                                 
+                                </div>
+                                 
  
                       
                         </div> 
@@ -1393,7 +1426,7 @@
                                         <div class="col-md-12"> 
                                     <div class="form-group row"> 
                                         <label for="exampleSelect1" class="col-sm-2 col-form-label">ประเภทห้อง</label> 
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-10">
                                         <select class="form-control " id="exampleSelect1" name="tid"> 
                                             @foreach (var rt in ViewBag.roomtypes) 
                                             { 
@@ -1408,16 +1441,17 @@
                                 <div class="row"> 
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ชื่อ</label> 
-                                            <div class="col-sm-9"> 
+                                            
+                                            <h5 class="col-sm-4 col-form-label"><i class="mr-1 mt-2 mdi mdi-account-check text-primary mdi-24px"></i>ชื่อ</h5> 
+                                            <div class="col-sm-8"> 
                                                 <input value="@renter.RenName" name="renname" type="text" class="form-control" /> 
                                             </div> 
                                         </div> 
                                     </div> 
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">นามสกุล</label> 
-                                            <div class="col-sm-9"> 
+                                            <h5 class="col-sm-4 col-form-label"><i class="mr-1 mdi mdi-account-edit text-primary mdi-24px"></i>นามสกุล</h5> 
+                                            <div class="col-sm-8"> 
                                                 <input value="@renter.RenSurename" name="RenSurename" type="text" class="form-control" /> 
                                             </div> 
                                         </div> 
@@ -1426,21 +1460,94 @@
                                 <div class="row"> 
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">อายุ</label> 
-                                            <div class="col-sm-9"> 
+                                            <label class="col-sm-4 col-form-label"><i class="mr-1 mdi mdi-emoticon text-primary mdi-24px "></i>อายุ</label> 
+                                            <div class="col-sm-8"> 
                                                 <input value="@renter.RenAge" name="RenAge" type="text" class="form-control" /> 
                                             </div> 
                                         </div> 
                                     </div> 
                                     <div class="col-md-6"> 
                                         <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">เบอร์โทร</label> 
-                                            <div class="col-sm-9"> 
+                                            <label class="col-sm-4 col-form-label"><i class="mr-1 mdi mdi-cellphone-android text-primary mdi-24px "></i>เบอร์โทร</label> 
+                                            <div class="col-sm-8"> 
                                                 <input value="@renter.RenTel" name="RenTel" type="text" class="form-control" /> 
                                             </div> 
                                         </div> 
                                     </div> 
                                 </div> 
+                                 <div class="row"> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-4 col-form-label">มิเตอร์น้ำเริ่มต้น</label> 
+                                             <div class="col-sm-8"> 
+                                                   <div class="input-group ">
+                                                    <input value="@renter.StartWaterMeter" name="StartWaterMeter" type="text" class="form-control " > 
+                                                    <span class="input-group-btn">                                    
+                                                        <div class=" text-preview-input">                                                           
+                                                            <span class="glyphicon-folder-open"></span>                                                           
+                                                            <span  class="btn btn-default  bg-primary border-primary text-preview-input img-title "><i  class="mdi mdi-water mdi-24px text-white"></i></span>     
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div> 
+                                            
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-4 col-form-label">มิเตอร์ไฟเริ่มต้น</label> 
+                                             <div class="col-sm-8"> 
+                                                   <div class="input-group ">
+                                                    <input value="@renter.StartElecMeter" name="StartElecMeter" type="text" class="form-control " > 
+                                                    <span class="input-group-btn">                                    
+                                                        <div class=" text-preview-input">                                                           
+                                                            <span class="glyphicon-folder-open"></span>                                                           
+                                                            <span  class="btn btn-default  bg-primary border-primary text-preview-input img-title "><i  class="mdi mdi-water mdi-24px text-white"></i></span>     
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div> 
+                         
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class = "row">
+                                     <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-4 col-form-label">ไฟล์สัญญา</label> 
+                                            <div class="col-sm-8"> 
+                                                   <div class="input-group ">
+                                                    <input value ="@renter.RenAgreement" type="text" class="form-control file-preview-filename" > 
+                                                    <span class="input-group-btn">                                    
+                                                        <div class=" file-preview-input">                                                           
+                                                            <span class="glyphicon-folder-open"></span>                                                           
+                                                            <span id="hov" class="btn btn-default  bg-primary border-primary file-preview-input img-title "><i  class="mdi mdi-file mdi-24px text-white"></i></span>
+                                                            <input  type="file"  name="agreement" multiple/> 
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-4 col-form-label">บัตรประชาชน</label> 
+                                            <div class="col-sm-8"> 
+                                                <div class="input-group ">
+                                                    <input value="@renter.RenSsnPicture" type="text" class="form-control image-preview-filename" > 
+                                                    <span class="input-group-btn">                                    
+                                                        <div class=" image-preview-input">                                                           
+                                                            <span class="glyphicon-folder-open"></span>                                                           
+                                                            <span id="hov" class="btn btn-default  bg-primary border-primary image-preview-input img-title "><i id ="icon" class="mdi mdi-image mdi-24px text-white"></i></span>
+                                                            <input  type="file" accept="" name="ssn"/> 
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div>
+
                                 <input name="Rid" value="@renter.Rid" hidden="hidden" /> 
                                 <input name="RenId" value="@renter.RenId" hidden="hidden" /> 
                                 <input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -1485,7 +1592,8 @@
                                 $("#renter_on_@renter.Rid").hide(); 
                                 $("#renter_off_@renter.Rid").show(); 
                                 $("#checkbox_off_@renter.Rid").prop("checked", true);
-                                window.location.href = '#@renter.Rid'
+                                window.location.href = '#@renter.Rid';
+                                edit_@renter.Rid (); 
                             }
                         }
                     }) 
@@ -1509,8 +1617,8 @@
                    text: 'โปรดเปลี่ยนสถานะห้องพื่อกำหนดข้อมูลผู้เช่าผู้เช่า', 
                    showConfirmButton: false,  
                    timer: 1500,
-                   backdrop: 'rgba(0,0, 26,0.8)' 
-                   })
+                   backdrop: 'rgba(0,0, 26,0.8)'
+                   });
                                 $("#renter_off_@renter.Rid").hide(); 
                                 $("#renter_on_@renter.Rid").show(); 
                                 $("#checkbox_on_@renter.Rid").prop("checked", false);
@@ -1520,6 +1628,15 @@
                     }) 
                 } 
             } 
+            </script>  
+    } 
+     
+</body> 
+</html>  
+<script> 
+    $("#meter").click(function () { 
+        window.location.href = '../Renter/Meter?did=@ViewBag.did' 
+    }); 
             function nodata() { 
                swal({
                    type: 'error', 
@@ -1532,7 +1649,7 @@
             } 
          
             
-        </script> 
-    } 
-</body> 
-</html> 
+    </script> 
+  
+
+

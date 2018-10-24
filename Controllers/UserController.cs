@@ -4,6 +4,7 @@ using MASdemo.Models;
 using MASdemo.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 
 namespace MASdemo.Controllers
 {
@@ -73,6 +74,63 @@ namespace MASdemo.Controllers
             }
 
             return RedirectToAction("Login", "User");
+        }
+
+        public IActionResult ChangePassword()
+        {
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("Name");
+                return View();
+            }
+        }
+
+        public IActionResult ChangePassword2(string password, string newpassword)
+        {
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                string result = "Fail";
+                string passDb = "";
+                string ConnectionStringMysql = "Server=localhost;database=masdatabase;user id=root;pwd=;sslmode=none";
+                MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
+                mysqlcon.Open();
+                string query = "SELECT Password FROM owner WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + "";
+                MySqlCommand com = new MySqlCommand(query);
+                com.Connection = mysqlcon;
+                MySqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    passDb = reader["Password"].ToString();
+                }
+                mysqlcon.Close();
+
+                string enpassword = Encryption.EncryptedPass(password);
+                if (enpassword != passDb)
+                {
+                    return Json(result);
+                }
+                else
+                {
+                    string ennewpassword = Encryption.EncryptedPass(newpassword);
+                    string query2 = "UPDATE `owner` SET `Password`='" + ennewpassword + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + "";
+                    mysqlcon.Open();
+                    MySqlCommand com2 = new MySqlCommand(query2);
+                    com2.Connection = mysqlcon;
+                    MySqlDataReader reader2 = com2.ExecuteReader();
+                    mysqlcon.Close();
+                    result = "Ok";
+                    return Json(result);
+                }
+            }
+
         }
     }
 }

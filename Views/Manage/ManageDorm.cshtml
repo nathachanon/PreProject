@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
     <title>จัดการหอพัก</title> 
     <link href="~/css/models.css" rel="stylesheet" /> 
+     <link href="~/css/imgFile.css" rel="stylesheet" /> 
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
 </head>  
   
@@ -141,13 +142,17 @@
                                         <div class="form-group row"> 
                                             <label class="col-sm-3 col-form-label">รูปภาพ</label> 
                                             <div class="col-sm-9"> 
-                                                <div class="input-group"> 
-                                                    <div class="custom-file"> 
-                                                        <input value="@dorm.picture" name="picture" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"> 
-                                                        <label value="@dorm.picture" class="custom-file-label" for="inputGroupFile01">@dorm.picture</label> 
-                                                    </div> 
+                                                <div class="input-group mpv ">
+                                                    <input type="text" class="form-control image-preview-filename" value="@dorm.picture" placeholder="@dorm.picture"> 
+                                                    <span class="input-group-btn">                                    
+                                                        <div class=" image-preview-input">                                                           
+                                                            <span class="glyphicon-folder-open"></span>                                                           
+                                                            <span id="hov" class="btn btn-default  bg-info border-info image-preview-input img-title "><i id ="icon" class="mdi mdi-image mdi-24px text-white"></i></span>
+                                                            <input value="@dorm.picture" type="file" accept="image/png, image/jpeg, image/gif" name="picture"/> 
+                                                        </div>
+                                                    </span>
+                                                </div>
  
-                                                </div> 
                                             </div> 
                                         </div> 
                                     </div> 
@@ -267,6 +272,7 @@
         </div> 
     } 
     <script src="~/js/roomtype.js"></script> 
+    <script src="~/js/imgFile.js"></script> 
 </body>  
   
 </html>  

@@ -1,0 +1,82 @@
+ 
+@{ 
+    Layout = "_Layout"; 
+} 
+ 
+<!DOCTYPE html> 
+ 
+<html> 
+<head> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <meta name="viewport" content="width=device-width" /> 
+    <title>รายได้ย้อนหลัง</title> 
+    <meta charset="utf-8"> 
+</head> 
+<body> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="col-12 grid-margin"> 
+                <div class="card">                   
+                      <canvas id="myChart"></canvas> 
+                </div> 
+            </div> 
+        
+        </div> 
+    </div> 
+     
+</body> 
+</html> 
+
+ <script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+    text: 'aaaaa',
+
+    // The data for our dataset
+    data: {
+         labels: ["ม.ค", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค."],
+        datasets: [{
+          label: 'ธนาวงศ์',
+          data: [150050, 150000, 100000, 410000, 125000, 1500, 120344],
+          backgroundColor: 'rgba(0, 128, 207, 0.4)',
+          borderWidth: 1,
+          fill: true
+        }]     
+    },
+
+    // Configuration options go here
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          yAxes: [{
+            display: true
+          }],
+          xAxes: [{
+            display: true,
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 3
+          }
+        },
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        },
+        stepsize: 1}
+});
+</script>

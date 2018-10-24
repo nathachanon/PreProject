@@ -39,7 +39,7 @@
                 <div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <button onclick="Login()" class="login100-form-btn">เข้าสู่ระบบ</button>
+                        <button id="btnlogin" onclick="Login()" class="login100-form-btn">เข้าสู่ระบบ</button>
                     </div>
                 </div>
 				
@@ -55,10 +55,17 @@
             </div>
         </div>
     </div>
+    </div>
 
 
     <div id="dropDownSelect1"></div>
     <script>
+        addEventListener("keyup", function (event) { 
+            event.preventDefault(); 
+            if (event.keyCode === 13) { 
+                document.getElementById("btnlogin").click(); 
+            } 
+        });
         function gotomain() {
             setTimeout(function () {
                 window.location.href = '@Url.Action("Main", "Manage")'

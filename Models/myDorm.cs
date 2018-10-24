@@ -19,4 +19,8 @@ namespace MASdemo.Models
         public string Province { get; set; }
         public string Zip_code { get; set; }
     }
+    public class myDorm2
+    {
+        public int Did { get; set; }
+    }
 }
