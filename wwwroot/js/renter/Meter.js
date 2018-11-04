@@ -12,8 +12,8 @@ $("#goback").click(function () {
     $("#elec").val('');
     document.getElementById("divadds").innerHTML = '';
     document.getElementById("showmonth").innerHTML = '';
-    $("#div1").fadeOut("Slow");
-    $("#months").fadeIn("Slow");
+    $("#div1").hide("fast");
+    $("#months").fadeIn("fast");
 });
 $("#next1").click(function () {
     var datemonth = $("#month").val();
@@ -36,11 +36,11 @@ $("#next1").click(function () {
                 } else {
                     var items = '';
                     $.each(result, function (i, item) {
-                        $("#divadds").append("<a href='#' onclick='getroom(" + item.roomid + ")'>" + "<font size='6'>" + " " + item.roomid + " " + "</font>" + "</a>");
+                        $("#divadds").append("<button onclick='getroom(" + item.roomid + ")' class = 'mr-1 btn-default btn btn-1 bg-info border-info text-white'>" + item.roomid + "</button>");
                     });
-                    $("#months").fadeOut("Slow");
+                    $("#months").hide("fast");
                     $("#showmonth").text("กรอกมิเตอร์ของเดือน " + datemonth);
-                    $("#div1").fadeIn("Slow");
+                    $("#div1").fadeIn("fast");
                 }
             }
         })

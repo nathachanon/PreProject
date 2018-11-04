@@ -109,7 +109,7 @@ namespace MASdemo.Controllers
                                 Year = reader["Year"].ToString(),
                                 Amount = reader["Amount"].ToString() + ","
                             });
-                            ViewBag.Dorm_Name = reader["Name"].ToString();
+                            ViewBag.DormName = reader["Name"];
                             ViewBag.GetIncome = incomes;
                         }
                     }

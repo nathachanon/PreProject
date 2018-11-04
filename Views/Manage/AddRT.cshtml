@@ -15,81 +15,86 @@
     <title>AddRT</title> 
 </head> 
 <body> 
-    <a class="close" href="#" onclick="reloads()">&times;</a> 
-    <div class="card-body text-center">
-    <table id="tblRoomtype" class="table  table-striped table-responsive "> 
-        <thead> 
-            <tr> 
-                <th align="left" class="h3 productth text-danger">ประเภทห้อง</th> 
-                <th align="left" class="h3 productth text-danger">ราคา</th> 
-                <th align="left" class="h3 productth text-danger">ปรับปรุง</th> 
-            </tr> 
-        </thead> 
-        <tbody></tbody> 
-    </table> 
-    </div>
-    @if (ViewBag.rts != null) 
-    { 
-        @foreach (var rt in ViewBag.rts) 
-        { 
-            <script> 
-                function gotomanage() { 
-                setTimeout(function () { 
-                    location.reload(); 
-                }, 2000); 
-            } 
-                function DeleteRT_@rt.Tid () { 
-                    window.location.href = '@Url.Action("DeleteRT", "Manage", new { tid = rt.Tid })' 
-                    gotomanage(); 
-            } 
-            </script> 
-        } 
-    } 
+        <p class="h2 mb-2 mt-3 text-center ">ตั้งค่าประเภทห้อง</p>
+        <a class="close" href="#" onclick="reloads()">&times;</a> 
+            <div class=" text-center in-center table-responsive">
+                <div class="input-group  text-center" >                     
+                    <table id="tblRoomtype" class="table table-bordered"> 
+                        <thead> 
+                            <tr> 
+                                <th align="left" class="h2 productth text-primary">ประเภทห้อง</th> 
+                                <th align="left" class="h2 productth text-primary">ราคา</th> 
+                                <th align="left" class="h2 productth text-primary">แก้ไข</th>                        
+                            </tr> 
+                        </thead> 
+                        <tbody>
+
+                        </tbody> 
+                    </table>                   
+                </div>
+            </div>
+                @if (ViewBag.rts != null) 
+                { 
+                    @foreach (var rt in ViewBag.rts) 
+                    { 
+                        <script> 
+                            function gotomanage() { 
+                            setTimeout(function () { 
+                                location.reload(); 
+                            }, 2000); 
+                        } 
+                            function DeleteRT_@rt.Tid () { 
+                                window.location.href = '@Url.Action("DeleteRT", "Manage", new { tid = rt.Tid })' 
+                                gotomanage(); 
+                        } 
+                        </script> 
+                    } 
+                } 
     <br /> 
+                 
     <form id="rtForm"> 
-        <input name="did" hidden="hidden" value="@ViewBag.mydata" /> 
-        <div class="row"> 
-            <div class="col-md-6"> 
-                <div class="form-group row"> 
-                    <label class="text-center col-sm-8 col-form-label">ระบุจำนวนประเภทห้องที่ต้องการ</label> 
-                    <div class="col-sm-9"> 
-                        <div class="input-group"> 
-                            <input required id="myrt" name="myrt" type="text" class="form-control" maxlength="2" placeholder="ห้องมีทั้งหมดกี่ประเภท" aria-describedby="colored-addon3" autocomplete="off"> 
-                            <div class="input-group-append bg-info border-primary"> 
-                                <span class="input-group-text bg-transparent"> 
-                                    <i class="mdi mdi-table-column-plus-after mdi-24px text-white"></i> 
-                                </span> 
-                            </div> 
-                        </div> 
+         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin "> 
+                <div class="  card-statistics"> 
+                    <div class="mt-2 card-primary card-body-18  text-center"> 
+                        <input name="did" hidden="hidden" value="@ViewBag.mydata" />  
+                            <div class ="text-center " > 
+                                <p class="h4 mb-3 text-info">ระบุจำนวนประเภทห้องที่ต้องการ</p> 
+                                    <div class="col-sm-6 in-center" >
+                                        <div class="input-group  text-center" >   
+                                            <input type="text" maxlength="2" placeholder="ห้องมีทั้งหมดกี่ประเภท" aria-describedby="colored-addon3" autocomplete="off" class="input100 form-control" name="myrt" id="myrt" /> 
+                                            <span  class="col-sm-3 btn  btn-default  bg-info border-info text-white"><i class="mdi mdi-table-column-plus-after mdi-24px text-white"></i></span> 
+                                        </div>
+                                    </div>
+                            </div>
+      
+                            <div class="row mt-3"> 
+                                @for (int i = 1; i <= 10; i++) 
+                                { 
+                                    <div class="col-md-6"> 
+                                        <div id="rt_@i" class="form-group row" style="display: none"> 
+                                            <label class="col-sm-3 col-form-label aj">ประเภท @i</label> 
+                                            <div class="col-sm-5"> 
+                                                <div class="input-group"> 
+                                                    <input class="form-control" type="text" name="rt_type_@i" autocomplete="off" value="" placeholder="ระบุรายละเอียด"> 
+                                                </div> 
+                                            </div> 
+                                            <div class="col-sm-4"> 
+                                                <div class="input-group"> 
+                                                    <input class="form-control" type="text" name="rt_price_@i" autocomplete="off" value="" placeholder="ราคาห้อง"> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                } 
                     </div> 
-                </div> 
-            </div> 
-        </div> 
-        <div class="row"> 
-            @for (int i = 1; i <= 10; i++) 
-            { 
-                <div class="col-md-6"> 
-                    <div id="rt_@i" class="form-group row" style="display: none"> 
-                        <label class="col-sm-3 col-form-label aj">ประเภท @i</label> 
-                        <div class="col-sm-5"> 
-                            <div class="input-group"> 
-                                <input class="form-control" type="text" name="rt_type_@i" autocomplete="off" value="" placeholder="ระบุรายละเอียด"> 
-                            </div> 
-                        </div> 
-                        <div class="col-sm-4"> 
-                            <div class="input-group"> 
-                                <input class="form-control" type="text" name="rt_price_@i" autocomplete="off" value="" placeholder="ราคาห้อง"> 
-                            </div> 
-                        </div> 
-                    </div> 
-                </div> 
-            } 
-        </div> 
-        <div class=" text-center"> 
+                </div>
+            </div>
+        <div class=" text-center mt-3"> 
             <button type="button" onclick="AddRT()" class="btn btn-outline-success   btn-block btn-rounded  btn-3 btn-fw item-center"> 
                 <i class="mdi mdi-check"></i>บันทึก 
             </button> 
         </div> 
+       
     </form> 
     <script src="~/js/roomtype.js"></script> 
     <script> 
@@ -175,7 +180,7 @@
                         var rows = "<tr>" 
                         + "<td class='prtoducttd'>" + item.getType + "</td>" 
                         + "<td class='prtoducttd'>" + item.getPrice + "</td>" 
-                        + "<td class='prtoducttd'><a href='#rt_"+@ViewBag.mydata+"' onclick='DeleteRoomtype(" + item.getTid + ")'>ลบ</a></td>" 
+                        + "<td class='prtoducttd'><a class = 'badge badge-danger' href='#rt_"+@ViewBag.mydata+"' onclick='DeleteRoomtype(" + item.getTid + ")'>ลบ</a></td>" 
                     + "</tr>"; 
                     $('#tblRoomtype tbody').append(rows); 
                 }); 

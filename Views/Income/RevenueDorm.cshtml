@@ -10,30 +10,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <meta name="viewport" content="width=device-width" /> 
     <title>รายได้ย้อนหลัง</title> 
-    <meta charset="utf-8"> 
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 </head> 
 <body> 
     <div class="main-panel"> 
         <div class="content-wrapper"> 
             <div class="col-12 grid-margin"> 
-                <div class="card">                   
+                <div class="card">  
                       <canvas id="myChart"></canvas> 
+                     
+                </div> 
+
+                 <div class="card">  
+                
+                      <div id="chart-container"></div>
                 </div> 
             </div> 
-        
+            <input type="hidden" id="test1" value="@ViewBag.DormName"/>
         </div> 
-    </div> 
+    </div>
      
 </body> 
 </html> 
-
 <script> 
+     var dname = $("#test1").val(); 
      var ctx = document.getElementById("myChart"); 
      var myChart = new Chart(ctx, { 
          type: 'bar', 
          data: { 
              labels: [ 
-                 @foreach(var income in ViewBag.GetIncome) 
+                 @foreach (var income in ViewBag.GetIncome) 
                  { 
                      var year = income.Year; 
  
@@ -42,57 +48,57 @@
                          <text> 
                  "ม.ค. ปี @year", 
                         </text> 
-                     }else if(income.Month == "2") 
+                     } else if (income.Month == "2") 
                      { 
                          <text> 
                  "ก.พ. ปี @year", 
                         </text> 
-                     }else if(income.Month == "3") 
+                     } else if (income.Month == "3") 
                      { 
                          <text> 
                  "มี.ค. ปี @year", 
                         </text> 
-                     }else if(income.Month == "4") 
+                     } else if (income.Month == "4") 
                      { 
                          <text> 
                  "เม.ย. ปี @year", 
                         </text> 
-                     }else if(income.Month == "5") 
+                     } else if (income.Month == "5") 
                      { 
                          <text> 
                  "พ.ค. ปี @year", 
                         </text> 
-                     }else if(income.Month == "6") 
+                     } else if (income.Month == "6") 
                      { 
                          <text> 
                  "มิ.ย. ปี @year", 
                         </text> 
-                     }else if(income.Month == "7") 
+                     } else if (income.Month == "7") 
                      { 
                          <text> 
                  "ก.ค. ปี @year", 
                         </text> 
-                     }else if(income.Month == "8") 
+                     } else if (income.Month == "8") 
                      { 
                          <text> 
                  "ส.ค. ปี @year", 
                         </text> 
-                     }else if(income.Month == "9") 
+                     } else if (income.Month == "9") 
                      { 
                          <text> 
                  "ก.ย. ปี @year", 
                         </text> 
-                     }else if(income.Month == "10") 
+                     } else if (income.Month == "10") 
                      { 
                          <text> 
                  "ต.ค. ปี @year", 
                         </text> 
-                     }else if(income.Month == "11") 
+                     } else if (income.Month == "11") 
                      { 
                          <text> 
                  "พ.ย. ปี @year", 
                         </text> 
-                     }else if(income.Month == "12") 
+                     } else if (income.Month == "12") 
                      { 
                          <text> 
                  "ธ.ค. ปี @year", 
@@ -101,26 +107,82 @@
                  } 
              ], 
              datasets: [{ 
-                 label: '@ViewBag.Dorm_Name', 
+                 label: dname, 
                  data: [ 
                      @foreach(var income in ViewBag.GetIncome) 
                         { 
                             @income.Amount; 
                         } 
                  ], 
-                 backgroundColor: 'rgba(0, 128, 207, 0.4)', 
+                 backgroundColor: 'rgba(0, 150, 307, 0.7)', 
                  borderWidth: 1, 
                  fill: true 
              }] 
          }, 
          options: { 
+             legend: {
+                labels: {
+                    fontSize: 14, 
+                    fontFamily: "'Kanit', sans-serif", 
+                    fontColor: '#000',
+                    padding: 10
+                }
+        },
+            title: {
+                display: true,
+                text: 'ข้อมูลรายได้ย้อนหลัง',
+                fontSize: 25, 
+                fontFamily: "'Kanit', sans-serif", 
+                fontColor: '#979797',
+                lineHeight: 1.5
+        },
              scales: { 
-                 yAxes: [{ 
-                     ticks: { 
-                         beginAtZero: true 
-                     } 
-                 }] 
-             } 
+                 xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+                            labelString: 'เดือน',
+                            fontSize: 16, 
+                                fontFamily: "'Kanit', sans-serif", 
+                                fontColor: '#979797', 
+                                fontStyle: 'bold'
+                        },
+                        gridLines : {
+                            display : false
+                        },
+                        ticks: {
+                            fontSize: 13, 
+                            fontFamily: "'Kanit', sans-serif", 
+                            fontColor: '#000', 
+                            fontStyle: '500'
+                        }
+                                
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+                            labelString: 'รายได้',
+                            fontSize: 16, 
+                                fontFamily: "'Kanit', sans-serif", 
+                                fontColor: '#979797', 
+                                fontStyle: 'bold'
+						},ticks: {
+                                fontSize: 13, 
+                                fontFamily: "'Kanit', sans-serif", 
+                                fontColor: '#000', 
+                                fontStyle: '500'
+                                }
+					}]
+             },layout: {
+                padding: {
+                    left: 10,
+                    right: 20,
+                    top: 10,
+                    bottom: 10
+                }
+          }
          } 
      }); 
+
 </script>

@@ -28,16 +28,27 @@
 </body> 
 </html> 
 
- <script>const dataSource = {
+ <script>
+ const dataSource = {
   "chart": {
     "caption": "ข้อมูลรายได้ย้อนหลังรวม",
-    "subcaption": "มกราคม-มิถุนายน",
     "xaxisname": "เดือน",
     "yaxisname": "รายได้",
     "formatnumberscale": "1",
     "plottooltext": "<b>$dataValue</b> ข้อมูลรายได้ของหอ </b> $seriesname",
     "theme": "fusion",
-    "drawcrossline": "2"
+    "drawcrossline": "1",
+    "baseFont": "'Kanit', sans-serif",
+    "baseFontSize": "14",
+    "baseFontColor": "#0066cc",
+    "chartLeftMargin": "25",
+    "chartTopMargin": "40",
+    "chartRightMargin": "40",
+    "chartBottomMargin": "40",
+    "plotHighlightEffect": "fadeout|color=#7f7f7f, alpha=60",
+    "legendItemFontSize": "15",
+    "legendItemFont": "'Kanit', sans-serif"
+ 
   },
   "categories": [
     {
@@ -62,26 +73,6 @@
   ],
   "dataset": [
     {
-      "seriesname": "ธนางวงศ์",
-      "data": [
-        {
-          "value": "125000"
-        },
-        {
-          "value": "300000"
-        },
-        {
-          "value": "480000"
-        },
-        {
-          "value": "350000"
-        },
-        {
-          "value": "150000"
-        }
-      ]
-    },
-    {
       "seriesname": "วงศ์ศิริ",
       "data": [
         {
@@ -100,6 +91,25 @@
           "value": "140000"
         }
       ]
+    },{
+      "seriesname": "ดีดีแมนชัน",
+      "data": [
+        {
+          "value": "407000"
+        },
+        {
+          "value": "250000"
+        },
+        {
+          "value": "150000"
+        },
+        {
+          "value": "540000"
+        },
+        {
+          "value": "340000"
+        }
+      ]
     }
     
   ]
@@ -110,7 +120,7 @@ FusionCharts.ready(function() {
       type: "mscolumn2d",
       renderAt: "chart-container",
       width: "100%",
-      height: "100%",
+      height: "500",
       dataFormat: "json",
       dataSource
    }).render();
