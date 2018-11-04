@@ -1268,7 +1268,7 @@
                                 } 
  
                             } 
-                                 <button id="meter" class="btn-outline-primary col-lg-12">กรอก ค่าน้ำ ค่าไฟ</button></div> 
+                                 <button id="meter" class="btn-outline-primary col-lg-12">อัพเดทมิเตอร์</button></div> 
 
                         </div> 
                     </div> 
@@ -1420,23 +1420,33 @@
                         <div class="card-body2" id="edit_@renter.Rid" style="display: none"> 
                             <form class="form-sample" asp-controller="Renter" asp-action="EditRenter" method="POST" enctype="multipart/form-data"> 
                                 <h3 class="text-center text-success"> แก้ไขข้อมูลผู้เช่า </h3> 
-                                 @if (ViewBag.roomtypes != null) 
+                                 @foreach (var rooms in ViewBag.rooms) 
                                 { 
-                                    <div class="mt-5 row">
-                                        <div class="col-md-12"> 
-                                    <div class="form-group row"> 
-                                        <label for="exampleSelect1" class="col-sm-2 col-form-label">ประเภทห้อง</label> 
-                                        <div class="col-sm-10">
-                                        <select class="form-control " id="exampleSelect1" name="tid"> 
-                                            @foreach (var rt in ViewBag.roomtypes) 
-                                            { 
-                                                <option value="@rt.Tid">ประเภท : @rt.Type    ราคา : @rt.Price</option> 
-                                            } 
-                                        </select> 
-                                        </div>
-                                    </div>
-                                    </div>
-                                    </div> 
+                                    if (rooms.Rid == renter.Rid) 
+                                    { 
+                                        <div class="mt-5 row"> 
+                                            <div class="col-md-12"> 
+                                                <div class="form-group row"> 
+                                                    <label for="exampleSelect1" class="col-sm-2 col-form-label">ประเภทห้อง</label> 
+                                                    <div class="col-sm-10"> 
+                                                        <select class="form-control " id="exampleSelect1" name="tid"> 
+                                                            @foreach (var rt in ViewBag.roomtypes) 
+                                                            { 
+                                                                if (rooms.Tid == rt.Tid) 
+                                                                { 
+                                                                    <option selected="selected" value="@rt.Tid">ประเภท : @rt.Type    ราคา : @rt.Price</option> 
+                                                                } 
+                                                                else 
+                                                                { 
+                                                                    <option value="@rt.Tid">ประเภท : @rt.Type    ราคา : @rt.Price</option> 
+                                                                } 
+                                                            } 
+                                                        </select> 
+                                                    </div> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    } 
                                 } 
                                 <div class="row"> 
                                     <div class="col-md-6"> 
@@ -1444,7 +1454,15 @@
                                             
                                             <h5 class="col-sm-4 col-form-label"><i class="mr-1 mt-2 mdi mdi-account-check text-primary mdi-24px"></i>ชื่อ</h5> 
                                             <div class="col-sm-8"> 
-                                                <input value="@renter.RenName" name="renname" type="text" class="form-control" /> 
+                                                @if (renter.RenName == null) 
+                                                { 
+                                                    <input autocomplete="off" id="renname_@renter.Rid" value="" name="renname" type="text" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่ชื่อ')" oninput="setCustomValidity('')" /> 
+                                                } 
+                                                else 
+                                                { 
+                                                    <input autocomplete="off" id="renname_@renter.Rid" value="@renter.RenName" name="renname" type="text" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่ชื่อ')" oninput="setCustomValidity('')" /> 
+ 
+                                                } 
                                             </div> 
                                         </div> 
                                     </div> 
@@ -1452,7 +1470,7 @@
                                         <div class="form-group row"> 
                                             <h5 class="col-sm-4 col-form-label"><i class="mr-1 mdi mdi-account-edit text-primary mdi-24px"></i>นามสกุล</h5> 
                                             <div class="col-sm-8"> 
-                                                <input value="@renter.RenSurename" name="RenSurename" type="text" class="form-control" /> 
+                                                <input autocomplete="off" id="rensurname" value="@renter.RenSurename" name="RenSurename" type="text" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่นามสกุล')" oninput="setCustomValidity('')" /> 
                                             </div> 
                                         </div> 
                                     </div> 
@@ -1462,7 +1480,7 @@
                                         <div class="form-group row"> 
                                             <label class="col-sm-4 col-form-label"><i class="mr-1 mdi mdi-emoticon text-primary mdi-24px "></i>อายุ</label> 
                                             <div class="col-sm-8"> 
-                                                <input value="@renter.RenAge" name="RenAge" type="text" class="form-control" /> 
+                                                <input autocomplete="off" id="renage" value="@renter.RenAge" name="RenAge" type="text" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" /> 
                                             </div> 
                                         </div> 
                                     </div> 
@@ -1470,7 +1488,7 @@
                                         <div class="form-group row"> 
                                             <label class="col-sm-4 col-form-label"><i class="mr-1 mdi mdi-cellphone-android text-primary mdi-24px "></i>เบอร์โทร</label> 
                                             <div class="col-sm-8"> 
-                                                <input value="@renter.RenTel" name="RenTel" type="text" class="form-control" /> 
+                                                <input autocomplete="off" id="rentel" value="@renter.RenTel" name="RenTel" type="tel" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่เบอร์โทรศัพท์')" oninput="setCustomValidity('')" /> 
                                             </div> 
                                         </div> 
                                     </div> 
@@ -1481,7 +1499,7 @@
                                             <label class="col-sm-4 col-form-label">มิเตอร์น้ำเริ่มต้น</label> 
                                              <div class="col-sm-8"> 
                                                    <div class="input-group ">
-                                                    <input value="@renter.StartWaterMeter" name="StartWaterMeter" type="text" class="form-control " > 
+                                                    <input autocomplete="off" id="meterwater" value="@renter.StartWaterMeter" name="StartWaterMeter" type="text" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')"> 
                                                     <span class="input-group-btn">                                    
                                                         <div class=" text-preview-input">                                                           
                                                             <span class="glyphicon-folder-open"></span>                                                           
@@ -1498,11 +1516,11 @@
                                             <label class="col-sm-4 col-form-label">มิเตอร์ไฟเริ่มต้น</label> 
                                              <div class="col-sm-8"> 
                                                    <div class="input-group ">
-                                                    <input value="@renter.StartElecMeter" name="StartElecMeter" type="text" class="form-control " > 
+                                                    <input autocomplete="off" id="meterelec" value="@renter.StartElecMeter" name="StartElecMeter" type="text" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')"> 
                                                     <span class="input-group-btn">                                    
                                                         <div class=" text-preview-input">                                                           
                                                             <span class="glyphicon-folder-open"></span>                                                           
-                                                            <span  class="btn btn-default  bg-primary border-primary text-preview-input img-title "><i  class="mdi mdi-water mdi-24px text-white"></i></span>     
+                                                            <span  class="btn btn-default  bg-primary border-primary text-preview-input img-title "><i  class="mdi mdi-flash mdi-24px text-white"></i></span>     
                                                         </div>
                                                     </span>
                                                 </div>
@@ -1514,15 +1532,15 @@
                                 <div class = "row">
                                      <div class="col-md-6"> 
                                         <div class="form-group row"> 
-                                            <label class="col-sm-4 col-form-label">ไฟล์สัญญา</label> 
+                                            <label id="lb1" class="col-sm-4 col-form-label">ไฟล์สัญญาเช่า</label> 
                                             <div class="col-sm-8"> 
                                                    <div class="input-group ">
-                                                    <input value ="@renter.RenAgreement" type="text" class="form-control file-preview-filename" > 
+                                                    <input disabled value="@renter.RenAgreement" type="text" class="form-control file-preview-filename"> 
                                                     <span class="input-group-btn">                                    
                                                         <div class=" file-preview-input">                                                           
                                                             <span class="glyphicon-folder-open"></span>                                                           
-                                                            <span id="hov" class="btn btn-default  bg-primary border-primary file-preview-input img-title "><i  class="mdi mdi-file mdi-24px text-white"></i></span>
-                                                            <input  type="file"  name="agreement" multiple/> 
+                                                            <span id="hov" class="btn btn-default  bg-primary border-primary file-preview-input img-title "><i class="mdi mdi-file mdi-24px text-white"></i></span> 
+                                                            <input type="file" name="agreement" multiple /> 
                                                         </div>
                                                     </span>
                                                 </div>
@@ -1534,12 +1552,12 @@
                                             <label class="col-sm-4 col-form-label">บัตรประชาชน</label> 
                                             <div class="col-sm-8"> 
                                                 <div class="input-group ">
-                                                    <input value="@renter.RenSsnPicture" type="text" class="form-control image-preview-filename" > 
+                                                    <input disabled value="@renter.RenSsnPicture" type="text" class="form-control image-preview-filename"> 
                                                     <span class="input-group-btn">                                    
                                                         <div class=" image-preview-input">                                                           
                                                             <span class="glyphicon-folder-open"></span>                                                           
-                                                            <span id="hov" class="btn btn-default  bg-primary border-primary image-preview-input img-title "><i id ="icon" class="mdi mdi-image mdi-24px text-white"></i></span>
-                                                            <input  type="file" accept="" name="ssn"/> 
+                                                            <span id="hov" class="btn btn-default  bg-primary border-primary image-preview-input img-title "><i id="icon" class="mdi mdi-image mdi-24px text-white"></i></span> 
+                                                            <input type="file" accept="" name="ssn" /> 
                                                         </div>
                                                     </span>
                                                 </div>
@@ -1551,7 +1569,7 @@
                                 <input name="Rid" value="@renter.Rid" hidden="hidden" /> 
                                 <input name="RenId" value="@renter.RenId" hidden="hidden" /> 
                                 <input value="@ViewBag.did" name="did" hidden="hidden" /> 
-                                <button type="submit" class="btn btn-1 btn-success btn-rounded btn-block btn-fw">บันทึก</button> 
+                                <button id="saving_@renter.Rid" type="submit" class="btn btn-1 btn-success btn-rounded btn-block btn-fw">บันทึก</button> 
                                 <button id="infobutton_@renter.Rid" type="button" class="btn btn-1 btn-danger btn-rounded btn-block btn-fw" onclick="info_@renter.Rid ()" style="display: none">ย้อนกลับ</button>
 
                                  
@@ -1564,14 +1582,50 @@
             </div> 
     </div> 
         <script> 
+
+            var myRid;
+            var mystatus;
+            $(".close").click(function () {
+                window.location.href = '/Renter/ShowRoom?did=@ViewBag.did';
+            });
+
+            $("#saving_@renter.Rid").click(function () {
+                var name = $("#renname").val();
+                var surname = $("#rensurname").val();
+                var age = $("#renage").val();
+                var tel = $("#rentel").val();
+                var water = $("#meterwater").val();
+                var elec = $("#meterelec").val();
+                     if (mystatus == 0) {
+                                  $.ajax({
+                                    type: "post",
+                                    url: "/Renter/set1Status",
+                                    data: myRid,
+                                    success: function (result) {
+                                             if (result == "Fail") {
+                                                    alert("เกิดปัญหาในการเชื่อมต่อระบบ2");
+                                                    $("#checkbox_on_@renter.Rid").prop("checked", true);
+                                             } else {
+
+                                             }
+                                    }
+                                  });               
+                            } else if (mystatus == 1) {
+ 
+                            }
+                
+            });
                 function info_@renter.Rid () { 
-                  
+                    var data = $("#mystatus_@renter.Rid").serialize();
+                    myRid = data;
                     $("#edit_@renter.Rid").hide("fast"); 
                     $("#editbutton_@renter.Rid").show("fast"); 
                     $("#infobutton_@renter.Rid").hide("fast"); 
                     $("#viewinfo_@renter.Rid").show("fast"); 
                 } 
                 function edit_@renter.Rid () { 
+                    var data = $("#mystatus_@renter.Rid").serialize();
+                    myRid = data;
                     $("#viewinfo_@renter.Rid").hide("fast"); 
                     $("#editbutton_@renter.Rid").hide("fast"); 
                     $("#infobutton_@renter.Rid").show("fast"); 
@@ -1580,28 +1634,31 @@
             function check_on_@renter.Rid () { 
                 if (document.getElementById('checkbox_on_@renter.Rid').checked == true) { 
                     var data = $("#mystatus_@renter.Rid").serialize();
+                    myRid = data;
                     $.ajax({
                         type: "post",
-                        url: "/Renter/set1Status",
+                        url: "/Renter/checkStatus",
                         data: data,
                         success: function (result) {
                             if (result == "Fail") {
-                                alert("เกิดปัญหาในการเชื่อมต่อระบบ");
+                                alert("เกิดปัญหาในการเชื่อมต่อระบบ1");
                                 $("#checkbox_on_@renter.Rid").prop("checked", true);
-                            } else {
+                            } else { mystatus = result;
+                            }
+                        }
+                    });
                                 $("#renter_on_@renter.Rid").hide(); 
                                 $("#renter_off_@renter.Rid").show(); 
                                 $("#checkbox_off_@renter.Rid").prop("checked", true);
                                 window.location.href = '#@renter.Rid';
                                 edit_@renter.Rid (); 
-                            }
-                        }
-                    }) 
                 } 
             } 
+
             function check_off_@renter.Rid () { 
                 if (document.getElementById('checkbox_off_@renter.Rid').checked == false) {
                     var data = $("#mystatus_@renter.Rid").serialize();
+                    myRid = data;
                     $.ajax({
                         type: "post",
                         url: "/Renter/set0Status",

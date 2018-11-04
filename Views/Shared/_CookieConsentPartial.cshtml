@@ -5,3 +5,67 @@
     var showBanner = !consentFeature?.CanTrack ?? false;
     var cookieString = consentFeature?.CreateConsentCookie();
 }
+ 
+@if (showBanner) 
+{ 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" /> 
+    <link rel="stylesheet" href="~/css/site.css" /> 
+ 
+    <nav id="cookieConsent" class="navbar navbar-default navbar-fixed-top" role="alert"> 
+        <div class="container"> 
+            <div class="collapse navbar-collapse"> 
+                <p class="navbar-text" style="font-size:300%;"> 
+                    ใช้พื้นที่นี้เพื่อสรุปข้อมูลส่วนบุคคลและนโยบายการใช้คุกกี้ของคุณ กดยอมรับเพื่อเข้าใช้งานเว็บไซต์ 
+                </p> 
+                <div class="navbar-expand-lg"> 
+                    <button style="font-size:300%;" type="button" class="btn btn-default navbar-btn" data-cookie-string="@cookieString">ยอมรับ</button> 
+                </div> 
+            </div> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+            <br /> 
+        </div> 
+    </nav> 
+    <script> 
+        (function () { 
+            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) { 
+                document.cookie = el.target.dataset.cookieString; 
+                document.querySelector("#cookieConsent").classList.add("hidden"); 
+                location.reload(); 
+            }, false); 
+        })(); 
+    </script> 
+}

@@ -12,6 +12,8 @@ using System.Linq;
 
 namespace MASdemo.Controllers
 {
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+
     public class ManageController : Controller
     {
         private readonly IHostingEnvironment he;
@@ -1746,22 +1748,22 @@ namespace MASdemo.Controllers
             {
                 return RedirectToAction("Login", "User");
             }
-            MySqlConnection mysqlconnect = new MySqlConnection("Server = localhost; User Id = root; Password=; Database=masdatabase; SslMode=none; CharacterSet=utf8;");
-            
-            string querycal = "DELETE c FROM cal_info_room c INNER JOIN room r on c.RID = r.RID WHERE r.DID = "+Id_dorm+" "; 
+            MySqlConnection mysqlconnect = new MySqlConnection("server=localhost;database=masdatabase;user=root;pwd=; SslMode=none; CharacterSet=utf8;");
+
+            string querycal = "DELETE c FROM cal_info_room c INNER JOIN room r on c.RID = r.RID WHERE r.DID = " + Id_dorm + " ";
             string query = "DELETE FROM `renter` WHERE Ren_Id like @instemail ";
             string query2 = "DELETE FROM `room` WHERE did = '" + Id_dorm + "' ";
             string query1 = "DELETE FROM `roomtype` WHERE did = '" + Id_dorm + "' ";
             string query3 = "DELETE FROM `set_floor_room` WHERE did = '" + Id_dorm + "' ";
             string query4 = "DELETE FROM `dorm` WHERE did = '" + Id_dorm + "' and oid = " + HttpContext.Session.GetInt32("Oid") + " ";
 
-            mysqlconnect.Open(); 
-            MySqlCommand commm1 = new MySqlCommand(querycal); 
-            commm1.Connection = mysqlconnect; 
-            MySqlDataReader readerm1 = commm1.ExecuteReader(); 
-            mysqlconnect.Close(); 
-            
- 
+            mysqlconnect.Open();
+            MySqlCommand commm1 = new MySqlCommand(querycal);
+            commm1.Connection = mysqlconnect;
+            MySqlDataReader readerm1 = commm1.ExecuteReader();
+            mysqlconnect.Close();
+
+
             mysqlconnect.Open();
             MySqlCommand comm = new MySqlCommand(query);
             comm.Parameters.AddWithValue("@instemail", "%" + Id_dorm + "%");

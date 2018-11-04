@@ -8,6 +8,8 @@ using MySql.Data.MySqlClient;
 
 namespace MASdemo.Controllers
 {
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+
     public class UserController : Controller
     {
         [HttpGet]
@@ -99,7 +101,7 @@ namespace MASdemo.Controllers
             {
                 string result = "Fail";
                 string passDb = "";
-                string ConnectionStringMysql = "Server=localhost;database=masdatabase;user id=root;pwd=;sslmode=none";
+                string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
                 MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
                 mysqlcon.Open();
                 string query = "SELECT Password FROM owner WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + "";
@@ -111,7 +113,6 @@ namespace MASdemo.Controllers
                     passDb = reader["Password"].ToString();
                 }
                 mysqlcon.Close();
-
                 string enpassword = Encryption.EncryptedPass(password);
                 if (enpassword != passDb)
                 {

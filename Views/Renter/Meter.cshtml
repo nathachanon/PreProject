@@ -20,13 +20,14 @@
                         <h1>กรอกข้อมูลการใช้น้ำ - ไฟ</h1> 
                         <div id="months"> 
                             <p>เลือกเดือนที่ต้องการกรอก</p> 
-                            <input type="month" class="input100" name="month" id="month" value="month" /> 
+                            <input type="month" class="input100" name="month" id="month"  /> 
                             <button id="next1" class="btn-outline-primary">ตกลง</button> 
  
                         </div> 
                         <br /> 
                         <br /> 
                         <div style="display: none;" id="div1"> 
+                          <button id="goback" class="btn-outline-primary">กลับไปเลือกเดือนใหม่</button> 
                             <h3 id="showmonth"></h3> 
                             <h3>ห้องที่มีผู้เช่า</h3> 
                             <div id="divadds"></div> 
@@ -72,9 +73,7 @@
         
         </div> 
     </div> 
-     
+    <script src="~/js/renter/Meter.js"></script> 
 </body> 
 </html> 
-<script src="~/js/Meter.js"></script>
-
 

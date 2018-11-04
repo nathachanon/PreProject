@@ -1,6 +1,6 @@
  
 @{ 
-    Layout = "_Layout"; 
+    Layout = "_Layout";
 } 
  
 <!DOCTYPE html> 
@@ -27,56 +27,100 @@
 </body> 
 </html> 
 
- <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'bar',
-    text: 'aaaaa',
-
-    // The data for our dataset
-    data: {
-         labels: ["ม.ค", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค."],
-        datasets: [{
-          label: 'ธนาวงศ์',
-          data: [150050, 150000, 100000, 410000, 125000, 1500, 120344],
-          backgroundColor: 'rgba(0, 128, 207, 0.4)',
-          borderWidth: 1,
-          fill: true
-        }]     
-    },
-
-    // Configuration options go here
-    options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        scales: {
-          yAxes: [{
-            display: true
-          }],
-          xAxes: [{
-            display: true,
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        },
-        legend: {
-          display: false
-        },
-        elements: {
-          point: {
-            radius: 3
-          }
-        },
-        layout: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0
-          }
-        },
-        stepsize: 1}
-});
+<script> 
+     var ctx = document.getElementById("myChart"); 
+     var myChart = new Chart(ctx, { 
+         type: 'bar', 
+         data: { 
+             labels: [ 
+                 @foreach(var income in ViewBag.GetIncome) 
+                 { 
+                     var year = income.Year; 
+ 
+                     if (income.Month == "1") 
+                     { 
+                         <text> 
+                 "ม.ค. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "2") 
+                     { 
+                         <text> 
+                 "ก.พ. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "3") 
+                     { 
+                         <text> 
+                 "มี.ค. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "4") 
+                     { 
+                         <text> 
+                 "เม.ย. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "5") 
+                     { 
+                         <text> 
+                 "พ.ค. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "6") 
+                     { 
+                         <text> 
+                 "มิ.ย. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "7") 
+                     { 
+                         <text> 
+                 "ก.ค. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "8") 
+                     { 
+                         <text> 
+                 "ส.ค. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "9") 
+                     { 
+                         <text> 
+                 "ก.ย. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "10") 
+                     { 
+                         <text> 
+                 "ต.ค. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "11") 
+                     { 
+                         <text> 
+                 "พ.ย. ปี @year", 
+                        </text> 
+                     }else if(income.Month == "12") 
+                     { 
+                         <text> 
+                 "ธ.ค. ปี @year", 
+                        </text> 
+                     } 
+                 } 
+             ], 
+             datasets: [{ 
+                 label: '@ViewBag.Dorm_Name', 
+                 data: [ 
+                     @foreach(var income in ViewBag.GetIncome) 
+                        { 
+                            @income.Amount; 
+                        } 
+                 ], 
+                 backgroundColor: 'rgba(0, 128, 207, 0.4)', 
+                 borderWidth: 1, 
+                 fill: true 
+             }] 
+         }, 
+         options: { 
+             scales: { 
+                 yAxes: [{ 
+                     ticks: { 
+                         beginAtZero: true 
+                     } 
+                 }] 
+             } 
+         } 
+     }); 
 </script>

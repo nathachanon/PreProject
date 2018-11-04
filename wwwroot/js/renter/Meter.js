@@ -7,7 +7,13 @@ $(document).ready(function () {
     document.getElementById("month").value = year + "-" + month;
 });
 $("#goback").click(function () {
-    alert("1");
+    $("#roomid").val('');
+    $("#water").val('');
+    $("#elec").val('');
+    document.getElementById("divadds").innerHTML = '';
+    document.getElementById("showmonth").innerHTML = '';
+    $("#div1").fadeOut("Slow");
+    $("#months").fadeIn("Slow");
 });
 $("#next1").click(function () {
     var datemonth = $("#month").val();
@@ -93,9 +99,9 @@ $("#add").click(function () {
                             showConfirmButton: false,
                             timer: 3000
                         });
-                        $("#roomid").val(0);
-                        $("#water").val(0);
-                        $("#elec").val(0);
+                        $("#roomid").val('');
+                        $("#water").val('');
+                        $("#elec").val('');
                     }
                 }
             })
@@ -123,7 +129,7 @@ function getroom(a) {
                     showConfirmButton: false,
                     timer: 3000
                 });
-                $("#roomid").val(0);
+                $("#roomid").val('');
                 $('#water').attr('data-content', "กรุณาเลือกห้องก่อน");
                 $('#elec').attr('data-content', "กรุณาเลือกห้องก่อน");
             } else {

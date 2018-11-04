@@ -12,7 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 
 namespace MASdemo.Controllers
+
 {
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+
     public class RenterController : Controller
     {
         private readonly IHostingEnvironment he;
@@ -263,7 +266,7 @@ namespace MASdemo.Controllers
         public IActionResult getRenter(int oid)
         {
             int renterroom = 0;
-            string ConnectionStringMysql = "Server=localhost;database=masdatabase;user id=root;pwd=;sslmode=none";
+            string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
             MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
             mysqlcon.Open();
             string query = "SELECT COUNT(r.RID) FROM owner o INNER JOIN dorm d ON d.OID = o.Oid INNER JOIN room r ON r.DID = d.DID WHERE o.Oid = '" + oid + "' AND r.Status = 1";
@@ -281,7 +284,7 @@ namespace MASdemo.Controllers
         public IActionResult getRenter0(int oid)
         {
             int renterroom = 0;
-            string ConnectionStringMysql = "Server=localhost;database=masdatabase;user id=root;pwd=;sslmode=none";
+            string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
             MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
             mysqlcon.Open();
             string query = "SELECT COUNT(r.RID) FROM owner o INNER JOIN dorm d ON d.OID = o.Oid INNER JOIN room r ON r.DID = d.DID WHERE o.Oid = '" + oid + "' AND r.Status = 0";
@@ -307,7 +310,7 @@ namespace MASdemo.Controllers
                 HttpContext.Session.SetInt32("isDid", did);
                 int countdid = 0;
                 ViewBag.myName = HttpContext.Session.GetString("Name");
-                string ConnectionStringMysql = "Server=localhost;database=masdatabase;user id=root;pwd=;sslmode=none";
+                string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
                 MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
                 mysqlcon.Open();
                 string query = "SELECT COUNT(*) , o.Oid , d.DID FROM owner o INNER JOIN dorm d ON d.OID = o.Oid WHERE o.Oid = " + HttpContext.Session.GetInt32("Oid") + " AND d.DID = " + did + "";
@@ -336,7 +339,7 @@ namespace MASdemo.Controllers
             var result = new { Result = "Fail", Water = 0, Elec = 0 };
             if (datemonth != null & datemonth_old != null & roomid != 0)
             {
-                string ConnectionStringMysql = "Server=localhost;database=masdatabase;user id=root;pwd=;sslmode=none";
+                string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
                 MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
                 mysqlcon.Open();
                 string f1 = "SELECT Count(*) FROM owner o INNER JOIN dorm d ON d.OID = o.Oid " +
@@ -407,7 +410,7 @@ namespace MASdemo.Controllers
 
         public IActionResult getRenterMeter2()
         {
-            string ConnectionStringMysql = "Server=localhost;database=masdatabase;user id=root;pwd=;sslmode=none";
+            string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
             MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
             mysqlcon.Open();
             string query = "SELECT o.Oid ,d.DID, r.RoomNumber, r.Status FROM owner o INNER JOIN dorm d ON d.OID = o.Oid INNER JOIN room r ON r.DID = d.DID WHERE o.Oid = " + HttpContext.Session.GetInt32("Oid") + " AND d.DID = " + HttpContext.Session.GetInt32("isDid") + " AND r.Status = 1";
@@ -428,7 +431,7 @@ namespace MASdemo.Controllers
 
         public IActionResult AddCal(int roomid, int meterwater, int meterelec, string datemonth, int oldwater, int oldelec)
         {
-            string ConnectionStringMysql = "Server=localhost;database=masdatabase;user id=root;pwd=;sslmode=none";
+            string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
             MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
             string result = "Fail";
             int waterprice = 0;
@@ -471,6 +474,28 @@ namespace MASdemo.Controllers
             com3.ExecuteNonQuery();
             mysqlcon.Close();
             result = "OK";
+            return Json(result);
+        }
+
+        public IActionResult checkStatus(int status)
+        {
+            string result = "Fail";
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                var context = new masdatabaseContext();
+                if (status != 0)
+                {
+                    var checkroom = context.Room.Where(x => x.Rid == status).SingleOrDefault();
+                    if (checkroom != null)
+                    {
+                        result = checkroom.Status;
+                    }
+                }
+            }
             return Json(result);
         }
     }

@@ -16,16 +16,18 @@
 </head> 
 <body> 
     <a class="close" href="#" onclick="reloads()">&times;</a> 
-    <table id="tblRoomtype" class="table table-bordered table-striped table-responsive table-hover"> 
+    <div class="card-body text-center">
+    <table id="tblRoomtype" class="table  table-striped table-responsive "> 
         <thead> 
             <tr> 
-                <th align="left" class="productth">ประเภทห้อง</th> 
-                <th align="left" class="productth">ราคา</th> 
-                <th align="left" class="productth">ปรับปรุง</th> 
+                <th align="left" class="h3 productth text-danger">ประเภทห้อง</th> 
+                <th align="left" class="h3 productth text-danger">ราคา</th> 
+                <th align="left" class="h3 productth text-danger">ปรับปรุง</th> 
             </tr> 
         </thead> 
         <tbody></tbody> 
     </table> 
+    </div>
     @if (ViewBag.rts != null) 
     { 
         @foreach (var rt in ViewBag.rts) 
@@ -49,7 +51,7 @@
         <div class="row"> 
             <div class="col-md-6"> 
                 <div class="form-group row"> 
-                    <label class="col-sm-8 col-form-label">ระบุจำนวนประเภทห้องที่ต้องการ</label> 
+                    <label class="text-center col-sm-8 col-form-label">ระบุจำนวนประเภทห้องที่ต้องการ</label> 
                     <div class="col-sm-9"> 
                         <div class="input-group"> 
                             <input required id="myrt" name="myrt" type="text" class="form-control" maxlength="2" placeholder="ห้องมีทั้งหมดกี่ประเภท" aria-describedby="colored-addon3" autocomplete="off"> 

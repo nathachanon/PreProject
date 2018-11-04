@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 
 namespace MASdemo.Controllers
 {
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+
     public class StatusCodeController : Controller
     {
         public IActionResult Index()
