@@ -1795,7 +1795,8 @@ namespace MASdemo.Controllers
             MySqlDataReader reader4 = comm4.ExecuteReader();
             mysqlconnect.Close();
 
-            return RedirectToAction("ManageDorm", "Manage");
+            string result = "OK";
+            return Json(result);
         }
 
         public IActionResult EditDorm(AddDorm ad, IFormFile picture, int Id_dorm)

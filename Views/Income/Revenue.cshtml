@@ -7,8 +7,8 @@
  
 <html> 
 <head> 
-  <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
-  <script src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>   
+    <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script> 
+    <script src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script> 
     <meta name="viewport" content="width=device-width" /> 
     <title>รายได้ย้อนหลัง</title> 
     <meta charset="utf-8"> 
@@ -16,113 +16,189 @@
 <body> 
     <div class="main-panel"> 
         <div class="content-wrapper"> 
-            
-              <div id="chart-container"></div>
-                 
-                </div> 
-                </div>
-          
-        
-  
-     
+ 
+            <div id="chart-container"></div> 
+ 
+        </div> 
+    </div> 
+    @foreach (var did in ViewBag.did) 
+    { 
+            <text> 
+                <input type="hidden" id="@did.Did" value="@did.Name" /> 
+            </text> 
+    } 
+ 
+ 
+ 
 </body> 
 </html> 
-
- <script>
- const dataSource = {
-  "chart": {
-    "caption": "ข้อมูลรายได้ย้อนหลังรวม",
-    "xaxisname": "เดือน",
-    "yaxisname": "รายได้",
-    "formatnumberscale": "1",
-    "plottooltext": "<b>$dataValue</b> ข้อมูลรายได้ของหอ </b> $seriesname",
-    "theme": "fusion",
-    "drawcrossline": "1",
-    "baseFont": "'Kanit', sans-serif",
-    "baseFontSize": "14",
-    "baseFontColor": "#0066cc",
-    "chartLeftMargin": "25",
-    "chartTopMargin": "40",
-    "chartRightMargin": "40",
-    "chartBottomMargin": "40",
-    "plotHighlightEffect": "fadeout|color=#7f7f7f, alpha=60",
-    "legendItemFontSize": "15",
-    "legendItemFont": "'Kanit', sans-serif"
  
-  },
-  "categories": [
-    {
-      "category": [
-        {
-          "label": "ม.ค."
-        },
-        {
-          "label": "ก.พ."
-        },
-        {
-          "label": "มี.ค."
-        },
-        {
-          "label": "เม.ย."
-        },
-        {
-          "label": "มิ.ย."
-        }
-      ]
-    }
-  ],
-  "dataset": [
-    {
-      "seriesname": "วงศ์ศิริ",
-      "data": [
-        {
-          "value": "307000"
-        },
-        {
-          "value": "150000"
-        },
-        {
-          "value": "350000"
-        },
-        {
-          "value": "340000"
-        },
-        {
-          "value": "140000"
-        }
-      ]
-    },{
-      "seriesname": "ดีดีแมนชัน",
-      "data": [
-        {
-          "value": "407000"
-        },
-        {
-          "value": "250000"
-        },
-        {
-          "value": "150000"
-        },
-        {
-          "value": "540000"
-        },
-        {
-          "value": "340000"
-        }
-      ]
-    }
-    
-  ]
-};
-
-FusionCharts.ready(function() {
-   var myChart = new FusionCharts({
-      type: "mscolumn2d",
-      renderAt: "chart-container",
-      width: "100%",
-      height: "500",
-      dataFormat: "json",
-      dataSource
-   }).render();
-});
+<script> 
+    @foreach (var did in ViewBag.did) 
+     { 
+        <text> 
+                var dname_@did.Did = $("#@did.Did").val(); 
+        </text> 
+     } 
+                const dataSource = { 
+        "chart": { 
+                    "caption": "ข้อมูลรายได้ย้อนหลังรวม", 
+            "xaxisname": "เดือน", 
+            "yaxisname": "รายได้", 
+            "formatnumberscale": "1", 
+            "plottooltext": "<b>$dataValue</b> ข้อมูลรายได้ของหอ </b> $seriesname", 
+            "theme": "fusion", 
+            "drawcrossline": "1", 
+            "baseFont": "'Kanit', sans-serif", 
+            "baseFontSize": "14", 
+            "baseFontColor": "#0066cc", 
+            "chartLeftMargin": "25", 
+            "chartTopMargin": "40", 
+            "chartRightMargin": "40", 
+            "chartBottomMargin": "40", 
+            "plotHighlightEffect": "fadeout|color=#7f7f7f, alpha=60", 
+            "legendItemFontSize": "15", 
+            "legendItemFont": "'Kanit', sans-serif" 
+ 
+        }, 
+        "categories": [ 
+            { 
+                "category": [ 
+                    @foreach (var incomeall in ViewBag.incomeall) 
+                    { 
+                        var isdid=1; 
+ 
+                        @foreach (var did in ViewBag.did) 
+                        { 
+                            isdid = did.Did; 
+                        } 
+                        var year = incomeall.Year; 
+ 
+                        if(incomeall.Did == isdid) 
+                        { 
+                            if (incomeall.Month == "1") 
+                            { 
+                         <text> 
+                            { 
+                                "label" : "ม.ค. ปี @year", 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "2") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "ก.พ. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "3") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "มี.ค. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "4") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "เม.ย. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "5") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "พ.ค. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "6") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "มิ.ย. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "7") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "ก.ค. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "8") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "ส.ค. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "9") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "ก.ย. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "10") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "ต.ค. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "11") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "พ.ย. ปี @year" 
+                            }, 
+                        </text> 
+                     } else if (incomeall.Month == "12") 
+                     { 
+                         <text> 
+                            { 
+                                "label" : "ธ.ค. ปี @year" 
+                            }, 
+                        </text> 
+                     } 
+                        } 
+                    } 
+                ] 
+            } 
+        ], 
+        "dataset": [ 
+            @foreach(var did in ViewBag.did) 
+            { 
+                <text> 
+                        { 
+                            "seriesname":dname_@did.Did, 
+                            "data": [ 
+                                @foreach(var incomeall in ViewBag.incomeall) 
+                                { 
+                                    if(incomeall.Did == did.Did) 
+                                    { 
+                                        <text> 
+                                            { 
+                                                "value": "@incomeall.Amount" 
+                                            }, 
+                                        </text> 
+                                    } 
+                                } 
+                            ] 
+                        }, 
+                </text> 
+            } 
+        ] 
+    }; 
+ 
+    FusionCharts.ready(function () { 
+        var myChart = new FusionCharts({ 
+            type: "mscolumn2d", 
+            renderAt: "chart-container", 
+            width: "100%", 
+            height: "500", 
+            dataFormat: "json", 
+            dataSource 
+        }).render(); 
+    }); 
 </script>

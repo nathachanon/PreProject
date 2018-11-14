@@ -12,4 +12,18 @@ namespace MASdemo.Models
         public string Amount { get; set; }
 
     }
+
+    public class IncomeAll
+    {
+        public int Did { get; set; }
+        public string Month { get; set; }
+        public string Year { get; set; }
+        public string Amount { get; set; }
+    }
+
+    public class did
+    {
+        public int Did { get; set; }
+        public string Name { get; set; }
+    }
 }

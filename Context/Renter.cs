@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASdemo.Context
 {
@@ -15,7 +16,7 @@ namespace MASdemo.Context
         public int? StartWaterMeter { get; set; }
         public int? StartElecMeter { get; set; }
         public string RenAgreement { get; set; }
-
+        public DateTime DateTime { get; set; }
         public virtual Room R { get; set; }
     }
 }

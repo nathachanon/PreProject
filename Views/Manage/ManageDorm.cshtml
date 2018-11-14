@@ -1,274 +1,314 @@
-﻿  
-@{  
-  Layout = "_Layout";  
-}  
+﻿   
+@{   
+  Layout = "_Layout";   
+}   
+   
+<!DOCTYPE html>   
+<html lang="en">   
+   
+<head>  
+
+    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css">  
+    <script src="~/js/sweetalert2.all.min.js"></script>  
+    <script src="~/js/sweetalert2.min.js"></script>  
+    <meta charset="utf-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
+    <title>จัดการหอพัก</title>  
+    <link href="~/css/models.css" rel="stylesheet" />  
+     <link href="~/css/imgFile.css" rel="stylesheet" />  
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+</head>   
+   
+<body>  
+    @Html.Raw(TempData["AddSuccessful"])  
+    @Html.Raw(TempData["EditSuccessful"])  
   
-<!DOCTYPE html>  
-<html lang="en">  
+    <div class="main-panel">  
+        <div class="content-wrapper">  
+            <div class="row purchace-popup">  
+            </div>  
+            <div class="row">  
+                @foreach (var dorm in ViewBag.dorms)  
+                {  
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">  
+                        <div class="card card-statistics">  
+                            <div class="card-body-M">  
+                                <div class="clearfix">  
+                                    <div class="align-items-center">  
+                                        <div class="fluid-container">  
+                                            @{  
+                                                if (@dorm.picture != "")  
+                                                {  
+                                                    <img class="Cir" width="100%" height="100%" src="~/uploads/img_mansion/@dorm.picture" /><br /><br />  
+                                                }  
+                                                else  
+                                                {  
+                                                    <img class="Cir" width="100%" height="100%" src="~/uploads/blank_img.png" /><br /><br />  
+                                                }  
+                                            }  
+                                            <h4 class="font-weight-medium text-right mb-0 text-center display-4">@dorm.Name</h4>                      
+                                             
+                                            <br>  
+                                            <a class="dropdown-item display-5" href="#rt_@dorm.Did">  
+                                                <button onclick="myload_@dorm.Did ()" type="button" class="btn btn-1 btn-outline-dark btn-rounded display-5 btn-block btn-fw">ประเภทห้อง</button>  
+                                            </a>  
+                                            <a class="dropdown-item display-5" href="#@dorm.Did">  
+                                                <button type="button" class="btn btn-1 btn-outline-success btn-rounded display-5 btn-block btn-fw">แก้ไข</button>  
+                                            </a>  
+                                            <a class="dropdown-item display-5">  
+                                                <button onclick="delete_dorm(@dorm.Did)" type="button" class="btn btn-1 btn-outline-danger  btn-rounded display-5 btn-block btn-fw">ลบหอพัก</button>  
+                                            </a>  
   
-<head> 
-    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css"> 
-    <script src="~/js/sweetalert2.all.min.js"></script> 
-    <script src="~/js/sweetalert2.min.js"></script> 
-    <meta charset="utf-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-    <title>จัดการหอพัก</title> 
-    <link href="~/css/models.css" rel="stylesheet" /> 
-     <link href="~/css/imgFile.css" rel="stylesheet" /> 
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
-</head>  
   
-<body> 
-    @Html.Raw(TempData["AddSuccessful"]) 
-    @Html.Raw(TempData["EditSuccessful"]) 
- 
-    <div class="main-panel"> 
-        <div class="content-wrapper"> 
-            <div class="row purchace-popup"> 
-            </div> 
-            <div class="row"> 
-                @foreach (var dorm in ViewBag.dorms) 
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                        </div>  
+                    </div>  
+                }  
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">  
+                    <div class="card card-statistics">  
+                        <div class="card-body">  
+                            <div class="mt-50 clearfix">  
+                                <div class="align-items-center align-items-lg-center">  
+                                    <div class="fluid-container ">  
+                                        <a href="@Url.Action("AddDorm", "Manage")">  
+                                            <h1 class="mdi mdi-library-plus text-success icon-lg text-center"></h1>  
+                                            <a class="dropdown-item display-3 text-success" href="@Url.Action("AddDorm", "Manage")">เพิ่มหอพัก</a>  
+                                        </a>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                        </div>  
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+  
+    @foreach (var dorm in ViewBag.dorms)  
+    {  
+    <div id="rt_@dorm.Did" class="overlay">  
+        <div class="popup" id="rt_@dorm.Did">  
+            <div id="load_@dorm.Did">  
+            </div>  
+        </div>  
+    </div>  
+        <script>  
+            function myload_@dorm.Did () {  
+                    $("#load_@dorm.Did").load('@Url.Action("AddRT", "Manage", new { did = dorm.Did })');  
+            }  
+        </script>  
+  
+        <div id="@dorm.Did" class="overlay">  
+            <div class="popup">  
+                <a class="close" href="#">&times;</a>  
+                <div class="col-12 grid-margin">  
+                    <div class="card">  
+                        <div class="card-body">  
+  
+                            <h3 class="font-weight-medium text-primary text-center ">  
+                                <i class="mdi mdi-city mdi-48px text-info"></i>  
+                                แก้ไขข้อมูลหอพัก @dorm.Name  
+                                <i class="mdi mdi-city mdi-48px text-info"></i>  
+                            </h3>  
+  
+                            <form class="form-sample" asp-controller="Manage" asp-action="EditDorm" method="POST" enctype="multipart/form-data">  
+                                <h4 class="card-description text-primary">  
+                                    ข้อมูลหอพัก  
+                                </h4>  
+                                <div class="row">  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">ชื่อหอ</label>  
+                                            <div class="col-sm-9">  
+                                                <div class="input-group">  
+                                                    <input value="@dorm.Name" name="d_name" required type="text" class="form-control" placeholder="ชื่อหอพัก">  
+                                                    <div class="input-group-append bg-info border-primary">  
+                                                        <span class="input-group-text bg-transparent">  
+                                                            <i class="mdi mdi-city mdi-24px text-white"></i>  
+                                                        </span>  
+                                                    </div>  
+                                                </div>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">รูปภาพ</label>  
+                                            <div class="col-sm-9">  
+                                                <div class="input-group mpv "> 
+                                                    <input disabled type="text" class="form-control image-preview-filename" value="@dorm.picture" placeholder="@dorm.picture">  
+                                                    <span class="input-group-btn">                                     
+                                                        <div class=" image-preview-input">                                                            
+                                                            <span class="glyphicon-folder-open"></span>                                                            
+                                                            <span id="hov" class="btn btn-default  bg-info border-info image-preview-input img-title "><i id ="icon" class="mdi mdi-image mdi-24px text-white"></i></span> 
+                                                            <input value="@dorm.picture" type="file" accept="image/png, image/jpeg, image/gif" name="picture"/>  
+                                                        </div> 
+                                                    </span> 
+                                                </div> 
+  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+  
+  
+  
+                                <div class="row">  
+  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">ระบุค่าน้ำ*</label>  
+                                            <div class="col-sm-9">  
+                                                <div class="input-group">  
+                                                    <input value="@dorm.setWater" name="setwater" type="text" class="form-control" placeholder="ค่าน้ำต่อยูนิต" aria-describedby="colored-addon3">  
+                                                    <div class="input-group-append bg-info border-primary">  
+                                                        <span class="input-group-text bg-transparent">  
+                                                            <i class="mdi mdi-water mdi-24px text-white"></i>  
+                                                        </span>  
+                                                    </div>  
+                                                </div>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">ระบุค่าไฟ*</label>  
+                                            <div class="col-sm-9">  
+                                                <div class="input-group">  
+                                                    <input value="@dorm.setElec" name="setelec" type="text" class="form-control" placeholder="ค่าไฟต่อยูนิต" aria-describedby="colored-addon3">  
+                                                    <div class="input-group-append bg-info border-primary">  
+                                                        <span class="input-group-text bg-transparent">  
+                                                            <i class="mdi mdi-speedometer mdi-24px text-white"></i>  
+                                                        </span>  
+                                                    </div>  
+                                                </div>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+  
+                                </div>  
+  
+  
+                                <h4 class="card-description text-primary"> ที่อยู่หอพัก </h4>  
+                                <div class="row">  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">เลขที่</label>  
+                                            <div class="col-sm-9">  
+                                                <input value="@dorm.Add_no" name="add_no" type="text" class="form-control" />  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">ถนน</label>  
+                                            <div class="col-sm-9">  
+                                                <input value="@dorm.Street" name="street" type="text" class="form-control" />  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                                <div class="row">  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">ตำบล</label>  
+                                            <div class="col-sm-9">  
+                                                <input value="@dorm.sub_District" name="sub_district" type="text" class="form-control" />  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">อำเภอ</label>  
+                                            <div class="col-sm-9">  
+                                                <input value="@dorm.District" name="district" type="text" class="form-control" />  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                                <div class="row">  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">จังหวัด</label>  
+                                            <div class="col-sm-9">  
+                                                <input value="@dorm.Province" name="province" type="text" class="form-control" />  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                    <div class="col-md-6">  
+                                        <div class="form-group row">  
+                                            <label class="col-sm-3 col-form-label">ไปรษณีย์</label>  
+                                            <div class="col-sm-9">  
+                                                <input value="@dorm.Zip_code" name="zip_code" type="text" class="form-control" />  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                    <input value="@dorm.Did" name="Id_dorm" hidden="hidden" />  
+                                </div>  
+  
+                                <div class="text-center">  
+                                    <button type="submit" class="btn btn-outline-success  btn-block btn-rounded  btn-3 btn-fw item-center">  
+                                        <i class="mdi mdi-check"></i>บันทึก  
+                                    </button>  
+                                </div>  
+  
+  
+  
+  
+  
+                            </form>  
+                        </div>  
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    }  
+    <script src="~/js/roomtype.js"></script>  
+    <script src="~/js/imgFile.js"></script>  
+    <script> 
+        function delete_dorm(dormId) { 
+            swal.mixin({ 
+                input: 'text', 
+                confirmButtonText: 'ลบหอพัก', 
+                showCancelButton: true, 
+            }).queue([ 
                 { 
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                        <div class="card card-statistics"> 
-                            <div class="card-body-M"> 
-                                <div class="clearfix"> 
-                                    <div class="align-items-center"> 
-                                        <div class="fluid-container"> 
-                                            @{ 
-                                                if (@dorm.picture != "") 
-                                                { 
-                                                    <img class="Cir" width="100%" height="100%" src="~/uploads/img_mansion/@dorm.picture" /><br /><br /> 
-                                                } 
-                                                else 
-                                                { 
-                                                    <img class="Cir" width="100%" height="100%" src="~/uploads/blank_img.png" /><br /><br /> 
-                                                } 
-                                            } 
-                                            <h4 class="font-weight-medium text-right mb-0 text-center display-4">@dorm.Name</h4> 
-                                            <br /> 
-                                            
-                                            <br> 
-                                            <a class="dropdown-item display-5" href="#rt_@dorm.Did"> 
-                                                <button onclick="myload_@dorm.Did ()" type="button" class="btn btn-1 btn-outline-dark btn-rounded display-5 btn-block btn-fw">ประเภทห้อง</button> 
-                                            </a> 
-                                            <a class="dropdown-item display-5" href="#@dorm.Did"> 
-                                                <button type="button" class="btn btn-1 btn-outline-success btn-rounded display-5 btn-block btn-fw">แก้ไข</button> 
-                                            </a> 
-                                            <a class="dropdown-item display-5" href="@Url.Action("DeleteDorm", "Manage",new { Id_dorm = dorm.Did })"> 
-                                                <button type="button" class="btn btn-1 btn-outline-danger  btn-rounded display-5 btn-block btn-fw">ลบหอพัก</button> 
-                                            </a> 
- 
- 
-                                        </div> 
-                                    </div> 
-                                </div> 
-                            </div> 
-                        </div> 
-                    </div> 
+                    title: 'คุณต้องการที่จะลบหอพัก', 
+                    text: 'โปรดใส่คำว่า DELETE เพื่อทำการลบหอพัก' 
                 } 
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
-                    <div class="card card-statistics"> 
-                        <div class="card-body"> 
-                            <div class="mt-50 clearfix"> 
-                                <div class="align-items-center align-items-lg-center"> 
-                                    <div class="fluid-container "> 
-                                        <a href="@Url.Action("AddDorm", "Manage")"> 
-                                            <h1 class="mdi mdi-library-plus text-success icon-lg text-center"></h1> 
-                                            <a class="dropdown-item display-3 text-success" href="@Url.Action("AddDorm", "Manage")">เพิ่มหอพัก</a> 
-                                        </a> 
-                                    </div> 
-                                </div> 
-                            </div> 
-                        </div> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
-    </div> 
+            ]).then((result) => { 
+                if (result.value == "DELETE") { 
+                    $.ajax({ 
+                        url: "../Manage/DeleteDorm?Id_dorm=" + dormId, 
+                        success: function (result) { 
+                            if (result == "Fail") { 
+                                alert("เกิดปัญหาในการเชื่อมต่อระบบ1"); 
+                            } else { 
+                                swal( 
+                                    'สำเร็จ!', 
+                                    'ลบหอพักถูกลบแล้ว', 
+                                    'success'); 
+                                setTimeout(function () { 
+                                    window.location.href = '../Manage/ManageDorm'; 
+                                }, 2000); 
+                            } 
+                        } 
+                    }); 
+                } else if (result.value == null) { 
  
-    @foreach (var dorm in ViewBag.dorms) 
-    { 
-    <div id="rt_@dorm.Did" class="overlay"> 
-        <div class="popup" id="rt_@dorm.Did"> 
-            <div id="load_@dorm.Did"> 
-            </div> 
-        </div> 
-    </div> 
-        <script> 
-            function myload_@dorm.Did () { 
-                    $("#load_@dorm.Did").load('@Url.Action("AddRT", "Manage", new { did = dorm.Did })'); 
-            } 
-        </script> 
- 
-        <div id="@dorm.Did" class="overlay"> 
-            <div class="popup"> 
-                <a class="close" href="#">&times;</a> 
-                <div class="col-12 grid-margin"> 
-                    <div class="card"> 
-                        <div class="card-body"> 
- 
-                            <h3 class="font-weight-medium text-primary text-center "> 
-                                <i class="mdi mdi-city mdi-48px text-info"></i> 
-                                แก้ไขข้อมูลหอพัก @dorm.Name 
-                                <i class="mdi mdi-city mdi-48px text-info"></i> 
-                            </h3> 
- 
-                            <form class="form-sample" asp-controller="Manage" asp-action="EditDorm" method="POST" enctype="multipart/form-data"> 
-                                <h4 class="card-description text-primary"> 
-                                    ข้อมูลหอพัก 
-                                </h4> 
-                                <div class="row"> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ชื่อหอ</label> 
-                                            <div class="col-sm-9"> 
-                                                <div class="input-group"> 
-                                                    <input value="@dorm.Name" name="d_name" required type="text" class="form-control" placeholder="ชื่อหอพัก"> 
-                                                    <div class="input-group-append bg-info border-primary"> 
-                                                        <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-city mdi-24px text-white"></i> 
-                                                        </span> 
-                                                    </div> 
-                                                </div> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">รูปภาพ</label> 
-                                            <div class="col-sm-9"> 
-                                                <div class="input-group mpv ">
-                                                    <input type="text" class="form-control image-preview-filename" value="@dorm.picture" placeholder="@dorm.picture"> 
-                                                    <span class="input-group-btn">                                    
-                                                        <div class=" image-preview-input">                                                           
-                                                            <span class="glyphicon-folder-open"></span>                                                           
-                                                            <span id="hov" class="btn btn-default  bg-info border-info image-preview-input img-title "><i id ="icon" class="mdi mdi-image mdi-24px text-white"></i></span>
-                                                            <input value="@dorm.picture" type="file" accept="image/png, image/jpeg, image/gif" name="picture"/> 
-                                                        </div>
-                                                    </span>
-                                                </div>
- 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                </div> 
- 
- 
- 
-                                <div class="row"> 
- 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ระบุค่าน้ำ*</label> 
-                                            <div class="col-sm-9"> 
-                                                <div class="input-group"> 
-                                                    <input value="@dorm.setWater" name="setwater" type="text" class="form-control" placeholder="ค่าน้ำต่อยูนิต" aria-describedby="colored-addon3"> 
-                                                    <div class="input-group-append bg-info border-primary"> 
-                                                        <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-water mdi-24px text-white"></i> 
-                                                        </span> 
-                                                    </div> 
-                                                </div> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
- 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ระบุค่าไฟ*</label> 
-                                            <div class="col-sm-9"> 
-                                                <div class="input-group"> 
-                                                    <input value="@dorm.setElec" name="setelec" type="text" class="form-control" placeholder="ค่าไฟต่อยูนิต" aria-describedby="colored-addon3"> 
-                                                    <div class="input-group-append bg-info border-primary"> 
-                                                        <span class="input-group-text bg-transparent"> 
-                                                            <i class="mdi mdi-speedometer mdi-24px text-white"></i> 
-                                                        </span> 
-                                                    </div> 
-                                                </div> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
- 
-                                </div> 
- 
- 
-                                <h4 class="card-description text-primary"> ที่อยู่หอพัก </h4> 
-                                <div class="row"> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">เลขที่</label> 
-                                            <div class="col-sm-9"> 
-                                                <input value="@dorm.Add_no" name="add_no" type="text" class="form-control" /> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ถนน</label> 
-                                            <div class="col-sm-9"> 
-                                                <input value="@dorm.Street" name="street" type="text" class="form-control" /> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                </div> 
-                                <div class="row"> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ตำบล</label> 
-                                            <div class="col-sm-9"> 
-                                                <input value="@dorm.sub_District" name="sub_district" type="text" class="form-control" /> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">อำเภอ</label> 
-                                            <div class="col-sm-9"> 
-                                                <input value="@dorm.District" name="district" type="text" class="form-control" /> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                </div> 
-                                <div class="row"> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">จังหวัด</label> 
-                                            <div class="col-sm-9"> 
-                                                <input value="@dorm.Province" name="province" type="text" class="form-control" /> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                    <div class="col-md-6"> 
-                                        <div class="form-group row"> 
-                                            <label class="col-sm-3 col-form-label">ไปรษณีย์</label> 
-                                            <div class="col-sm-9"> 
-                                                <input value="@dorm.Zip_code" name="zip_code" type="text" class="form-control" /> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                    <input value="@dorm.Did" name="Id_dorm" hidden="hidden" /> 
-                                </div> 
- 
-                                <div class="text-center"> 
-                                    <button type="submit" class="btn btn-outline-success  btn-block btn-rounded  btn-3 btn-fw item-center"> 
-                                        <i class="mdi mdi-check"></i>บันทึก 
-                                    </button> 
-                                </div> 
- 
- 
- 
- 
- 
-                            </form> 
-                        </div> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
-    } 
-    <script src="~/js/roomtype.js"></script> 
-    <script src="~/js/imgFile.js"></script> 
-</body>  
-  
-</html>  
+                } else { 
+                    swal( 
+                        'ผิดพลาด!', 
+                        'กรุณากรอก DELETE เพื่อทำการลบหอพัก', 
+                        'error'); 
+                } 
+            }); 
+        } 
+    </script> 
+</body>   
+   
+</html>   

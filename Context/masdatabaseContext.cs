@@ -48,7 +48,7 @@ namespace MASdemo.Context
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.DateTime)
-                    .HasColumnName("Date_time")
+                    .HasColumnName("Date")
                     .HasColumnType("date");
 
                 entity.Property(e => e.ElecMeter)
@@ -193,6 +193,11 @@ namespace MASdemo.Context
                 entity.Property(e => e.StartWaterMeter)
                     .HasColumnName("Start_Water_Meter")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.DateTime)
+                    .HasColumnName("Ren_StartDate")
+                    .HasColumnType("date");
+
 
                 entity.HasOne(d => d.R)
                     .WithMany(p => p.Renter)
