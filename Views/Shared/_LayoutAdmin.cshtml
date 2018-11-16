@@ -1,0 +1,117 @@
+ 
+ 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="utf-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+ 
+    <environment include="Development"> 
+ 
+        <link href="https://fonts.googleapis.com/css?family=Kanit:300" rel="stylesheet"> 
+        <link rel="stylesheet" href="~/vendors/iconfonts/mdi/css/materialdesignicons.min.css"> 
+        <link rel="stylesheet" href="~/vendors/css/vendor.bundle.base.css"> 
+        <link rel="stylesheet" href="~/vendors/css/vendor.bundle.addons.css"> 
+        <link rel="stylesheet" href="~/css/style.css"> 
+        <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css"> 
+        <link rel="shortcut icon" href="~/images/favicon.png" /> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    </environment> 
+ 
+</head> 
+<body> 
+ 
+    <partial name="_CookieConsentPartial" /> 
+    <div class="container-scroller"> 
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row"> 
+ 
+ 
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center"> 
+                <a class="navbar-brand brand-logo" href="@Url.Action("Main", "Manage")"> 
+                    <img src="../images/logo.svg" alt="logo" /> 
+                </a> 
+                <a class="navbar-brand brand-logo-mini" href="@Url.Action("Main", "Manage")"> 
+                    <img src="../images/logo-mini.svg" alt="logo" /> 
+                </a> 
+            </div> 
+            <div class="navbar-menu-wrapper d-flex align-items-center"> 
+                <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex"></ul> 
+                <ul class="navbar-nav navbar-nav-right"> 
+ 
+                    <li class="nav-item dropdown d-none d-xl-inline-block"> 
+                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false"> 
+                            <span class="profile-text">Hello, @ViewBag.myName</span> 
+                            <img class="img-xs rounded-circle" src="~/images/faces-clipart/pic-4.png" alt="Profile image"> 
+                        </a> 
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown"> 
+                            <a class="dropdown-item p-0"> 
+ 
+                            </a> 
+ 
+                            <a class="dropdown-item" href="@Url.Action("Logout", "Admin")"> 
+                                ออกจากระบบ 
+                            </a> 
+                        </div> 
+                    </li> 
+                </ul> 
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas"> 
+                    <span class="mdi mdi-menu"></span> 
+                </button> 
+            </div> 
+        </nav> 
+        <!-- partial --> 
+        <div class="container-fluid page-body-wrapper"> 
+            <!-- partial:partials/_sidebar.html --> 
+            <nav class="sidebar sidebar-offcanvas" id="sidebar"> 
+                <ul class="nav"> 
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Admin" asp-action="Administrator"> 
+                            <i class="menu-icon mdi mdi-home-account mdi-36px"></i> 
+                            <span class="menu-title ml-4">หน้าแรก</span> 
+                        </a> 
+                    </li> 
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Admin" asp-action="CheckReport"> 
+                            <i class="menu-icon mdi mdi-city mdi-36px"></i> 
+                            <span class="menu-title ml-4">เช็คปัญหา</span> 
+                        </a> 
+                    </li> 
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Admin" asp-action="Work"> 
+                            <i class="menu-icon mdi mdi-city mdi-36px"></i> 
+                            <span class="menu-title ml-4">ปัญหาที่รับมา</span> 
+                        </a> 
+                    </li> 
+ 
+ 
+                </ul> 
+            </nav> 
+            @RenderBody() 
+ 
+        </div> 
+        <environment include="Development"> 
+            <script src="~/js/used/sweetalert2.js"></script> 
+            <script src="~/vendors/js/vendor.bundle.base.js"></script> 
+            <script src="~/js/off-canvas.js"></script> 
+            <script src="~/js/misc.js"></script> 
+ 
+        </environment> 
+        <environment exclude="Development"> 
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js" 
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js" 
+                    asp-fallback-test="window.jQuery" 
+                    crossorigin="anonymous" 
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"> 
+            </script> 
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js" 
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js" 
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal" 
+                    crossorigin="anonymous" 
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"> 
+            </script> 
+ 
+        </environment> 
+ 
+        @RenderSection("Scripts", required: false) 
+</body> 
+</html> 

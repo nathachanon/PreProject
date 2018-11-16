@@ -51,4 +51,30 @@ namespace MASdemo.Models
         public string surname { get; set; }
 
     }
+
+    public class Report 
+    { 
+        public string Report_id { get; set; } 
+        public string Report_message { get; set; } 
+        public int Report_status { get; set; } 
+        public string Report_datetime { get; set; } 
+    }
+
+    public class ReportList 
+    { 
+        public string Report_id2 { get; set; } 
+        public int Report_id { get; set; } 
+        public string Report_message { get; set; } 
+        public string Report_datetime { get; set; } 
+        public string Report_Owner { get; set; } 
+    }
+
+    public class WorkAll 
+    { 
+        public string Work_id { get; set; } 
+        public int Report_id { get; set; } 
+        public string Report_message { get; set; } 
+        public string Report_datetime { get; set; } 
+        public string Report_Owner { get; set; } 
+    }
 }

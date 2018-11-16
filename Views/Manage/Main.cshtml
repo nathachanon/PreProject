@@ -39,6 +39,30 @@
                     $("#renter0update").text(getdate);
                 }
             }); 
+
+            
+            $.ajax({ 
+                type: "post", 
+                url: "../Income/IncomeAll?oid=" + @ViewBag.Oid, 
+                dataType: 'json', 
+                success: function (result) { 
+                   var in_all= new Intl.NumberFormat({ style: 'currency', currency: 'THB' }).format(result)
+                    $("#Income").text(in_all); 
+                    $("#Incomeupdate").text(getdate); 
+                } 
+            }); 
+ 
+            $.ajax({ 
+                type: "post", 
+                url: "../Income/GetExt?oid=" + @ViewBag.Oid, 
+                dataType: 'json', 
+                success: function (result) { 
+                    var in_ext = new Intl.NumberFormat({ style: 'currency', currency: 'THB' }).format(result)
+                    $("#IncomeExt").text(in_ext); 
+                    $("#IncomeExtupdate").text(getdate); 
+                } 
+            }); 
+ 
         }); 
     </script> 
 </head> 
@@ -55,16 +79,19 @@
                                     <i class="mdi mdi-cube text-danger icon-lg"></i> 
                                 </div> 
                                 <div class="float-right"> 
-                                    <p class="mb-0 text-right">รายได้ทั้งหมด</p> 
+                                    <p id="incomeall" class="mb-0 text-right">รายได้รวมเดือนล่าสุด</p> 
                                     <div class="fluid-container"> 
-                                        <h3 class="font-weight-medium text-right mb-0">฿0</h3> 
+                                        <h3 id="Income" class="font-weight-medium text-right mb-0">฿0</h3> 
                                         <p class="mb-0 text-right">บาท</p> 
                                     </div> 
                                 </div> 
                             </div> 
                             <p class="text-muted mt-3 mb-0"> 
-                                <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> เพิ่มขึ้น 65% 
+                                <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
                             </p> 
+                                <p id="Incomeupdate" class="text-muted mt-3 mb-0"> 
+                            </p> 
+
                         </div> 
                     </div> 
                 </div> 
@@ -76,15 +103,17 @@
                                     <i class="mdi mdi-account-location text-info icon-lg"></i> 
                                 </div> 
                                 <div class="float-right"> 
-                                    <p class="mb-0 text-right">คาดการณ์รายได้</p> 
+                                    <p class="mb-0 text-right">คาดการณ์รายได้เดือนหน้า</p> 
                                     <div class="fluid-container"> 
-                                        <h3 class="font-weight-medium text-right mb-0">฿0</h3> 
+                                        <h3 id="IncomeExt" class="font-weight-medium text-right mb-0">฿0</h3> 
                                         <p class="mb-0 text-right">บาท</p> 
                                     </div> 
                                 </div> 
                             </div> 
                             <p class="text-muted mt-3 mb-0"> 
-                                <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                                <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                            </p> 
+                            <p id="IncomeExtupdate" class="text-muted mt-3 mb-0"> 
                     
                             </p> 
                         </div> 
@@ -193,7 +222,7 @@
                                                     <input type="text" name="did" hidden="hidden" value="@dorm.Did"/> 
                                                     <button type="submit" class="btn btn-1 btn-primary btn-rounded btn-block btn-fw" asp-controller="Renter" asp-action="ShowRoom">ดูข้อมูลผู้เช่า</button> 
                                                     <button type="submit" class="btn btn-1 btn-success btn-rounded btn-block btn-fw" asp-controller="Income" asp-action="RevenueDorm">ดูรายได้ย้อนหลัง</button> 
-                                                    <button type="button" class="btn btn-danger btn-rounded btn-block btn-fw">ดูคาดการณ์รายได้</button> 
+                                                    <button type="submit" class="btn btn-1 btn-danger btn-rounded btn-block btn-fw" asp-controller="Income" asp-action="ExtrapolateDorm">ดูคาดการณ์รายได้</button>  
                                                 </form> 
  
                                             </div> 

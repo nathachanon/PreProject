@@ -1,0 +1,168 @@
+ 
+@{ 
+    Layout = "_LayoutAdmin"; 
+} 
+ 
+<!DOCTYPE html> 
+ 
+<html> 
+<head> 
+    <meta name="viewport" content="width=device-width" /> 
+    <title>Administrator</title> 
+    <script> 
+ 
+        $(document).ready(function () { 
+            var currentdate = new Date(); 
+            var getdate = "วันที่ " + currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " " + currentdate.getHours() + ":" 
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds() + " น." 
+            $.ajax({ 
+                type: "post", 
+                url: "../Admin/CheckOwner", 
+                dataType: 'json', 
+                success: function (result) { 
+                    $("#Owner").text(result); 
+                    $("#OwnerUpdate").text(getdate); 
+                } 
+            }); 
+ 
+            $.ajax({ 
+                type: "post", 
+                url: "../Admin/CheckDorm", 
+                dataType: 'json', 
+                success: function (result) { 
+                    $("#Dorm").text(result); 
+                    $("#DormUpdate").text(getdate); 
+                } 
+            }); 
+ 
+            $.ajax({ 
+                type: "post", 
+                url: "../Admin/CheckRoom", 
+                dataType: 'json', 
+                success: function (result) { 
+                    $("#Room").text(result); 
+                    $("#RoomUpdate").text(getdate); 
+                } 
+            }); 
+ 
+            $.ajax({ 
+                type: "post", 
+                url: "../Admin/CheckCal", 
+                dataType: 'json', 
+                success: function (result) { 
+                    $("#Cal").text(result); 
+                    $("#CalUpdate").text(getdate); 
+                } 
+            }); 
+ 
+        }); 
+    </script> 
+</head> 
+<body> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="row purchace-popup" style="display: none;"> 
+                <div class="col-12"> 
+                    <span class="d-block d-md-flex align-items-center"> 
+                        <p>Like what you see? Check out our premium version for more.</p> 
+                        <a class="btn ml-auto download-button d-none d-md-block" href="https://github.com/BootstrapDash/StarAdmin-Free-Bootstrap-Admin-Template" target="_blank">Download Free Version</a> 
+                        <a class="btn purchase-button mt-4 mt-md-0" href="https://www.bootstrapdash.com/product/star-admin-pro/" target="_blank">Upgrade To Pro</a> 
+                        <i class="mdi mdi-close popup-dismiss d-none d-md-block"></i> 
+                    </span> 
+                </div> 
+            </div> 
+            <div class="row"> 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="clearfix"> 
+                                <div class="float-left"> 
+                                    <i class="mdi mdi-cube text-danger icon-lg"></i> 
+                                </div> 
+                                <div class="float-right"> 
+                                    <p class="mb-0 text-right">ผู้ใช้งานในระบบ</p> 
+                                    <div class="fluid-container"> 
+                                        <h3 id="Owner" class="font-weight-medium text-right mb-0"></h3> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <p class="text-muted mt-3 mb-0"> 
+                                <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                            </p> 
+                            <p id="OwnerUpdate" class="text-muted mt-3 mb-0"> 
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="clearfix"> 
+                                <div class="float-left"> 
+                                    <i class="mdi mdi-receipt text-warning icon-lg"></i> 
+                                </div> 
+                                <div class="float-right"> 
+                                    <p class="mb-0 text-right">หอพักในระบบ</p> 
+                                    <div class="fluid-container"> 
+                                        <h3 id="Dorm" class="font-weight-medium text-right mb-0"></h3> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <p class="text-muted mt-3 mb-0"> 
+                                <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                            </p> 
+                            <p id="DormUpdate" class="text-muted mt-3 mb-0"> 
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="clearfix"> 
+                                <div class="float-left"> 
+                                    <i class="mdi mdi-poll-box text-success icon-lg"></i> 
+                                </div> 
+                                <div class="float-right"> 
+                                    <p class="mb-0 text-right">ห้องพักในระบบ</p> 
+                                    <div class="fluid-container"> 
+                                        <h3 id="Room" class="font-weight-medium text-right mb-0"></h3> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <p class="text-muted mt-3 mb-0"> 
+                                <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                            </p> 
+                            <p id="RoomUpdate" class="text-muted mt-3 mb-0"> 
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"> 
+                    <div class="card card-statistics"> 
+                        <div class="card-body"> 
+                            <div class="clearfix"> 
+                                <div class="float-left"> 
+                                    <i class="mdi mdi-account-location text-info icon-lg"></i> 
+                                </div> 
+                                <div class="float-right"> 
+                                    <p class="mb-0 text-right">คำนวณมิเตอร์ไปแล้ว</p> 
+                                    <div class="fluid-container"> 
+                                        <h3 id="Cal" class="font-weight-medium text-right mb-0"></h3> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <p class="text-muted mt-3 mb-0"> 
+                                <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> ข้อมูลล่าสุด 
+                            </p> 
+                            <p id="CalUpdate" class="text-muted mt-3 mb-0"> 
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</body> 
+</html> 

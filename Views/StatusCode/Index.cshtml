@@ -12,33 +12,19 @@
      <link href="https://fonts.googleapis.com/css?family=Kanit:300" rel="stylesheet">
     <link href="~/css/error404.css" rel="stylesheet" />
 </head>
-<body>
-        <div class="container">
-
-            <div class="error">
-                <p class="p">4</p>
-                <span class="dracula">
-                    <div class="con">
-                        <div class="hair"></div>
-                        <div class="hair-r"></div>
-                        <div class="head"></div>
-                        <div class="eye"></div>
-                        <div class="eye eye-r"></div>
-                        <div class="mouth"></div>
-                        <div class="blod"></div>
-                        <div class="blod blod2"></div>
-                    </div>
-                </span>
-                <p class="p">4</p>
-
-                <div class="page-ms">
-                    <p class="page-msg"> เกิดข้อผิดพลาด, หน้าเว็บที่คุณกำลังค้นหา ไม่มีอยู่จริง ! </p>
-                    <button class="go-back" onclick="gohome()">Go Back Home</button>
-                </div>
-            </div>
-
-
-            <!-- 	<p>Auto back to home page</p> -->
+<body><div id="clouds">
+            <div class="cloud x1"></div>
+            <div class="cloud x1_5"></div>
+            <div class="cloud x2"></div>
+            <div class="cloud x3"></div>
+            <div class="cloud x4"></div>
+            <div class="cloud x5"></div>
+        </div>
+        <div class='c'>
+            <div class='_404'>404</div>
+            <div class='_1'>THE PAGE</div>
+            <div class='_2'>WAS NOT FOUND</div><br>
+            <a class='btn' asp-controller="Home" asp-action="Index">BACK TO HOME</a>
         </div>
         <script>
         function gohome()

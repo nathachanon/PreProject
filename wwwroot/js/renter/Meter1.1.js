@@ -1,6 +1,12 @@
 $(document).ready(function () {
-    $('#water').popover({ title: 'มิเตอร์น้ำเดือนที่แล้ว', content: "กรุณาเลือกห้องก่อน" });
-    $('#elec').popover({ title: 'มิเตอร์ไฟเดือนที่แล้ว', content: "กรุณาเลือกห้องก่อน" });
+    $('#water').popover({
+        title: 'มิเตอร์น้ำเดือนที่แล้ว',
+        content: "กรุณาเลือกห้องก่อน"
+    });
+    $('#elec').popover({
+        title: 'มิเตอร์ไฟเดือนที่แล้ว',
+        content: "กรุณาเลือกห้องก่อน"
+    });
     var d = new Date();
     var month = d.getMonth() + 1;
     var year = d.getFullYear();
@@ -52,7 +58,14 @@ $("#next1").click(function () {
             alert("This is Month : NULL Pls input Month !");
         }
     } else {
-        alert("กรุณาเลือกเดือนและปีให้ตรงกับปัจจุบัน หรือ น้อยกว่า ไม่สามารถเลือกที่มากกว่าปัจจุบันได้")
+        swal({
+            position: 'center',
+            type: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: "กรุณาเลือกเดือนและปีให้ตรงกับปัจจุบัน หรือ น้อยกว่า ไม่สามารถเลือกที่มากกว่าปัจจุบันได้",
+            showConfirmButton: false,
+            timer: 3000
+        });
     }
 });
 
@@ -106,8 +119,7 @@ $("#add").click(function () {
                             showConfirmButton: false,
                             timer: 3000
                         });
-                    }
-                    else {
+                    } else {
                         swal({
                             position: 'center',
                             type: 'success',
@@ -153,23 +165,43 @@ function getroom(a) {
                 } else {
                     $.ajax({
                         type: "post",
-                        url: "../Renter/getRenterMeter?datemonth=" + datemonth + "&roomid=" + roomids + "&datemonth_old=" + datemonths,
-                        success: function (result) {
-                            if (result.result == "Fail") {
+                        url: "../Renter/RenterCheckbefore?roomid=" + roomids + "&datemonth_old=" + datemonths,
+                        success: function (before) {
+                            if (before == "No") {
                                 swal({
                                     position: 'center',
                                     type: 'error',
                                     title: 'เกิดข้อผิดพลาด',
-                                    text: "ห้องนี้ได้เพิ่มค่าน้ำค่าไฟของเดือนนี้ไปแล้ว",
+                                    text: "ห้องนี้ยังไม่ได้เพิ่มมิเตอร์ของเดือนที่แล้ว !",
                                     showConfirmButton: false,
                                     timer: 3000
                                 });
                                 $("#roomid").val('');
-                                $('#water').attr('data-content', "กรุณาเลือกห้องก่อน");
-                                $('#elec').attr('data-content', "กรุณาเลือกห้องก่อน");
+                                $('#water').attr('data-content', "กรุณาเลือกห้องก่อน2");
+                                $('#elec').attr('data-content', "กรุณาเลือกห้องก่อน2");
                             } else {
-                                $('#water').attr('data-content', result.water);
-                                $('#elec').attr('data-content', result.elec);
+                                $.ajax({
+                                    type: "post",
+                                    url: "../Renter/getRenterMeter?datemonth=" + datemonth + "&roomid=" + roomids + "&datemonth_old=" + datemonths,
+                                    success: function (result) {
+                                        if (result.result == "Fail") {
+                                            swal({
+                                                position: 'center',
+                                                type: 'error',
+                                                title: 'เกิดข้อผิดพลาด',
+                                                text: "ห้องนี้ได้เพิ่มค่าน้ำค่าไฟของเดือนนี้ไปแล้ว",
+                                                showConfirmButton: false,
+                                                timer: 3000
+                                            });
+                                            $("#roomid").val('');
+                                            $('#water').attr('data-content', "กรุณาเลือกห้องก่อน");
+                                            $('#elec').attr('data-content', "กรุณาเลือกห้องก่อน");
+                                        } else {
+                                            $('#water').attr('data-content', result.water);
+                                            $('#elec').attr('data-content', result.elec);
+                                        }
+                                    }
+                                });
                             }
                         }
                     });

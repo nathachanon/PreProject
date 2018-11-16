@@ -12,19 +12,32 @@
     <title>รายได้ย้อนหลัง</title> 
     <meta charset="utf-8"></head> 
 <body> 
-    <div class="main-panel"> 
-        <div class="content-wrapper"> 
- 
-            <div id="chart-container"></div> 
- 
-        </div> 
+   
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-lg-8 grid-margin stretch-card">
+                    
+                        <div class="card ">
+                            <div class="card-body">
+                                <div id="chart-container"></div>
 
-         <div class="content-wrapper"> 
- 
-            <div id="chart-container"></div> 
- 
-        </div>
-    </div> 
+                            </div>
+                        </div>
+                 </div>
+
+                  <div class="col-lg-4 grid-margin stretch-card">
+                    
+                        <div class="card ">
+                            <div class="card-body">
+                             <h1>ส่งออกไฟล์</h1>
+
+                            </div>
+                        </div>
+                 </div>
+
+            </div>
+        </div> 
     <input type="hidden" id="test1" value="@ViewBag.DormName" /> 
  
  
@@ -32,6 +45,7 @@
 </html>
 <script> 
     var dname = $("#test1").val(); 
+    
     const dataSource = { 
         "chart": { 
             "caption": "ข้อมูลรายได้ย้อนหลัง : " + dname, 
@@ -177,4 +191,6 @@
             dataSource 
         }).render(); 
     }); 
+    
+
 </script>

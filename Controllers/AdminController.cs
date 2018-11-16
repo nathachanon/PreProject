@@ -1,0 +1,404 @@
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using MASdemo.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
+
+namespace MASdemo.Controllers
+{
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+
+    public class AdminController : Controller
+    {
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult CheckLogin(string username, string password)
+        {
+            string result = "Fail";
+            SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+            try
+            {
+                sqlcon.Open();
+                string query1 = "SELECT * FROM Admin WHERE Username = '" + username + "' AND Password = '" + password + "' AND Status = 1 ";
+                SqlCommand sqlcom1 = new SqlCommand(query1);
+                sqlcom1.Connection = sqlcon;
+                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                if (sqlReader1.HasRows)
+                {
+                    while (sqlReader1.Read())
+                    {
+                        HttpContext.Session.SetInt32("AdminID", sqlReader1.GetInt32(sqlReader1.GetOrdinal("Admin_id")));
+                        HttpContext.Session.SetString("AdminName", sqlReader1["Name"].ToString());
+                        HttpContext.Session.SetString("AdminSurname", sqlReader1["Surname"].ToString());
+                        HttpContext.Session.SetString("AdminTel", sqlReader1["Tel"].ToString());
+                        HttpContext.Session.SetInt32("AdminStatus", sqlReader1.GetInt32(sqlReader1.GetOrdinal("Status")));
+                        HttpContext.Session.SetString("AdminUsername", sqlReader1["Username"].ToString());
+                        HttpContext.Session.SetString("AdminPassword", sqlReader1["Password"].ToString());
+                        result = "Login OK";
+                    }
+                }
+                else
+                {
+                    result = "Fail";
+                }
+                sqlcon.Close();
+            }
+            catch (Exception fail)
+            {
+                result = "Fail" + fail;
+                result = "Fail";
+            }
+            if (result == "Login OK")
+            {
+                var myactivities = "เข้าสู่ระบบ";
+                string mydate = ToChristianDateString(DateTime.Today);
+                sqlcon.Open();
+                string query2 = "INSERT INTO admin_log (activities, datetime , Admin_id) VALUES('" + myactivities + "', '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "' , '" + HttpContext.Session.GetInt32("AdminID") + "' )";
+                SqlCommand sqlcom2 = new SqlCommand(query2);
+                sqlcom2.Connection = sqlcon;
+                SqlDataReader sqlReader2 = sqlcom2.ExecuteReader();
+                result = "OK";
+                sqlcon.Close();
+            }
+            return Json(result);
+        }
+
+        public IActionResult Administrator()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+            }
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                var myactivities = "ออกจากระบบ";
+                string mydate = ToChristianDateString(DateTime.Today);
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                sqlcon.Open();
+                string query2 = "INSERT INTO admin_log (activities, datetime , Admin_id) VALUES('" + myactivities + "', '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "' , '" + HttpContext.Session.GetInt32("AdminID") + "' )";
+                SqlCommand sqlcom2 = new SqlCommand(query2);
+                sqlcom2.Connection = sqlcon;
+                SqlDataReader sqlReader2 = sqlcom2.ExecuteReader();
+                sqlcon.Close();
+
+                HttpContext.Session.SetString("Log", "0");
+                ViewBag.myLog = HttpContext.Session.GetString("Log");
+                HttpContext.Session.Clear();
+                if (ViewBag.myLog == null)
+                {
+                    HttpContext.Session.SetString("Log", "0");
+                    ViewBag.myLog = HttpContext.Session.GetString("Log");
+                }
+            }
+            return RedirectToAction("Login", "Admin");
+        }
+
+        public IActionResult CheckReport()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+            }
+            return View();
+        }
+        public IActionResult CheckOwner()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                string result = "Fail";
+                string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
+                MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
+                mysqlcon.Open();
+                string query = "SELECT COUNT(*) as Count FROM `owner`";
+                MySqlCommand com = new MySqlCommand(query);
+                com.Connection = mysqlcon;
+                MySqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    result = reader.GetInt32(reader.GetOrdinal("Count")).ToString();
+                }
+                mysqlcon.Close();
+                return Json(result);
+            }
+        }
+        public IActionResult CheckDorm()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                string result = "Fail";
+                string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
+                MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
+                mysqlcon.Open();
+                string query = "SELECT COUNT(*) as Count FROM `dorm`";
+                MySqlCommand com = new MySqlCommand(query);
+                com.Connection = mysqlcon;
+                MySqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    result = reader.GetInt32(reader.GetOrdinal("Count")).ToString();
+                }
+                mysqlcon.Close();
+                return Json(result);
+            }
+        }
+        public IActionResult CheckRoom()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                string result = "Fail";
+                string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
+                MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
+                mysqlcon.Open();
+                string query = "SELECT COUNT(*) as Count FROM `room`";
+                MySqlCommand com = new MySqlCommand(query);
+                com.Connection = mysqlcon;
+                MySqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    result = reader.GetInt32(reader.GetOrdinal("Count")).ToString();
+                }
+                mysqlcon.Close();
+                return Json(result);
+            }
+        }
+        public IActionResult CheckCal()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                string result = "Fail";
+                string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
+                MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
+                mysqlcon.Open();
+                string query = "SELECT COUNT(*) as Count FROM `cal_info_room`";
+                MySqlCommand com = new MySqlCommand(query);
+                com.Connection = mysqlcon;
+                MySqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    result = reader.GetInt32(reader.GetOrdinal("Count")).ToString();
+                }
+                mysqlcon.Close();
+                return Json(result);
+            }
+        }
+
+        public IActionResult ReportList()
+        {
+            string result = "Fail";
+            List<ReportList> reportlists = new List<ReportList>();
+            try
+            {
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                sqlcon.Open();
+                string query1 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id2 , * FROM Report WHERE status = 1";
+                SqlCommand sqlcom1 = new SqlCommand(query1);
+                sqlcom1.Connection = sqlcon;
+                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                if (sqlReader1.HasRows)
+                {
+                    while (sqlReader1.Read())
+                    {
+                        reportlists.Add(new ReportList()
+                        {
+                            Report_id2 = "R" + sqlReader1["Report_id2"].ToString(),
+                            Report_id = sqlReader1.GetInt32(sqlReader1.GetOrdinal("Report_id")),
+                            Report_message = sqlReader1["message"].ToString(),
+                            Report_datetime = sqlReader1["datetime"].ToString(),
+                            Report_Owner = sqlReader1["Owner_email"].ToString()
+                        });
+                    }
+                }
+                sqlcon.Close();
+            }
+            catch (Exception fail)
+            {
+                result = "Fail" + fail;
+                result = "Fail";
+            }
+            return Json(reportlists);
+        }
+
+        public IActionResult AddReport(int report_id)
+        {
+            string result = "Fail";
+            try
+            {
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                sqlcon.Open();
+                string query1 = "UPDATE Report SET Status=2 WHERE Report_id = " + report_id + " ";
+                SqlCommand sqlcom1 = new SqlCommand(query1);
+                sqlcom1.Connection = sqlcon;
+                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                result = "Add OK";
+                sqlcon.Close();
+                sqlcon.Open();
+                string query2 = "INSERT INTO Work (Admin_id, Report_id) VALUES('" + HttpContext.Session.GetInt32("AdminID") + "', '" + report_id + "') ";
+                SqlCommand sqlcom2 = new SqlCommand(query2);
+                sqlcom2.Connection = sqlcon;
+                SqlDataReader sqlReader2 = sqlcom2.ExecuteReader();
+                result = "OK";
+                sqlcon.Close();
+
+                var myactivities = "เพิ่มรายงาน report id : " + report_id;
+                string mydate = ToChristianDateString(DateTime.Today);
+                sqlcon.Open();
+                string query3 = "INSERT INTO admin_log (activities, datetime , Admin_id) VALUES('" + myactivities + "', '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "' , '" + HttpContext.Session.GetInt32("AdminID") + "' )";
+                SqlCommand sqlcom3 = new SqlCommand(query3);
+                sqlcom3.Connection = sqlcon;
+                SqlDataReader sqlReader3 = sqlcom3.ExecuteReader();
+
+                sqlcon.Close();
+            }
+            catch (Exception fail)
+            {
+                result = "Fail" + fail;
+                result = "Fail";
+            }
+            return Json(result);
+        }
+
+        public string ToChristianDateString(DateTime dateTime)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            return dateTime.ToString("yyyy-MM-dd");
+
+        }
+
+        public IActionResult Work()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+            }
+            return View();
+        }
+
+        public IActionResult CheckWork()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                List<WorkAll> workalls = new List<WorkAll>();
+                string result = "Fail";
+                try
+                {
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                    sqlcon.Open();
+                    string query1 = "SELECT RIGHT('000' + CAST([Work_id] AS varchar(5)) , 4) as Work_ids , r.Owner_email , r.report_id , r.status , r.message , r.datetime  FROM [Work] w " +
+                        "INNER JOIN Report r on w.Report_id = r.Report_id " +
+                        "WHERE r.status = 2 " +
+                        "AND w.Admin_id = " + HttpContext.Session.GetInt32("AdminID") + " ";
+                    SqlCommand sqlcom1 = new SqlCommand(query1);
+                    sqlcom1.Connection = sqlcon;
+                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                    if (sqlReader1.HasRows)
+                    {
+                        while (sqlReader1.Read())
+                        {
+                            workalls.Add(new WorkAll()
+                            {
+                                Work_id = "W" + sqlReader1["Work_ids"].ToString(),
+                                Report_id = sqlReader1.GetInt32(sqlReader1.GetOrdinal("report_id")),
+                                Report_Owner = sqlReader1["Owner_email"].ToString(),
+                                Report_message = sqlReader1["message"].ToString(),
+                                Report_datetime = sqlReader1["datetime"].ToString()
+                            });
+                        }
+                    }
+                    sqlcon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                    result = "Fail";
+                }
+                return Json(workalls);
+            }
+        }
+
+        public IActionResult Complete(int report_id)
+        {
+            string result = "Fail";
+            try
+            {
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                sqlcon.Open();
+                string query1 = "UPDATE Report SET Status=3 WHERE Report_id = " + report_id + " ";
+                SqlCommand sqlcom1 = new SqlCommand(query1);
+                sqlcom1.Connection = sqlcon;
+                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                result = "Add OK";
+                sqlcon.Close();
+
+                var myactivities = "งานเสร็จสิ้น report id : " + report_id;
+                string mydate = ToChristianDateString(DateTime.Today);
+                sqlcon.Open();
+                string query3 = "INSERT INTO admin_log (activities, datetime , Admin_id) VALUES('" + myactivities + "', '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "' , '" + HttpContext.Session.GetInt32("AdminID") + "' )";
+                SqlCommand sqlcom3 = new SqlCommand(query3);
+                sqlcom3.Connection = sqlcon;
+                SqlDataReader sqlReader3 = sqlcom3.ExecuteReader();
+
+                sqlcon.Close();
+            }
+            catch (Exception fail)
+            {
+                result = "Fail" + fail;
+                result = "Fail";
+            }
+            return Json(result);
+        }
+    }
+}

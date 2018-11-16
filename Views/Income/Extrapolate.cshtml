@@ -1,0 +1,35 @@
+ 
+@{ 
+    Layout = "_Layout"; 
+} 
+ 
+<!DOCTYPE html> 
+ 
+<html> 
+<head> 
+    <meta name="viewport" content="width=device-width" /> 
+    <title>คาดการณ์รายได้รวม</title> 
+</head> 
+<body> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="col-12 grid-margin"> 
+                <div class="card"> 
+                    <div class="card-body"> 
+ 
+                        @foreach (var ext in ViewBag.ExtrapolateAll) 
+                        { 
+                                <h1 id="DID_@ext.Did">เลขหอ : @ext.Did</h1> 
+                                <h2 id="DNAME_@ext.Did">ชื่อหอ : @ext.DName</h2> 
+                                <h2 id="Ext_@ext.Did">รายได้เดือนถัดไป : @string.Format("{0:#,#.}", ext.Extrapolates) บาท</h2> 
+                        } 
+ 
+                        <br /> 
+                        <h1 id="AmountALL">รายได้เดือนถัดไปรวมทุกหอที่มีขั้นต่ำ : @string.Format("{0:#,#.}", ViewBag.AmountAll) บาท</h1> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</body> 
+</html> 

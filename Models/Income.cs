@@ -26,4 +26,17 @@ namespace MASdemo.Models
         public int Did { get; set; }
         public string Name { get; set; }
     }
+
+
+    public class isDid
+    {
+        public int Did { get; set; }
+    }
+
+    public class Extrapolate
+    {
+        public int Did { get; set; }
+        public string DName { get; set; }
+        public int Extrapolates { get; set; }
+    }
 }

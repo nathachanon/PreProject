@@ -1,0 +1,101 @@
+ 
+@{ 
+    Layout = "_LayoutAdmin"; 
+} 
+ 
+<!DOCTYPE html> 
+ 
+<html> 
+<head> 
+    <meta name="viewport" content="width=device-width" /> 
+    <title>เช็คปัญหา</title> 
+</head> 
+<body> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="col-12 grid-margin"> 
+                <div class="card"> 
+                    <div class="card-body"> 
+                        <br /> 
+                        <table id="tblReport" class="table table-bordered"> 
+                            <thead> 
+                                <tr> 
+                                    <th align="left" class="h2 productth text-primary">รหัสร้องเรียน</th> 
+                                    <th align="left" class="h2 productth text-primary">ผู้ส่ง</th> 
+                                    <th align="left" class="h2 productth text-primary">ข้อความ</th> 
+                                    <th align="left" class="h2 productth text-primary">วันเวลาที่ส่ง</th> 
+                                    <th align="left" class="h2 productth text-primary text-center">จัดการ</th> 
+                                </tr> 
+                            </thead> 
+                            <tbody></tbody> 
+                        </table> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+    <script> 
+        $(document).ready(function () { 
+            LoadReport(); 
+        }); 
+ 
+        setInterval('LoadReport()', 10000); 
+ 
+        function LoadReport() { 
+        $("#tblReport tbody tr").remove(); 
+        $.ajax({ 
+            type: 'post', 
+            url: '../Admin/ReportList', 
+            dataType: 'json', 
+            success: function (reports) { 
+                var items = ''; 
+                $.each(reports, function (i, item) { 
+                    var rows = "<tr>" 
+                        + "<td class='prtoducttd'>" + item.report_id2 + "</td>" 
+                        + "<td class='prtoducttd'>" + item.report_Owner + "</td>" 
+                        + "<td class='prtoducttd'>" + item.report_message + "</td>" 
+                        + "<td class='prtoducttd'>" + item.report_datetime + "</td>" 
+                        + "<td class='prtoducttd text-center'><a class = 'badge badge-primary' href='#' onclick='addReport(" + item.report_id + ")'>รับเรื่อง</a></td>"  
+                        + "</tr>"; 
+                    $('#tblReport tbody').append(rows); 
+                }); 
+            }, 
+            error: function (ex) { 
+                var r = jQuery.parseJSON(response.responseText); 
+                alert("Message: " + r.Message); 
+                alert("StackTrace: " + r.StackTrace); 
+                alert("ExceptionType: " + r.ExceptionType); 
+            } 
+                    }); 
+        } 
+ 
+        function addReport(report_id) 
+        { 
+            $.ajax({ 
+                type: "post", 
+                url: "../Admin/AddReport?report_id=" + report_id, 
+                success: function (result) { 
+                    if (result == "Fail") { 
+                        swal({ 
+                            position: 'center', 
+                            type: 'error', 
+                            title: 'รับเรื่องล้มเหลว', 
+                            showConfirmButton: false, 
+                            timer: 3000 
+                        }); 
+                    } else { 
+                        swal({ 
+                            position: 'center', 
+                            type: 'success', 
+                            title: 'รับเรื่องเรียบร้อย', 
+                            showConfirmButton: false, 
+                            timer: 2000 
+                        }); 
+                        LoadReport(); 
+                    } 
+                } 
+            }); 
+        } 
+    </script> 
+</body> 
+</html> 
