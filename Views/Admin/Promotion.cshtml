@@ -19,15 +19,15 @@
                         <h1 class="text-primary text-center">จัดการโปรโมชัน</h1>                                             
                      
                         <br /> 
-                        <table id="tblPromotion" class="table table-bordered"> 
+                        <table id="tblPromotion" class="table table-hover" style="table-layout: fixed;"> 
                             <thead> 
                                 <tr> 
-                                    <th align="left" class="h2 productth text-primary">ชื่อ</th> 
-                                    <th align="left" class="h2 productth text-primary">รายละเอียด</th> 
-                                    <th align="left" class="h2 productth text-primary">ราคา</th> 
-                                    <th align="left" class="h2 productth text-primary">วันที่เริ่ม</th> 
-                                    <th align="left" class="h2 productth text-primary">วันสิ้นสุด</th> 
-                                    <th align="left" class="h2 productth text-primary text-center">จัดการ</th> 
+                                    <th class="h2 productth text-primary" width="8%">ชื่อ</th> 
+                                    <th class="h2 productth text-primary" width="50%">รายละเอียด</th> 
+                                    <th class="h2 productth text-primary" width="5">ราคา</th> 
+                                    <th class="h2 productth text-primary">วันที่เริ่ม</th> 
+                                    <th class="h2 productth text-primary">วันสิ้นสุด</th> 
+                                    <th class="h2 productth text-primary text-center">จัดการ</th> 
                                 </tr> 
                             </thead> 
                             <tbody></tbody> 
@@ -137,7 +137,6 @@
     <script> 
         $(document).ready(function () {
             LoadPromotion();
-            LoadPromotionEX();
         }); 
  
         $("#b1").click(function () { 
@@ -189,31 +188,9 @@
                             timer: 2000
                         });
                         LoadPromotion();
-                        LoadPromotionEX();
                     }
                 }
             });  
-        } 
- 
-        function LoadPromotionEX() {
-            $('#promotion1 div').remove();
-            $.ajax({
-                type: 'post',
-                url: '../Admin/LoadPromotion',
-                dataType: 'json',
-                success: function (promotions) {
-                    var items = '';
-                    $.each(promotions, function (i, item) {
-                        $('#promotion1').append('<div class="col-third" id="' + item.promotion_id+'"><div class= "col-md-12" ><div class="price-box text-center"><div id="' + item.promotion_id + '"><h3><b>' + item.title + '</b></h3><h2 class="text-org"><b>' + item.price + ' บาท</b></h2 ><h3><b>ต่อเดือน</b></h3><div class="gr-line"></div><div>' + item.detail + '</div><div class="gr-line"></div><div>โปรโมชั่นนี้จะหมดเขต ' + item.endDate + '</div></div>');
-                    });
-                },
-                error: function (ex) {
-                    var r = jQuery.parseJSON(response.responseText);
-                    alert("Message: " + r.Message);
-                    alert("StackTrace: " + r.StackTrace);
-                    alert("ExceptionType: " + r.ExceptionType);
-                }
-            });
         } 
  
         function LoadPromotion() {
@@ -226,12 +203,12 @@
                     var items = '';
                     $.each(promotions, function (i, item) {
                         var rows = "<tr>"
-                            + "<td class='prtoducttd'>" + item.title + "</td>"
-                            + "<td class='prtoducttd'>" + item.detail + "</td>"
-                            + "<td class='prtoducttd'>" + item.price + "</td>"
-                            + "<td class='prtoducttd'>" + item.startDate + "</td>"
-                            + "<td class='prtoducttd'>" + item.endDate + "</td>"
-                            + "<td class='prtoducttd text-center'><a class = 'badge badge-danger' href='#' onclick='deletePromotion(" + item.promotion_id + ")'>ลบ</a></td>"
+                            + "<td>" + item.title + "</td>"
+                            + "<td>" + item.detail + "</td>"
+                            + "<td>" + item.price + "</td>"
+                            + "<td>" + item.startDate + "</td>"
+                            + "<td>" + item.endDate + "</td>"
+                            + "<td class='text-center'><a class = 'badge badge-danger' href='#' onclick='deletePromotion(" + item.promotion_id + ")'>ลบ</a></td>"
                             + "</tr>";
                         $('#tblPromotion tbody').append(rows);
                     });
@@ -267,7 +244,6 @@
                             timer: 2000
                         });
                         LoadPromotion();
-                        LoadPromotionEX();
                     }
                 }
             });

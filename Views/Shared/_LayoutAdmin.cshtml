@@ -1,4 +1,4 @@
- 
+﻿ 
  
 <!DOCTYPE html> 
 <html> 
@@ -63,33 +63,39 @@
         <div class="container-fluid page-body-wrapper"> 
             <!-- partial:partials/_sidebar.html --> 
             <nav class="sidebar sidebar-offcanvas" id="sidebar"> 
-                <ul class="nav"> 
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Admin" asp-action="Administrator"> 
-                            <i class="menu-icon mdi mdi-home-account mdi-36px"></i> 
-                            <span class="menu-title ml-4">หน้าแรก</span> 
-                        </a> 
-                    </li> 
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Admin" asp-action="CheckReport"> 
-                            <i class="menu-icon mdi mdi-checkbox-multiple-blank-outline mdi-36px"></i> 
-                            <span class="menu-title ml-4">เช็คปัญหา</span> 
-                        </a> 
-                    </li> 
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Admin" asp-action="Work"> 
-                            <i class="menu-icon mdi mdi-checkbox-multiple-marked-outline mdi-36px"></i> 
-                            <span class="menu-title ml-4">ปัญหาที่รับมา</span> 
-                        </a> 
-                    </li> 
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Admin" asp-action="Promotion"> 
-                            <i class="menu-icon mdi mdi-approval mdi-36px"></i> 
-                            <span class="menu-title ml-4">โปรโมชั่น</span> 
-                        </a> 
-                    </li> 
- 
- 
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Administrator">
+                            <i class="menu-icon mdi mdi-home-account mdi-36px"></i>
+                            <span class="menu-title ml-4">หน้าแรก</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="CheckReport">
+                            <i class="menu-icon mdi mdi-checkbox-multiple-blank-outline mdi-36px"></i>
+                            <span class="menu-title ml-4">เช็คปัญหา</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Work">
+                            <i class="menu-icon mdi mdi-checkbox-multiple-marked-outline mdi-36px"></i>
+                            <span class="menu-title ml-4">ปัญหาที่รับมา</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Promotion">
+                            <i class="menu-icon mdi mdi-approval mdi-36px"></i>
+                            <span class="menu-title ml-4">โปรโมชั่น</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Announce">
+                            <i class="menu-icon mdi mdi-approval mdi-36px"></i>
+                            <span class="menu-title ml-4">ประกาศ</span>
+                        </a>
+                    </li>
+
+
                 </ul> 
             </nav> 
             @RenderBody() 

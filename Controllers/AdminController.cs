@@ -427,7 +427,7 @@ namespace MASdemo.Controllers
                 {
                     OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
                     oraclecon.Open();
-                    string query1 = "insert into \"Promotion\" (\"Promotion_id\",\"Title\",\"Detail\",\"Price\",\"Startdate\", \"Enddate\") values(to_char(sequence_promotion.nextval,'FM00000'),'" + title + "','" + detail + "'," + price + ",TO_DATE('" + startdate + " 23:59:59" + "', 'yyyy-mm-dd HH24:MI:SS'),TO_DATE('" + enddate + " 23:59:59" + "', 'yyyy-mm-dd HH24:MI:SS'))";
+                    string query1 = "insert into \"Promotion\" (\"Promotion_id\",\"Title\",\"Detail\",\"Price\",\"Startdate\", \"Enddate\") values(to_char(sequence_promotion.nextval,'FM00000'),'" + title + "','" + detail + "'," + price + ",TO_DATE('" + startdate + "', 'yyyy-mm-dd'),TO_DATE('" + enddate + "', 'yyyy-mm-dd'))";
                     OracleCommand oraclecom1 = new OracleCommand(query1);
                     oraclecom1.Connection = oraclecon;
                     OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
@@ -458,7 +458,7 @@ namespace MASdemo.Controllers
                 {
                     OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
                     oraclecon.Open();
-                    string query1 = "SELECT \"Promotion_id\",\"Title\",\"Detail\",\"Price\",TO_CHAR(\"Startdate\", 'dd-MM-yyyy hh:mm:ss') as \"Startdate\" , TO_CHAR(\"Enddate\", 'dd-MM-yyyy hh:mm:ss') as \"Enddate\" FROM \"Promotion\" ORDER BY \"Promotion_id\" ";
+                    string query1 = "SELECT \"Promotion_id\",\"Title\",\"Detail\",\"Price\",TO_CHAR(\"Startdate\", 'DD MON YYYY') as \"Startdate\" , TO_CHAR(\"Enddate\", 'DD MON YYYY') as \"Enddate\" FROM \"Promotion\" ORDER BY \"Promotion_id\" ";
                     OracleCommand oraclecom1 = new OracleCommand(query1);
                     oraclecom1.Connection = oraclecon;
                     OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
@@ -517,5 +517,159 @@ namespace MASdemo.Controllers
                 return Json(result);
             }
         }
+
+        public IActionResult Announce()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+            }
+            return View();
+        }
+
+        public IActionResult LoadAnnounce()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                List<Announce> announces = new List<Announce>();
+                List<AnnounceMain> announceMains = new List<AnnounceMain>();
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "SELECT \"Announce_id\",\"Message\",\"Admin_id\",TO_CHAR(\"Datetime\", 'DD MON YYYY') as \"Date\" FROM \"Announce\" ORDER BY \"Announce_id\" ";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    if (oracleReader1.HasRows)
+                    {
+                        while (oracleReader1.Read())
+                        {
+                            announces.Add(new Announce()
+                            {
+                                Announce_id = oracleReader1.GetInt32(oracleReader1.GetOrdinal("Announce_id")),
+                                Message = oracleReader1["Message"].ToString(),
+                                Admin_id = oracleReader1.GetInt32(oracleReader1.GetOrdinal("Admin_id")),
+                                Date = oracleReader1["Date"].ToString()
+                            });
+                        }
+                    }
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                foreach(var ann in announces)
+                {
+                    try
+                    {
+                        sqlcon.Open();
+                        string query1 = "SELECT * FROM Admin WHERE Admin_id = " +ann.Admin_id+ " AND Status = 1 ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        if (sqlReader1.HasRows)
+                        {
+                            while (sqlReader1.Read())
+                            {
+                                announceMains.Add(new AnnounceMain()
+                                {
+                                    Announce_id = ann.Announce_id,
+                                    Message = ann.Message,
+                                    Admin_name = sqlReader1["Name"].ToString(),
+                                    Date = ann.Date
+                                });
+                            }
+                        }
+                        else
+                        {
+                            result = "Fail";
+                        }
+                        sqlcon.Close();
+                    }
+                    catch (Exception fails)
+                    {
+                        result = "Fail" + fails;
+                        result = "Fail";
+                    }
+                }
+
+                return Json(announceMains);
+            }
+        }
+
+        public IActionResult AddAnnounce(string message)
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "insert into \"Announce\" (\"Announce_id\", \"Message\",\"Datetime\", \"Admin_id\") values(to_char(sequence_announce.nextval,'FM00000'),'"+message+"',TO_DATE(SYSDATE, 'dd-mm-yyyy'),"+ HttpContext.Session.GetInt32("AdminID") + ") ";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    result = "Insert OK";
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+
+                return Json(result);
+            }
+        }
+
+        public IActionResult DeleteAnnounce(int announce_id)
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "DELETE FROM \"Announce\" WHERE \"Announce_id\" = " + announce_id + " ";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    result = "Delete";
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+
+                return Json(result);
+            }
+        }
+
     }
 }

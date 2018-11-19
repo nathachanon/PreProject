@@ -1,4 +1,4 @@
-@{
+﻿@{
 Layout = null;
 }
 
@@ -63,11 +63,7 @@ Layout = null;
                     <div class="col-xs-10 text-right menu-1"> 
                         <ul> 
                             <li><a href="#">หน้าหลัก</a></li> 
-                            <li><a href="#">บริการ</a></li>                    
-                            <li><a href="#">ฟีเจอร์</a></li> 
-                              <li><a href="#fh5co-bg-section">เกี่ยวกับ</a></li> 
                             <li  ><a asp-controller="User" asp-action="Login">เข้าสู่ระบบ</a>
-                            
                             <li><a asp-controller="User" asp-action="Register">สมัครสมาชิก</a></li> 
                         </ul> 
                     </div> 
@@ -104,63 +100,27 @@ Layout = null;
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit duis sed dapibus leonec.</p>
                             </div>
                             <div class="row">
-                            <div class="col-md-4 col-sm-4 animate-box">
-                                <div class="pricing-table">
-                                <div class="plan-name">
-                                    <h3>Basic</h3>
-                                </div>
-                                <div class="plan-price">
-                                    <div class="price-value">299 ฿</div>
-                                </div>
-                                <div class="plan-list">
-                                    <ul>
-                                     <li><strong>ใช้ได้ 2 หอ 50 ห้อง</strong></li>
-                                     <li><strong>ระยะเวลาโปรโมชัน</strong></li>
-                                    </ul>
-                                </div>
-                                <div class="plan-signup"> <a href="#" class="btn-system">Order Now</a> </div>
-                                </div>
-                            </div>
+                                @foreach (var p in ViewBag.Promotion)
+                                {
+                                    <div class="col-md-4 col-sm-4 text-center animate-box">
+                                        <div class="pricing-table ">
+                                            <div class="plan-name">
+                                                <h3>@p.Title</h3>
+                                            </div>
+                                            <div class="plan-price">
+                                                <div class="price-value">@p.Price ฿</div>
+                                            </div>
+                                            <div class="plan-list ">
+                                                <ul>
+                                                    <li><strong>@p.Detail</strong></li>
+                                                    <li><strong>สิ้นสุดโปรโมชั่น @p.EndDate</strong></li>
 
-
-                            <div class="col-md-4 col-sm-4 text-center animate-box">
-                                <div class="pricing-table ">
-                                <div class="plan-name">
-                                    <h3>Standard</h3>
-                                </div>
-                                <div class="plan-price">
-                                    <div class="price-value">399 ฿</div>
-                                </div>
-                                <div class="plan-list ">
-                                    <ul>
-                                    <li><strong>ใช้ได้ 2 หอ 50 ห้อง</strong></li>
-                                    <li><strong>ระยะเวลาโปรโมชัน</strong></li>
-                                    
-                                    </ul>
-                                </div>
-                                <div class="plan-signup"> <a href="#" class="btn-system ">Order Now</a> </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4 col-sm-4 animate-box">
-                                <div class="pricing-table">
-                                <div class="plan-name">
-                                    <h3>Professional</h3>
-                                </div>
-                                <div class="plan-price">
-                                    <div class="price-value">499 ฿</div>
-                                </div>
-                                <div class="plan-list">
-                                    <ul>
-                                     <li><strong>ใช้ได้ 2 หอ 50 ห้อง</strong></li>
-                                     <li><strong>ระยะเวลาโปรโมชัน</strong></li>
-                                    </ul>
-                                </div>
-                                <div class="plan-signup"> <a href="#" class="btn-system">Order Now</a> </div>
-                                </div>
-                            </div>
-
+                                                </ul>
+                                            </div>
+                                            <div class="plan-signup"> <a href="#" class="btn-system ">จองเลย !</a> </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                         </div>
@@ -316,66 +276,28 @@ Layout = null;
             </div> 
         </div> 
         <div id="fh5co-testimonial"> 
-            <div class="container"> 
-                <div class="row animate-box"> 
-                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading"> 
-                        <h2>ประกาศจากผู้พัฒนา</h2> 
-                    </div> 
-                </div> 
-                <div class="row"> 
-                    <div class="col-md-4 animate-box"> 
-                        <div class="testimony"> 
-                            <blockquote> 
-                                &ldquo;Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius&rdquo; 
-                            </blockquote> 
-                            <p class="author"><cite>John Doe</cite></p> 
-                        </div> 
-                    </div> 
-                    <div class="col-md-4 animate-box"> 
-                        <div class="testimony"> 
-                            <blockquote> 
-                                &ldquo;Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius&rdquo; 
-                            </blockquote> 
-                            <p class="author"><cite>Rob Smith</cite></p> 
-                        </div> 
-                    </div> 
-                    <div class="col-md-4 animate-box"> 
-                        <div class="testimony"> 
-                            <blockquote> 
-                                &ldquo;Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius&rdquo; 
-                            </blockquote> 
-                            <p class="author"><cite>Jane Doe</cite></p> 
-                        </div> 
-                    </div> 
-                </div> 
-            </div> 
+            <div class="container">
+                <div class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+                        <h2>ประกาศจากผู้พัฒนา</h2>
+                    </div>
+                </div>
+                    <div class="row">
+                        @foreach (var a in ViewBag.Announce)
+                        {
+                            <div class="col-md-4 animate-box">
+                                <div class="testimony">
+                                    <blockquote>
+                                        &ldquo;@a.Message&rdquo;
+                                    </blockquote>
+                                    <p class="author"><cite>Developer Team : @a.Admin_name</cite></p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+            </div>
         </div> 
- 
-        <div id="fh5co-started"> 
-            <div class="container"> 
-                <div class="row animate-box"> 
-                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading"> 
-                        <h2>Newsletter</h2> 
-                        <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p> 
-                    </div> 
-                </div> 
-                <div class="row animate-box"> 
-                    <div class="col-md-8 col-md-offset-2"> 
-                        <form class="form-inline"> 
-                            <div class="col-md-6 col-sm-6"> 
-                                <div class="form-group"> 
-                                    <label for="email" class="sr-only">Email</label> 
-                                    <input type="email" class="form-control" id="email" placeholder="Email"> 
-                                </div> 
-                            </div> 
-                            <div class="col-md-6 col-sm-6"> 
-                                <button type="submit" class="btn btn-default btn-block">Subscribe</button> 
-                            </div> 
-                        </form> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
+
         <footer id="fh5co-footer" role="contentinfo"> 
             <div class="container"> 
               

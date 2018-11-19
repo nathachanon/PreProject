@@ -103,4 +103,20 @@ namespace MASdemo.Models
         public string Tel { get; set; } 
         public string Picture { get; set; } 
     }
+
+    public class Announce
+    {
+        public int Announce_id { get; set; }
+        public string Message { get; set; }
+        public int Admin_id { get; set; }
+        public string Date { get; set; }
+    }
+
+    public class AnnounceMain
+    {
+        public int Announce_id { get; set; }
+        public string Message { get; set; }
+        public string Admin_name { get; set; }
+        public string Date { get; set; }
+    }
 }

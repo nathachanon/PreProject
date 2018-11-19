@@ -1,53 +1,54 @@
- 
-@{ 
-    Layout = "_Layout"; 
-} 
- 
-<!DOCTYPE html> 
- 
-<html> 
-<head> 
-    <meta name="viewport" content="width=device-width" /> 
-    <meta charset="utf-8"> 
-    <title>รายงานปัญหา</title> 
-</head> 
-<body> 
-    <div class="main-panel"> 
-        <div class="content-wrapper"> 
-            <div class="col-12 grid-margin"> 
-                <div class="card"> 
-                    <div class="card-body"> 
-                        <div class="form-group text-center"> 
-                            <label for="message" style="font-size:30px;">ระบุปัญหา หรือ ข้อเสนอแนะ</label> 
-                            <textarea class="form-control col-sm-5" id="message" rows="2" style="margin-left: auto;margin-right: auto;"></textarea> 
-                            <br /> 
-                            <button id="sendReport" type="button" class="btn btn-success mr-2">ส่ง</button> 
-                        </div> 
-                        <br /> 
-                        <table id="tblReport" class="table table-bordered"> 
-                            <thead> 
-                                <tr> 
-                                    <th align="left" class="h2 productth text-primary">รหัสร้องเรียน</th> 
-                                    <th align="left" class="h2 productth text-primary">ข้อความ</th> 
-                                    <th align="left" class="h2 productth text-primary">วันเวลาที่ส่งรายงาน</th> 
-                                    <th align="left" class="h2 productth text-primary text-center">สถานะ</th> 
-                                </tr> 
-                            </thead> 
-                            <tbody></tbody> 
-                        </table> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
-    </div> 
-    <script> 
+﻿
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <title>รายงานปัญหา</title>
+</head>
+<body>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group text-center">
+                            <label for="message" style="font-size:30px;">ระบุปัญหา หรือ ข้อเสนอแนะ</label>
+                            <textarea class="form-control col-sm-5" id="message" rows="2" style="margin-left: auto;margin-right: auto;"></textarea>
+                            <br />
+                            <button id="sendReport" type="button" class="btn btn-success mr-2">ส่ง</button>
+                        </div>
+                        <br />
+                        <table id="tblReport" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th><b>รหัสร้องเรียน</b></th>
+                                    <th><b>ข้อความ</b></th>
+                                    <th><b>วันเวลาที่ส่งรายงาน</b></th>
+                                    <th class="text-center"><b>สถานะ</b></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
         $(document).ready(function () {
             LoadReport();
-        });       
- 
-        setInterval('LoadReport()', 10000); 
- 
-        $("#sendReport").click(function () { 
+        });
+
+        setInterval('LoadReport()', 10000);
+
+        $("#sendReport").click(function () {
             var message = $("#message").val();
             if (message != "") {
                 $.ajax({
@@ -74,18 +75,18 @@
                             LoadReport();
                         }
                     }
-                }) 
-            } else { 
+                })
+            } else {
                 swal({
                     position: 'center',
                     type: 'error',
                     title: 'กรุณาใส่ข้อความก่อนส่ง',
                     showConfirmButton: false,
                     timer: 3000
-                }); 
-            } 
-        }); 
- 
+                });
+            }
+        });
+
         function LoadReport() {
         $("#tblReport tbody tr").remove();
         $.ajax({
@@ -97,18 +98,18 @@
                 $.each(reports, function (i, item) {
                     var status;
                     if (item.report_status == 0) {
-                        status = "<td class='text-center'><label class='badge badge-danger text-center'>คุณยังไม่เคยส่งรายงาน</label></td>" 
+                        status = "<td class='text-center'><label class='badge badge-danger text-center'>คุณยังไม่เคยส่งรายงาน</label></td>"
                     } else if (item.report_status == 1) {
-                        status = "<td class='text-center'><label class='badge badge-warning text-center'>รายงานถูกส่งไปแล้วรอผู้ดูแลระบบตรวจสอบ</label></td>" 
+                        status = "<td class='text-center'><label class='badge badge-warning text-center'>รายงานถูกส่งไปแล้วรอผู้ดูแลระบบตรวจสอบ</label></td>"
                     } else if (item.report_status == 2) {
-                        status = "<td class='text-center'><label class='badge badge-info text-center'>ผู้ดูแลระบบกำลังตรวจสอบและแก้ไข</label></td>" 
+                        status = "<td class='text-center'><label class='badge badge-info text-center'>ผู้ดูแลระบบกำลังตรวจสอบและแก้ไข</label></td>"
                     } else if (item.report_status == 3) {
-                        status = "<td class='text-center'><label class='badge badge-success text-center'>ปัญหาที่คุณส่งมาได้รับการแก้ไขแล้ว</label></td>" 
+                        status = "<td class='text-center'><label class='badge badge-success text-center'>ปัญหาที่คุณส่งมาได้รับการแก้ไขแล้ว</label></td>"
                     }
                     var rows = "<tr>"
-                        + "<td class='prtoducttd'>" + item.report_id + "</td>"
-                        + "<td class='prtoducttd'>" + item.report_message + "</td>"
-                        + "<td class='prtoducttd'>" + item.report_datetime + "</td>"
+                        + "<td>" + item.report_id + "</td>"
+                        + "<td>" + item.report_message + "</td>"
+                        + "<td>" + item.report_datetime + "</td>"
                         + status
                         + "</tr>";
                     $('#tblReport tbody').append(rows);
@@ -119,9 +120,9 @@
                 alert("Message: " + r.Message);
                 alert("StackTrace: " + r.StackTrace);
                 alert("ExceptionType: " + r.ExceptionType);
-            } 
+            }
                     });
-            } 
-    </script> 
-</body> 
-</html> 
+            }
+    </script>
+</body>
+</html>
