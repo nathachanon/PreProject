@@ -33,6 +33,7 @@ namespace MASdemo.Controllers
             else
             {
                 ViewBag.myName = HttpContext.Session.GetString("Name");
+                ViewBag.Profile = HttpContext.Session.GetString("Picture");
                 ViewBag.did = did;
                 int mydid = did;
                 var context = new masdatabaseContext();
@@ -336,6 +337,7 @@ namespace MASdemo.Controllers
                 HttpContext.Session.SetInt32("isDid", did);
                 int countdid = 0;
                 ViewBag.myName = HttpContext.Session.GetString("Name");
+                ViewBag.Profile = HttpContext.Session.GetString("Picture");
                 string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
                 MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
                 mysqlcon.Open();

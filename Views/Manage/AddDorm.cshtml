@@ -1,286 +1,286 @@
-﻿@{
-Layout = "_Layout";
-}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css">
-    <script src="~/js/sweetalert2.all.min.js"></script>
-    <script src="~/js/sweetalert2.min.js"></script>
-    <link href="~/css/imgFile.css" rel="stylesheet" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>จัดการหอพัก</title>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <style>
-        .form-controlfloor {  
-            border: 1px solid #f2f2f2;  
-            font-family: 'Kanit', sans-serif;  
-            font-size: 1rem;  
-            padding: 0.56rem 0.75rem;  
-            line-height: 14px;  
-            font-weight: 300;  
-            width: 40%;  
-        }  
-        .form-control {  
-            border: 1px solid #f2f2f2;  
-            font-family: 'Kanit', sans-serif;  
-            font-size: 1rem;  
-            padding: 0.56rem 0.75rem;  
-            line-height: 14px;  
-            font-weight: 300;  
-            width: 25%;  
-        }  
-    </style>
-</head>
-
-<body>
-    @Html.Raw(TempData["loginSuccessful"])
-    <div class="main-panel">
-        <div class="content-wrapper">
-            <div class="col-12 grid-margin">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="font-weight-medium text-primary text-center ">
-                            <i class="mdi mdi-city mdi-48px text-info"></i>
-                            กรุณาระบุข้อมูลหอพัก
-                            <i class="mdi mdi-city mdi-48px text-info"></i>
-                        </h3>
-                        <form class="form-sample" asp-controller="Manage" asp-action="AddDorm" method="POST" enctype="multipart/form-data">
-                            <h4 class="card-description text-primary">
-                                ข้อมูลหอพัก
-                            </h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">ชื่อหอ</label>
-                                        <div class="col-sm-9">
-                                            <div class="input-group">
-                                                <input name="d_name" required type="text" class="form-control"
-                                                    placeholder="ชื่อหอพัก" autocomplete="off">
-                                                <div class="input-group-append bg-info border-primary">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <i class="mdi mdi-city mdi-24px text-white"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">อัพโหลดรูปภาพ</label>
-                                        <div class="col-sm-9">
-
-                                            <div class="input-group mpv ">
-                                                <input disabled type="text" class="form-control image-preview-filename">
-                                                <span class="input-group-btn">
-                                                    <div class=" image-preview-input">
-                                                        <span class="glyphicon-folder-open"></span>
-                                                        <span id="hov" class="btn btn-default  bg-info border-info image-preview-input img-title "><i
-                                                                id="icon" class="mdi mdi-image mdi-24px text-white"></i></span>
-                                                        <input type="file" accept="image/png, image/jpeg, image/gif"
-                                                            name="picture" />
-                                                    </div>
-                                                </span>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">ระบุค่าน้ำ</label>
-                                        <div class="col-sm-9">
-                                            <div class="input-group">
-                                                <input name="setwater" type="text" class="form-control" placeholder="ค่าน้ำต่อยูนิต"
-                                                    aria-describedby="colored-addon3" autocomplete="off" required>
-                                                <div class="input-group-append bg-info border-primary">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <i class="mdi mdi-water mdi-24px text-white"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">ระบุค่าไฟ</label>
-                                        <div class="col-sm-9">
-                                            <div class="input-group">
-                                                <input name="setelec" type="text" class="form-control" placeholder="ค่าไฟต่อยูนิต"
-                                                    aria-describedby="colored-addon3" autocomplete="off" required>
-                                                <div class="input-group-append bg-info border-primary">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <i class="mdi mdi-speedometer mdi-24px text-white"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">ระบุชั้น</label>
-                                        <div class="col-sm-9">
-                                            <div class="input-group">
-                                                <input id="myfloor" name="floor" type="text" class="form-control"
-                                                    maxlength="2" placeholder="หอมีทั้งหมดกี่ชั้น" aria-describedby="colored-addon3"
-                                                    autocomplete="off" required>
-                                                <div class="input-group-append bg-info border-primary">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <i class="mdi mdi-table-column-plus-after mdi-24px text-white"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div id="floor1" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label aj">ชั้นที่ 1</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_1" class="form-control" type="text" name="floor1"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor2" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label">ชั้นที่ 2</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_2" class="form-control" type="text" name="floor2"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor3" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label">ชั้นที่ 3</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_3" class="form-control" type="text" name="floor3"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor4" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label aj">ชั้นที่ 4</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_4" class="form-control" type="text" name="floor4"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor5" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label">ชั้นที่ 5</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_5" class="form-control" type="text" name="floor5"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor6" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label">ชั้นที่ 6</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_6" class="form-control" type="text" name="floor6"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor7" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label">ชั้นที่ 7</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_7" class="form-control" type="text" name="floor7"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor8" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label aj">ชั้นที่ 8</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_8" class="form-control" type="text" name="floor8"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor9" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label">ชั้นที่ 9</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_9" class="form-control" type="text" name="floor9"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="floor10" class="form-group row" style="display: none">
-                                        <label class="col-sm-3 col-form-label">ชั้นที่ 10</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input id="floor_10" class="form-control" type="text" name="floor10"
-                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class=" text-center">
-                                <button type="submit" class="btn btn-outline-success   btn-block btn-rounded  btn-3 btn-fw item-center">
-                                    <i class="mdi mdi-check"></i>บันทึก
-                                </button>
-                            </div>
-
-
-
-
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-    <script src="~/js/dorm/myfloor.js"></script>
-    <script src="~/js/imgFile.js"></script>
-</body>
-
+﻿@{ 
+Layout = "_Layout"; 
+} 
+ 
+<!DOCTYPE html> 
+<html lang="en"> 
+ 
+<head> 
+    <link rel="stylesheet" type="text/css" src="~/css/sweetalert2.min.css"> 
+    <script src="~/js/sweetalert2.all.min.js"></script> 
+    <script src="~/js/sweetalert2.min.js"></script> 
+    <link href="~/css/imgFile.css" rel="stylesheet" /> 
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <title>จัดการหอพัก</title> 
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
+    <style> 
+        .form-controlfloor {   
+            border: 1px solid #f2f2f2;   
+            font-family: 'Kanit', sans-serif;   
+            font-size: 1rem;   
+            padding: 0.56rem 0.75rem;   
+            line-height: 14px;   
+            font-weight: 300;   
+            width: 40%;   
+        }   
+        .form-control {   
+            border: 1px solid #f2f2f2;   
+            font-family: 'Kanit', sans-serif;   
+            font-size: 1rem;   
+            padding: 0.56rem 0.75rem;   
+            line-height: 14px;   
+            font-weight: 300;   
+            width: 25%;   
+        }   
+    </style> 
+</head> 
+ 
+<body> 
+    @Html.Raw(TempData["loginSuccessful"]) 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="col-12 grid-margin"> 
+                <div class="card"> 
+                    <div class="card-body"> 
+                        <h3 class="font-weight-medium text-primary text-center "> 
+                            <i class="mdi mdi-city mdi-48px text-info"></i> 
+                            กรุณาระบุข้อมูลหอพัก 
+                            <i class="mdi mdi-city mdi-48px text-info"></i> 
+                        </h3> 
+                        <form class="form-sample" asp-controller="Manage" asp-action="AddDorm" method="POST" enctype="multipart/form-data"> 
+                            <h4 class="card-description text-primary"> 
+                                ข้อมูลหอพัก 
+                            </h4> 
+                            <div class="row"> 
+                                <div class="col-md-6"> 
+                                    <div class="form-group row"> 
+                                        <label class="col-sm-3 col-form-label">ชื่อหอ</label> 
+                                        <div class="col-sm-9"> 
+                                            <div class="input-group"> 
+                                                <input name="d_name" required type="text" class="form-control" 
+                                                    placeholder="ชื่อหอพัก" autocomplete="off"> 
+                                                <div class="input-group-append bg-info border-primary"> 
+                                                    <span class="input-group-text bg-transparent"> 
+                                                        <i class="mdi mdi-city mdi-24px text-white"></i> 
+                                                    </span> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div class="form-group row"> 
+                                        <label class="col-sm-3 col-form-label">อัพโหลดรูปภาพ</label> 
+                                        <div class="col-sm-9"> 
+ 
+                                            <div class="input-group mpv "> 
+                                                <input disabled type="text" class="form-control image-preview-filename"> 
+                                                <span class="input-group-btn"> 
+                                                    <div class=" image-preview-input"> 
+                                                        <span class="glyphicon-folder-open"></span> 
+                                                        <span id="hov" class="btn btn-default  bg-info border-info image-preview-input img-title "><i 
+                                                                id="icon" class="mdi mdi-image mdi-24px text-white"></i></span> 
+                                                        <input type="file" accept="image/png, image/jpeg, image/gif" 
+                                                            name="picture" /> 
+                                                    </div> 
+                                                </span> 
+                                            </div> 
+ 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <div class="row"> 
+                                <div class="col-md-6"> 
+                                    <div class="form-group row"> 
+                                        <label class="col-sm-3 col-form-label">ระบุค่าน้ำ</label> 
+                                        <div class="col-sm-9"> 
+                                            <div class="input-group"> 
+                                                <input name="setwater" type="number" class="form-control" placeholder="ค่าน้ำต่อยูนิต" 
+                                                    aria-describedby="colored-addon3" autocomplete="off" required> 
+                                                <div class="input-group-append bg-info border-primary"> 
+                                                    <span class="input-group-text bg-transparent"> 
+                                                        <i class="mdi mdi-water mdi-24px text-white"></i> 
+                                                    </span> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div class="form-group row"> 
+                                        <label class="col-sm-3 col-form-label">ระบุค่าไฟ</label> 
+                                        <div class="col-sm-9"> 
+                                            <div class="input-group"> 
+                                                <input name="setelec" type="number" class="form-control" placeholder="ค่าไฟต่อยูนิต" 
+                                                    aria-describedby="colored-addon3" autocomplete="off" required> 
+                                                <div class="input-group-append bg-info border-primary"> 
+                                                    <span class="input-group-text bg-transparent"> 
+                                                        <i class="mdi mdi-speedometer mdi-24px text-white"></i> 
+                                                    </span> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <div class="row"> 
+                                <div class="col-md-6"> 
+                                    <div class="form-group row"> 
+                                        <label class="col-sm-3 col-form-label">ระบุชั้น</label> 
+                                        <div class="col-sm-9"> 
+                                            <div class="input-group"> 
+                                                <input id="myfloor" name="floor" type="text" class="form-control" 
+                                                    maxlength="2" placeholder="หอมีทั้งหมดกี่ชั้น" aria-describedby="colored-addon3" 
+                                                    autocomplete="off" required> 
+                                                <div class="input-group-append bg-info border-primary"> 
+                                                    <span class="input-group-text bg-transparent"> 
+                                                        <i class="mdi mdi-table-column-plus-after mdi-24px text-white"></i> 
+                                                    </span> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <div class="row"> 
+                                <div class="col-md-6"> 
+                                    <div id="floor1" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label aj">ชั้นที่ 1</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_1" class="form-control" type="text" name="floor1" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor2" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label">ชั้นที่ 2</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_2" class="form-control" type="text" name="floor2" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor3" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label">ชั้นที่ 3</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_3" class="form-control" type="text" name="floor3" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor4" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label aj">ชั้นที่ 4</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_4" class="form-control" type="text" name="floor4" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor5" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label">ชั้นที่ 5</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_5" class="form-control" type="text" name="floor5" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor6" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label">ชั้นที่ 6</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_6" class="form-control" type="text" name="floor6" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor7" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label">ชั้นที่ 7</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_7" class="form-control" type="text" name="floor7" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor8" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label aj">ชั้นที่ 8</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_8" class="form-control" type="text" name="floor8" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor9" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label">ชั้นที่ 9</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_9" class="form-control" type="text" name="floor9" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div id="floor10" class="form-group row" style="display: none"> 
+                                        <label class="col-sm-3 col-form-label">ชั้นที่ 10</label> 
+                                        <div class="col-sm-4"> 
+                                            <div class="input-group"> 
+                                                <input id="floor_10" class="form-control" type="text" name="floor10" 
+                                                    autocomplete="off" maxlength="2" value="" placeholder="ระบุห้อง"> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div> 
+ 
+ 
+                            <div class=" text-center"> 
+                                <button type="submit" class="btn btn-outline-success   btn-block btn-rounded  btn-3 btn-fw item-center"> 
+                                    <i class="mdi mdi-check"></i>บันทึก 
+                                </button> 
+                            </div> 
+ 
+ 
+ 
+ 
+ 
+                        </form> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+ 
+ 
+ 
+ 
+ 
+    <script src="~/js/dorm/myfloor.js"></script> 
+    <script src="~/js/imgFile.js"></script> 
+</body> 
+ 
 </html>

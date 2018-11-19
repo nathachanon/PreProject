@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using MASdemo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using Oracle.ManagedDataAccess.Client;
 
 namespace MASdemo.Controllers
 {
@@ -399,6 +398,124 @@ namespace MASdemo.Controllers
                 result = "Fail";
             }
             return Json(result);
+        }
+
+        public IActionResult Promotion()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+            }
+            return View();
+        }
+
+        public IActionResult AddPromotion(string title, string detail, int price, string startdate, string enddate)
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "insert into \"Promotion\" (\"Promotion_id\",\"Title\",\"Detail\",\"Price\",\"Startdate\", \"Enddate\") values(to_char(sequence_promotion.nextval,'FM00000'),'" + title + "','" + detail + "'," + price + ",TO_DATE('" + startdate + " 23:59:59" + "', 'yyyy-mm-dd HH24:MI:SS'),TO_DATE('" + enddate + " 23:59:59" + "', 'yyyy-mm-dd HH24:MI:SS'))";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    result = "Insert OK";
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+
+                return Json(result);
+            }
+        }
+
+        public IActionResult LoadPromotion()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                List<Promotion> promotions = new List<Promotion>();
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "SELECT \"Promotion_id\",\"Title\",\"Detail\",\"Price\",TO_CHAR(\"Startdate\", 'dd-MM-yyyy hh:mm:ss') as \"Startdate\" , TO_CHAR(\"Enddate\", 'dd-MM-yyyy hh:mm:ss') as \"Enddate\" FROM \"Promotion\" ORDER BY \"Promotion_id\" ";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    if (oracleReader1.HasRows)
+                    {
+                        while (oracleReader1.Read())
+                        {
+                            promotions.Add(new Promotion()
+                            {
+                                Promotion_id = oracleReader1.GetInt32(oracleReader1.GetOrdinal("Promotion_id")),
+                                Title = oracleReader1["Title"].ToString(),
+                                Detail = oracleReader1["Detail"].ToString(),
+                                Price = oracleReader1.GetInt32(oracleReader1.GetOrdinal("Price")),
+                                StartDate = oracleReader1["StartDate"].ToString(),
+                                EndDate = oracleReader1["EndDate"].ToString()
+                            });
+                        }
+                    }
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+
+                return Json(promotions);
+            }
+        }
+
+        public IActionResult DeletePromotion(int promotion_id)
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "DELETE FROM \"Promotion\" WHERE \"Promotion_id\" = " + promotion_id + " ";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    result = "Delete";
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+
+                return Json(result);
+            }
         }
     }
 }

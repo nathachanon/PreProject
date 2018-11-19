@@ -77,4 +77,30 @@ namespace MASdemo.Models
         public string Report_datetime { get; set; } 
         public string Report_Owner { get; set; } 
     }
+
+    public class Promotion 
+    { 
+        public int Promotion_id { get; set; } 
+        public string Detail { get; set; } 
+        public string StartDate { get; set; } 
+        public string EndDate { get; set; } 
+        public string Title { get; set; } 
+        public int Price { get; set; } 
+    }
+
+    public class Profile 
+    { 
+        public string Name { get; set; } 
+        public string Surname { get; set; } 
+        public string Tel { get; set; } 
+        public string Picture { get; set; } 
+    }
+
+    public class ProfileEdit 
+    { 
+        public string Name { get; set; } 
+        public string Surname { get; set; } 
+        public string Tel { get; set; } 
+        public string Picture { get; set; } 
+    }
 }

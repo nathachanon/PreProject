@@ -1,6 +1,28 @@
+function TelFormat(obj) {
+    var pattern = new String("___-___-____"); // กำหนดรูปแบบในนี้    
+    var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้    
+    var returnText = new String("");
+    var obj_l = obj.value.length;
+    var obj_l2 = obj_l - 1;
+    for (i = 0; i < pattern.length; i++) {
+        if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) {
+            returnText += obj.value + pattern_ex;
+            obj.value = returnText;
+        }
+    }
+    if (obj_l >= pattern.length) {
+        obj.value = obj.value.substr(0, pattern.length);
+    }
+}
+
 function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+}
+
+function phonenumber(inputtxt) {
+    var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    return phoneno.test(inputtxt);
 }
 
 var Register1 = function () {
@@ -16,6 +38,7 @@ var Register1 = function () {
         Register();
     }
 }
+
 function gotologin() {
     setTimeout(function () {
         window.location.href = "../User/Login";
@@ -40,32 +63,44 @@ var Register = function () {
         });
     } else {
         if (validateEmail(email)) {
-            $.ajax({
-                type: "post",
-                url: "/User/Register",
-                data: data,
-                success: function (result) {
-                    if (result == "Fail") {
-                        $('#email').val("");
-                        swal({
-                            position: 'center',
-                            error: 'error',
-                            title: 'Email นี้ถูกใช้งานไปแล้ว',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-                    } else {
-                        swal({
-                            position: 'center',
-                            type: 'success',
-                            title: 'ลงทะเบียนสำเร็จ',
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                        gotologin();
+
+            if (phonenumber(tel)) {
+                $.ajax({
+                    type: "post",
+                    url: "/User/Register",
+                    data: data,
+                    success: function (result) {
+                        if (result == "Fail") {
+                            $('#email').val("");
+                            swal({
+                                position: 'center',
+                                type: 'error',
+                                title: 'Email นี้ถูกใช้งานไปแล้ว',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                        } else {
+                            swal({
+                                position: 'center',
+                                type: 'success',
+                                title: 'ลงทะเบียนสำเร็จ',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            gotologin();
+                        }
                     }
-                }
-            })
+                });
+            } else {
+                $('#tel').val("");
+                swal({
+                    position: 'center',
+                    type: 'error',
+                    title: 'รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
         } else {
             swal({
                 position: 'center',

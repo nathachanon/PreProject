@@ -1,0 +1,158 @@
+ 
+@{ 
+    Layout = "_Layout"; 
+} 
+ 
+<!DOCTYPE html> 
+ 
+<html> 
+<head> 
+    <meta name="viewport" content="width=device-width" /> 
+    <title>EditProfile</title> 
+    <link href="~/css/imgFile.css" rel="stylesheet" /> 
+</head> 
+<body> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="col-12 grid-margin"> 
+                <div class="card"> 
+                    <div class="card-body"> 
+                        <h1 class="text-center text-info">แก้ไขข้อมูล</h1> 
+                        <br /> 
+                        <form class="form-sample" asp-controller="User" asp-action="EditProfiles" method="POST" enctype="multipart/form-data"> 
+ 
+                            @foreach (var p in ViewBag.profiles) 
+                            { 
+                                <div class="row"> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-3 col-form-label">ชื่อ</label> 
+                                            <div class="col-sm-9"> 
+                                                <div class="input-group"> 
+                                                    @if (p.Name != "") 
+                                                    { 
+                                                        <input name="name" required type="text" class="form-control" 
+                                                               placeholder="ชื่อ" autocomplete="off" value="@p.Name"> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <input name="name" required type="text" class="form-control" 
+                                                               placeholder="ชื่อ" autocomplete="off"> 
+                                                    } 
+                                                    <div class="input-group-append bg-info border-primary"> 
+                                                        <span class="input-group-text bg-transparent"> 
+                                                            <i class="mdi mdi-account-check mdi-24px text-white"></i> 
+                                                        </span> 
+                                                    </div> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-3 col-form-label">นามสกุล</label> 
+                                            <div class="col-sm-9"> 
+                                                <div class="input-group"> 
+                                                    @if (p.Surname != "") 
+                                                    { 
+                                                        <input name="surname" required type="text" class="form-control" 
+                                                               placeholder="นามสกุล" autocomplete="off" value="@p.Surname"> 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <input name="surname" required type="text" class="form-control" 
+                                                               placeholder="นามสกุล" autocomplete="off"> 
+                                                    } 
+                                                    <div class="input-group-append bg-info border-primary"> 
+                                                        <span class="input-group-text bg-transparent"> 
+                                                            <i class="mdi mdi-account-edit mdi-24px text-white"></i> 
+                                                        </span> 
+                                                    </div> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <div class="row"> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-3 col-form-label">เบอร์โทรศัพท์</label> 
+                                            <div class="col-sm-9"> 
+                                                <div class="input-group"> 
+                                                    @if (p.Tel != "") 
+                                                    { 
+                                                        <input name="tel" required type="tel" class="form-control" 
+                                                               placeholder="เบอร์โทรศัพท์" autocomplete="off" value="@p.Tel" onkeyup="TelFormat(this)"> 
+ 
+                                                    } 
+                                                    else 
+                                                    { 
+                                                        <input name="tel" required type="tel" class="form-control" 
+                                                               placeholder="เบอร์โทรศัพท์" autocomplete="off" onkeyup="TelFormat(this)"> 
+ 
+                                                    } 
+                                                    <div class="input-group-append bg-info border-primary"> 
+                                                        <span class="input-group-text bg-transparent"> 
+                                                            <i class="mdi mdi-phone-in-talk mdi-24px text-white"></i> 
+                                                        </span> 
+                                                    </div> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-6"> 
+                                        <div class="form-group row"> 
+                                            <label class="col-sm-3 col-form-label">รูปภาพ</label> 
+                                            <div class="col-sm-9"> 
+                                                <div class="input-group mpv "> 
+                                                    <input disabled type="text" class="form-control image-preview-filename" value="@p.Picture" placeholder="@p.Picture"> 
+                                                    <span class="input-group-btn"> 
+                                                        <div class=" image-preview-input"> 
+                                                            <span class="glyphicon-folder-open"></span> 
+                                                            <span id="hov" class="btn btn-default  bg-info border-info image-preview-input img-title "><i id="icon" class="mdi mdi-image mdi-24px text-white"></i></span> 
+                                                            <input value="@p.Picture" type="file" accept="image/png, image/jpeg, image/gif" name="picture" /> 
+                                                        </div> 
+                                                    </span> 
+                                                </div> 
+ 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+
+                                       
+                                </div> 
+                            } 
+                            <div class=" text-center"> 
+                                <button type="submit" class="btn btn-outline-success   btn-block btn-rounded  btn-3 btn-fw item-center"> 
+                                    <i class="mdi mdi-check"></i>บันทึก 
+                                </button> 
+                            </div> 
+                        </form> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+    <script> 
+ 
+        function TelFormat(obj) { 
+            var pattern = new String("___-___-____"); // กำหนดรูปแบบในนี้    
+            var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้    
+            var returnText = new String(""); 
+            var obj_l = obj.value.length; 
+            var obj_l2 = obj_l - 1; 
+            for (i = 0; i < pattern.length; i++) { 
+                if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) { 
+                    returnText += obj.value + pattern_ex; 
+                    obj.value = returnText; 
+                } 
+            } 
+            if (obj_l >= pattern.length) { 
+                obj.value = obj.value.substr(0, pattern.length); 
+            } 
+        } 
+ 
+    </script> 
+    <script src="~/js/imgFile.js"></script> 
+</body> 
+</html> 

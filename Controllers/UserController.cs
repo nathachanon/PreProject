@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO; 
 using System.Linq;
 using System.Threading;
 using MASdemo.Context;
 using MASdemo.Models;
 using MASdemo.Security;
+using Microsoft.AspNetCore.Hosting; 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols;
@@ -18,6 +20,12 @@ namespace MASdemo.Controllers
 
     public class UserController : Controller
     {
+        private readonly IHostingEnvironment he; 
+        public UserController(IHostingEnvironment e) 
+        { 
+            he = e; 
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -39,6 +47,14 @@ namespace MASdemo.Controllers
                 HttpContext.Session.SetString("Email", DataItem.Email);
                 HttpContext.Session.SetString("Surname", DataItem.Surname);
                 HttpContext.Session.SetString("Tel", DataItem.Tel);
+               if(DataItem.Picture == null) 
+                { 
+                    HttpContext.Session.SetString("Picture", "1"); 
+                } 
+                else 
+                { 
+                    HttpContext.Session.SetString("Picture", DataItem.Picture); 
+                }
                 HttpContext.Session.SetString("Log", "1");
                 result = "Success";
             }
@@ -93,6 +109,7 @@ namespace MASdemo.Controllers
             else
             {
                 ViewBag.myName = HttpContext.Session.GetString("Name");
+                ViewBag.Profile = HttpContext.Session.GetString("Picture");
                 return View();
             }
         }
@@ -149,6 +166,7 @@ namespace MASdemo.Controllers
             else
             {
                 ViewBag.myName = HttpContext.Session.GetString("Name");
+                ViewBag.Profile = HttpContext.Session.GetString("Picture");
                 ViewBag.Email = HttpContext.Session.GetString("Email");
             }
             return View();
@@ -163,6 +181,7 @@ namespace MASdemo.Controllers
             else
             {
                 ViewBag.myName = HttpContext.Session.GetString("Name");
+                ViewBag.Profile = HttpContext.Session.GetString("Picture");
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 List<Report> reports = new List<Report>();
                 string result = "";
@@ -236,6 +255,121 @@ namespace MASdemo.Controllers
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             return dateTime.ToString("yyyy-MM-dd");
 
+        }
+
+        public IActionResult EditProfile() 
+        { 
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("Name");
+                ViewBag.Profile = HttpContext.Session.GetString("Picture");
+                string ConnectionStringMysql = "server=localhost;database=masdatabase;user=root;pwd=;sslmode=none";
+                MySqlConnection mysqlcon = new MySqlConnection(ConnectionStringMysql);
+                mysqlcon.Open();
+                string query = "SELECT * FROM owner WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + "";
+                MySqlCommand com = new MySqlCommand(query);
+                com.Connection = mysqlcon;
+                MySqlDataReader reader = com.ExecuteReader();
+                List<Profile> profiles = new List<Profile>();
+                if(reader.HasRows) 
+                { 
+                    while (reader.Read()) 
+                    { 
+                        profiles.Add(new Profile() 
+                        { 
+                            Name = reader["Name"].ToString(), 
+                            Surname = reader["Surname"].ToString(), 
+                            Tel = reader["Tel"].ToString(), 
+                            Picture = reader["Picture"].ToString() 
+                        }); 
+                    } 
+                }
+                mysqlcon.Close();
+                ViewBag.profiles = profiles;
+                return View();
+            } 
+        }
+
+        [HttpPost]
+        public IActionResult EditProfiles(ProfileEdit pf,IFormFile picture) 
+        { 
+            var context = new masdatabaseContext(); 
+            if (HttpContext.Session.GetInt32("Oid") == null) 
+            { 
+                return RedirectToAction("Login", "User"); 
+            } 
+            else 
+            { 
+                if (picture != null) 
+                { 
+                    var fileName = ""; 
+                    var uploads = Path.Combine(he.WebRootPath, "uploads\\img_profile"); 
+                    fileName = Guid.NewGuid().ToString().Substring(0, 10) + Path.GetExtension(picture.FileName); 
+                    picture.CopyTo(new FileStream(Path.Combine(uploads, fileName), FileMode.Create)); 
+ 
+                    if (pf.Picture != null) 
+                    { 
+                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid")); 
+                        editOwner.Name = pf.Name; 
+                        editOwner.Surname = pf.Surname; 
+                        editOwner.Tel = pf.Tel; 
+                        context.SaveChanges(); 
+                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
+                        HttpContext.Session.SetString("Name", pf.Name); 
+                        HttpContext.Session.SetString("Surname", pf.Surname); 
+                        HttpContext.Session.SetString("Tel", pf.Tel); 
+                        return RedirectToAction("ManageDorm", "Manage"); 
+                    } 
+                    else 
+                    { 
+                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid")); 
+                        editOwner.Name = pf.Name; 
+                        editOwner.Surname = pf.Surname; 
+                        editOwner.Tel = pf.Tel; 
+                        editOwner.Picture = fileName; 
+                        context.SaveChanges(); 
+                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
+                        HttpContext.Session.SetString("Name", pf.Name); 
+                        HttpContext.Session.SetString("Surname", pf.Surname); 
+                        HttpContext.Session.SetString("Tel", pf.Tel); 
+                        HttpContext.Session.SetString("Picture", fileName); 
+                        return RedirectToAction("ManageDorm", "Manage"); 
+                    } 
+                } 
+                else 
+                { 
+                    if (pf.Picture != null) 
+                    { 
+                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid")); 
+                        editOwner.Name = pf.Name; 
+                        editOwner.Surname = pf.Surname; 
+                        editOwner.Tel = pf.Tel; 
+                        context.SaveChanges(); 
+                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
+                        HttpContext.Session.SetString("Name", pf.Name); 
+                        HttpContext.Session.SetString("Surname", pf.Surname); 
+                        HttpContext.Session.SetString("Tel", pf.Tel); 
+                        return RedirectToAction("ManageDorm", "Manage"); 
+                    } 
+                    else 
+                    { 
+                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid")); 
+                        editOwner.Name = pf.Name; 
+                        editOwner.Surname = pf.Surname; 
+                        editOwner.Tel = pf.Tel; 
+                        context.SaveChanges(); 
+                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
+                        HttpContext.Session.SetString("Name", pf.Name); 
+                        HttpContext.Session.SetString("Surname", pf.Surname); 
+                        HttpContext.Session.SetString("Tel", pf.Tel); 
+                        return RedirectToAction("ManageDorm", "Manage"); 
+                    } 
+                } 
+            } 
         }
     }
 }

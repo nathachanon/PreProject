@@ -62,22 +62,25 @@ Layout = "_Layout";
                     <div class="card  card-weather">
                         <div class="card-body ">
                            <div class="clearfix"> 
-                                <div class="float-left mt-2"> 
-                                    <i class="mb-5 mdi mdi-48px mdi-account-card-details text-success icon-lg"></i> 
-                                    <br><Br>
-                                    <p class="mt-3 h3 text-danger ">ห้อง พัดลม</p> 
-                                    <p class="mt-3 h3 text-danger ">ห้อง แอร์</p> 
-
-                                </div> 
+                               <div class="float-left mt-2"> 
+                                   <i class="mb-5 mdi mdi-48px mdi-account-card-details text-success icon-lg"></i> 
+                                   <br><Br> 
+                                   @foreach (var r in ViewBag.RoomUpdate) 
+                                   { 
+                                       <p class="mt-3 h3 text-danger ">ห้อง @r.Type</p> 
+                                   } 
+                               </div> 
                                 
                                 <div class="float-right"> 
                                     <p class="mb-0 h2 text-right">จำนวนผู้เช่า</p> 
                                     <div class="fluid-container"> 
-                                        <h3 id="Renter" class="h1 text-success text-right mb-0">48</h3> 
+                                        <h3 id="Renter" class="h1 text-success text-right mb-0">@ViewBag.RenterCount</h3> 
                                         <p class=" h3 text-right">คน</p> 
-                                         <p class="mt-3 h3 text-danger text-right">20 ห้อง</p>
-                                         <p class="mt-3 h3 text-danger text-right">28 ห้อง</p>
-                                         
+                                        @foreach (var r in ViewBag.RoomUpdate) 
+                                        { 
+                                        <p class="mt-3 h3 text-danger text-right">@r.Count ห้อง</p> 
+                                        } 
+ 
                                     </div> 
                                 </div> 
                             </div> 
@@ -100,7 +103,7 @@ Layout = "_Layout";
                     <div class="card card-weather">
                         <div class="card-body">
                             <p class="mb-3 h1 text-center">รายได้ที่จะได้รับอย่างน้อย </p> <br>
-                             <p class="mt-0 hb text-primary text-center">120,000 ฿ </p> 
+                            <p class="mt-0 hb text-primary text-center">@string.Format("{0:#,#.}", ViewBag.ExtrapolateDorm) ฿ </p> 
 
                         </div>
                     </div>
@@ -152,88 +155,248 @@ Layout = "_Layout";
 
 </html>
 
-<script>
-
-
-    const water = {
-         "chart": {
-                    "caption": "ปริมาณการใช้น้ำ",
-                    "plottooltext": "เดือน <b>$label</b> ใช้น้ำไป <b>$value</b> ยูนิต",
-                    "centerlabel": "$Value",
+<script> 
+ 
+ 
+    const water = { 
+         "chart": { 
+                    "caption": "ปริมาณการใช้น้ำ", 
+                    "plottooltext": "เดือน <b>$label</b> ใช้น้ำไป <b>$value</b> ยูนิต", 
+                    "centerlabel": "$Value", 
                     "centerLabelFontSize": "15", 
-                    "theme": "fusion",
-                    "baseFont": "'Kanit', sans-serif",
-                    "baseFontSize": "14",
-                    "labelFont": "'Kanit', sans-serif",
-                    "legendItemFont": "'Kanit', sans-serif"
-              
-                },
-                "data": [{
-                        "label": "ธ.ค.",
-                        "value": "320"
-                    },
-                    {
-                        "label": "ก.ค.",
-                        "value": "600"
-                    },
-                    {
-                        "label": "พ.ย.",
-                        "value": "150"
-                    }
-                ]
-
-    }
-  
-    FusionCharts.ready(function () {
-        var circle = new FusionCharts({
-            type: "doughnut2d",
-            renderAt: "chart-water",
-            width: "100%",
-            height: "300",
-            dataFormat: "json",
-            dataSource : water
-        }).render();
-    });
-
-
-    const elec = {
-         "chart": {
-                    "caption": "ปริมาณการใช้ไฟ",
-                    "plottooltext": "เดือน <b>$label</b> ใช้ไฟไป <b>$value</b> ยูนิต",
-                    "centerlabel": "$Value",
+                    "theme": "fusion", 
+                    "baseFont": "'Kanit', sans-serif", 
+                    "baseFontSize": "14", 
+                    "labelFont": "'Kanit', sans-serif", 
+                    "legendItemFont": "'Kanit', sans-serif" 
+ 
+                }, 
+        "data": [@foreach(var w in ViewBag.Unit) 
+                { 
+                    if(w.Month == "1") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "มกราคม", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "2") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "กุมภาพันธ์", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "3") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "มีนาคม", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "4") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "เมษายน", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "5") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "พฤษภาคม", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "6") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "มิถุนายน", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "8") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "สิงหาคม", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "9") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "กันยายน", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "10") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "ตุลาคม", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "11") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "พฤศจิกายน", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    }else if(w.Month == "12") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "ธันวาคม", 
+                            "value": "@w.Water" 
+                        }, 
+                        </text> 
+                    } 
+                } 
+                ] 
+ 
+    } 
+ 
+    FusionCharts.ready(function () { 
+        var circle = new FusionCharts({ 
+            type: "doughnut2d", 
+            renderAt: "chart-water", 
+            width: "100%", 
+            height: "300", 
+            dataFormat: "json", 
+            dataSource : water 
+        }).render(); 
+    }); 
+ 
+ 
+    const elec = { 
+         "chart": { 
+                    "caption": "ปริมาณการใช้ไฟ", 
+                    "plottooltext": "เดือน <b>$label</b> ใช้ไฟไป <b>$value</b> ยูนิต", 
+                    "centerlabel": "$Value", 
                     "centerLabelFontSize": "15", 
-                    "theme": "fusion",
-                    "baseFont": "'Kanit', sans-serif",
-                    "baseFontSize": "14",
-                    "labelFont": "'Kanit', sans-serif",
-                    "legendItemFont": "'Kanit', sans-serif"
-                },
-                "data": [{
-                        "label": "ม.ค.",
-                        "value": "450"
-                    },
-                    {
-                        "label": "ส.ค.",
-                        "value": "500"
-                    },
-                    {
-                        "label": "ก.ย.",
-                        "value": "350"
-                    }
-                ]
-
-    }
-  
-    FusionCharts.ready(function () {
-        var circle = new FusionCharts({
-            type: "doughnut2d",
-            renderAt: "chart-elec",
-            width: "100%",
-            height: "300",
-            dataFormat: "json",
-            dataSource : elec
-        }).render();
-    });
-
-  
+                    "theme": "fusion", 
+                    "baseFont": "'Kanit', sans-serif", 
+                    "baseFontSize": "14", 
+                    "labelFont": "'Kanit', sans-serif", 
+                    "legendItemFont": "'Kanit', sans-serif" 
+                }, 
+                "data": [@foreach(var e in ViewBag.Unit) 
+                { 
+                    if(e.Month == "1") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "มกราคม", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "2") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "กุมภาพันธ์", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "3") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "มีนาคม", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "4") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "เมษายน", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "5") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "พฤษภาคม", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "6") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "มิถุนายน", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "8") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "สิงหาคม", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "9") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "กันยายน", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "10") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "ตุลาคม", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "11") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "พฤศจิกายน", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    }else if(e.Month == "12") 
+                    { 
+                        <text> 
+                        { 
+                            "label": "ธันวาคม", 
+                            "value": "@e.Elec" 
+                        }, 
+                        </text> 
+                    } 
+                } 
+                ] 
+ 
+    } 
+ 
+    FusionCharts.ready(function () { 
+        var circle = new FusionCharts({ 
+            type: "doughnut2d", 
+            renderAt: "chart-elec", 
+            width: "100%", 
+            height: "300", 
+            dataFormat: "json", 
+            dataSource : elec 
+        }).render(); 
+    }); 
+ 
+ 
 </script>

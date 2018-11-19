@@ -1,3 +1,5 @@
+
+
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
@@ -6,16 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0-preview2-35157" /> 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview1-final" /> 
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" /> 
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" /> 
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.18.3" /> 
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" /> 
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\export\xlsx\" />
     <Folder Include="wwwroot\uploads\img_mansion\" />
+    <Folder Include="wwwroot\uploads\img_profile\" />
   </ItemGroup>
 
 </Project>
