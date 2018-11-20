@@ -1,20 +1,3 @@
-function TelFormat(obj) {
-    var pattern = new String("___-___-____"); // กำหนดรูปแบบในนี้    
-    var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้    
-    var returnText = new String("");
-    var obj_l = obj.value.length;
-    var obj_l2 = obj_l - 1;
-    for (i = 0; i < pattern.length; i++) {
-        if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) {
-            returnText += obj.value + pattern_ex;
-            obj.value = returnText;
-        }
-    }
-    if (obj_l >= pattern.length) {
-        obj.value = obj.value.substr(0, pattern.length);
-    }
-}
-
 function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);

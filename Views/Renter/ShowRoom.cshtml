@@ -1,22 +1,32 @@
- 
+﻿ 
 @{ 
     Layout = "_Layout"; 
 } 
 <!DOCTYPE html> 
 <html lang="en"> 
-<head> 
-    <link href="~/css/sweetalert2.min.css" rel="stylesheet" /> 
-    <meta charset="utf-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-    <title>ข้อมูลผู้เช่า</title> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-    <script src="~/js/sweetalert2.all.min.js"></script> 
-    <script src="~/js/sweetalert2.min.js"></script> 
-    <script src="~/js/showroom.js"></script> 
-    <link href="~/css/modelrenter.css" rel="stylesheet" /> 
-    <link href="~/css/imgFile.css" rel="stylesheet" /> 
-    <link href="~/css/switch.css" rel="stylesheet" /> 
-    <script src="~/js/imgFile.js"></script> 
+<head>
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ข้อมูลผู้เช่า</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/js/sweetalert2.all.min.js"></script>
+    <script src="~/js/sweetalert2.min.js"></script>
+    <script src="~/js/showroom.js"></script>
+    <link href="~/css/modelrenter.css" rel="stylesheet" />
+    <link href="~/css/imgFile.css" rel="stylesheet" />
+    <link href="~/css/switch.css" rel="stylesheet" />
+    <script src="~/js/imgFile.js"></script>
+    <style>
+        input[type='number'] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
 </head> 
 <body> 
     @Html.Raw(TempData["EditSuccessful"]) 
@@ -1502,11 +1512,11 @@
                                             <div class="col-sm-8"> 
                                                 @if (renter.RenAge == null) 
                                                 { 
-                                                    <input autocomplete="off" id="renage_@renter.Rid" value="" name="RenAge" type="number" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" /> 
+                                                    <input autocomplete="off" id="renage_@renter.Rid" value="" name="RenAge" type="number" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" min="15" max="60"/> 
                                                 } 
                                                 else 
                                                 { 
-                                                    <input autocomplete="off" id="renage_@renter.Rid" value="@renter.RenAge" name="RenAge" type="number" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" /> 
+                                                    <input autocomplete="off" id="renage_@renter.Rid" value="@renter.RenAge" name="RenAge" type="number" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" min="15" max="60"/> 
                                                 } 
                                             </div> 
                                         </div> 
@@ -1535,11 +1545,11 @@
                                                 <div class="input-group "> 
                                                     @if (renter.StartWaterMeter == null) 
                                                     { 
-                                                        <input autocomplete="off" id="meterwater_@renter.Rid" value="" name="StartWaterMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')"> 
+                                                        <input autocomplete="off" id="meterwater_@renter.Rid" value="" name="StartWaterMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')" min="1" max="10000000"> 
                                                     } 
                                                     else 
                                                     { 
-                                                        <input autocomplete="off" id="meterwater_@renter.Rid" value="@renter.StartWaterMeter" name="StartWaterMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')"> 
+                                                        <input autocomplete="off" id="meterwater_@renter.Rid" value="@renter.StartWaterMeter" name="StartWaterMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')" min="1" max="10000000"> 
                                                     } 
                                                     <span class="input-group-btn"> 
                                                         <div class=" text-preview-input"> 
@@ -1559,11 +1569,11 @@
                                                 <div class="input-group "> 
                                                     @if (renter.StartElecMeter == null) 
                                                     { 
-                                                        <input autocomplete="off" id="meterelec_@renter.Rid" value="" name="StartElecMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')"> 
+                                                        <input autocomplete="off" id="meterelec_@renter.Rid" value="" name="StartElecMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')" min="1" max="10000000"> 
                                                     } 
                                                     else 
                                                     { 
-                                                        <input autocomplete="off" id="meterelec_@renter.Rid" value="@renter.StartElecMeter" name="StartElecMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')"> 
+                                                        <input autocomplete="off" id="meterelec_@renter.Rid" value="@renter.StartElecMeter" name="StartElecMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')" min="1" max="10000000"> 
                                                     } 
                                                     <span class="input-group-btn"> 
                                                         <div class=" text-preview-input"> 
