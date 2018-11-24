@@ -22,8 +22,7 @@
                         <table id="Announce" class="table table-hover" style="table-layout: fixed;">
                             <thead>
                                 <tr>
-                                    <th class="h2 productth text-primary" width="60%">ข้อความ</th>
-                                    <th class="h2 productth text-primary">ผู้ประกาศ</th>
+                                    <th class="h2 productth text-primary" width="70%">ข้อความ</th>
                                     <th class="h2 productth text-primary">วันที่</th>
                                     <th class="h2 productth text-primary text-center">จัดการ</th>
                                 </tr>
@@ -117,9 +116,8 @@
                     $.each(promotions, function (i, item) {
                         var rows = "<tr>"
                             + "<td>" + item.message + "</td>"
-                            + "<td>" + item.admin_name + "</td>"
                             + "<td>" + item.date + "</td>"
-                            + "<td class='text-center'><a class = 'badge badge-danger' href='#' onclick='deleteAnnounce(" + item.announce_id + ")'>ลบ</a></td>"
+                            + "<td class='text-center'><a class = 'badge badge-danger' href='#' onclick='deleteAnnounce(" + item.announce_id + ")'>ลบ</a>   <a class = 'badge badge-warning' href='#' onclick='editAnnounce(" + item.announce_id + ")'>แก้ไข</a></td>"
                             + "</tr>";
                         $('#Announce tbody').append(rows);
                     });
@@ -158,6 +156,55 @@
                     }
                 }
             });
+        }
+
+        function editAnnounce(aid) {
+            swal.mixin({
+                input: 'text',
+                confirmButtonText: 'ตกลง',
+                showCancelButton: true,
+                progressSteps: ['1']
+            }).queue([
+                {
+                    title: 'แก้ไข',
+                    text: 'กรุณาใส่ข้อความประกาศใหม่'
+                }
+            ]).then((result) => {
+                if (result.value != "") {
+                    $.ajax({
+                        type: "post",
+                        url: "../Admin/UpdateAnnounce?aid=" + aid + "&message=" + result.value,
+                        success: function (result) {
+                            if (result == "Fail") {
+                                swal({
+                                    position: 'center',
+                                    type: 'error',
+                                    title: 'แก้ไขประกาศล้มเหลว',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                });
+                            } else {
+                                swal({
+                                    position: 'center',
+                                    type: 'success',
+                                    title: 'แก้ไขประกาศสำเร็จ',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                LoadAnnounce();
+                            }
+                        }
+                    });
+                } else {
+                    swal({
+                        position: 'center',
+                        type: 'error',
+                        title: 'ไม่พบข้อความกรุณาพิมพ์ใหม่',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+            })
         }
     </script>
 </body>

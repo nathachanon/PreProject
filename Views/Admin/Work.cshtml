@@ -51,8 +51,8 @@
                     var items = '';
                     $.each(workalls, function (i, item) {
                         var rows = "<tr>"
-                            + "<td class='prtoducttd'>" + item.work_id + "</td>"
-                            + "<td class='prtoducttd'>" + item.report_Owner + "</td>"
+                            + "<td class='prtoducttd'>" + item.report_id + "</td>"
+                            + "<td class='prtoducttd'>" + item.owner_email + "</td>"
                             + "<td class='prtoducttd'>" + item.report_message + "</td>"
                             + "<td class='prtoducttd'>" + item.report_datetime + "</td>"
                             + "<td class='prtoducttd text-center'><a class = 'badge badge-primary' href='#' onclick='complete(" + item.report_id + ")'>เสร็จสิ้น</a></td>"

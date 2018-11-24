@@ -65,17 +65,21 @@ namespace MASdemo.Models
         public string Report_id2 { get; set; } 
         public int Report_id { get; set; } 
         public string Report_message { get; set; } 
-        public string Report_datetime { get; set; } 
-        public string Report_Owner { get; set; } 
+        public string Report_datetime { get; set; }
+        public string Owner_email { get; set; }
     }
 
+    public class OwnerEmail
+    {
+        public int Owner_id { get; set; }
+    }
     public class WorkAll 
     { 
-        public string Work_id { get; set; } 
-        public int Report_id { get; set; } 
+        public int Report_id { get; set; }
+        public string Report_ids { get; set; }
         public string Report_message { get; set; } 
         public string Report_datetime { get; set; } 
-        public string Report_Owner { get; set; } 
+        public string Owner_email { get; set; }
     }
 
     public class Promotion 
@@ -108,15 +112,6 @@ namespace MASdemo.Models
     {
         public int Announce_id { get; set; }
         public string Message { get; set; }
-        public int Admin_id { get; set; }
-        public string Date { get; set; }
-    }
-
-    public class AnnounceMain
-    {
-        public int Announce_id { get; set; }
-        public string Message { get; set; }
-        public string Admin_name { get; set; }
         public string Date { get; set; }
     }
 }

@@ -82,6 +82,15 @@ namespace MASdemo.Controllers
                 var adduser = new Owner { Email = auser.email, Password = enpass, Name = auser.name, Surname = auser.surname, Tel = auser.tel };
                 context.Add(adduser);
                 context.SaveChanges();
+
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                sqlcon.Open();
+                string query1 = "INSERT INTO owner (Email, Password, Name, Surname , Tel) VALUES('" + auser.email + "', '"+enpass+"', '" + auser.name + "','"+auser.surname+"','"+auser.tel+"')";
+                SqlCommand sqlcom1 = new SqlCommand(query1);
+                sqlcom1.Connection = sqlcon;
+                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                result = "OK";
+                sqlcon.Close();
             }
 
             return Json(result);
@@ -144,12 +153,22 @@ namespace MASdemo.Controllers
                 else
                 {
                     string ennewpassword = Encryption.EncryptedPass(newpassword);
-                    string query2 = "UPDATE `owner` SET `Password`='" + ennewpassword + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + "";
+                    string query2 = "UPDATE `owner` SET `Password`='" + ennewpassword + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
                     mysqlcon.Open();
                     MySqlCommand com2 = new MySqlCommand(query2);
                     com2.Connection = mysqlcon;
                     MySqlDataReader reader2 = com2.ExecuteReader();
                     mysqlcon.Close();
+
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                    sqlcon.Open();
+
+                    string query1 = "UPDATE owner SET Password='" + ennewpassword + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                    SqlCommand sqlcom1 = new SqlCommand(query1);
+                    sqlcom1.Connection = sqlcon;
+                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                    result = "Add OK";
+                    sqlcon.Close();
                     result = "Ok";
                     return Json(result);
                 }
@@ -189,7 +208,7 @@ namespace MASdemo.Controllers
                 {
                     SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
                     sqlcon.Open();
-                    string query1 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id, message , status , datetime FROM Report WHERE Owner_email = '" + Email + "' ";
+                    string query1 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id, message , status , datetime FROM Report WHERE Owner_id = '" + HttpContext.Session.GetInt32("Oid") + "' ";
                     SqlCommand sqlcom1 = new SqlCommand(query1);
                     sqlcom1.Connection = sqlcon;
                     SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
@@ -234,7 +253,7 @@ namespace MASdemo.Controllers
                     string mydate = ToChristianDateString(DateTime.Today);
                     SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
                     sqlcon.Open();
-                    string query1 = "INSERT INTO Report (message, status, datetime, Owner_email) VALUES('" + message + "', 1, '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "', '" + HttpContext.Session.GetString("Email") + "')";
+                    string query1 = "INSERT INTO Report (message, status, datetime, Owner_id) VALUES('" + message + "', 1, '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "', '" + HttpContext.Session.GetInt32("Oid") + "')";
                     SqlCommand sqlcom1 = new SqlCommand(query1);
                     sqlcom1.Connection = sqlcon;
                     SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
@@ -303,7 +322,8 @@ namespace MASdemo.Controllers
                 return RedirectToAction("Login", "User"); 
             } 
             else 
-            { 
+            {
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
                 if (picture != null) 
                 { 
                     var fileName = ""; 
@@ -317,7 +337,13 @@ namespace MASdemo.Controllers
                         editOwner.Name = pf.Name; 
                         editOwner.Surname = pf.Surname; 
                         editOwner.Tel = pf.Tel; 
-                        context.SaveChanges(); 
+                        context.SaveChanges();
+                        sqlcon.Open();
+                        string query1 = "UPDATE owner SET Name='" + pf.Name + "',Surname='"+pf.Surname+ "',Tel='" + pf.Tel + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        sqlcon.Close();
                         TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
                         HttpContext.Session.SetString("Name", pf.Name); 
                         HttpContext.Session.SetString("Surname", pf.Surname); 
@@ -331,7 +357,13 @@ namespace MASdemo.Controllers
                         editOwner.Surname = pf.Surname; 
                         editOwner.Tel = pf.Tel; 
                         editOwner.Picture = fileName; 
-                        context.SaveChanges(); 
+                        context.SaveChanges();
+                        sqlcon.Open();
+                        string query1 = "UPDATE owner SET Name='" + pf.Name + "',Surname='" + pf.Surname + "',Tel='" + pf.Tel + "',Picture='" + fileName + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        sqlcon.Close();
                         TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
                         HttpContext.Session.SetString("Name", pf.Name); 
                         HttpContext.Session.SetString("Surname", pf.Surname); 
@@ -348,7 +380,13 @@ namespace MASdemo.Controllers
                         editOwner.Name = pf.Name; 
                         editOwner.Surname = pf.Surname; 
                         editOwner.Tel = pf.Tel; 
-                        context.SaveChanges(); 
+                        context.SaveChanges();
+                        sqlcon.Open();
+                        string query1 = "UPDATE owner SET Name='" + pf.Name + "',Surname='" + pf.Surname + "',Tel='" + pf.Tel + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        sqlcon.Close();
                         TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
                         HttpContext.Session.SetString("Name", pf.Name); 
                         HttpContext.Session.SetString("Surname", pf.Surname); 
@@ -361,7 +399,13 @@ namespace MASdemo.Controllers
                         editOwner.Name = pf.Name; 
                         editOwner.Surname = pf.Surname; 
                         editOwner.Tel = pf.Tel; 
-                        context.SaveChanges(); 
+                        context.SaveChanges();
+                        sqlcon.Open();
+                        string query1 = "UPDATE owner SET Name='" + pf.Name + "',Surname='" + pf.Surname + "',Tel='" + pf.Tel + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        sqlcon.Close();
                         TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
                         HttpContext.Session.SetString("Name", pf.Name); 
                         HttpContext.Session.SetString("Surname", pf.Surname); 

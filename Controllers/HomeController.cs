@@ -22,7 +22,6 @@ namespace MASdemo.Controllers
             OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
             List<Promotion> promotions = new List<Promotion>();
             List<Announce> announces = new List<Announce>();
-            List<AnnounceMain> announceMains = new List<AnnounceMain>();
             try
             {
                 oraclecon.Open();
@@ -55,7 +54,7 @@ namespace MASdemo.Controllers
             try
             {
                 oraclecon.Open();
-                string query2 = "SELECT \"Announce_id\",\"Message\",\"Admin_id\",TO_CHAR(\"Datetime\", 'DD MON YYYY') as \"Date\" FROM \"Announce\" ORDER BY \"Announce_id\" ";
+                string query2 = "SELECT \"Announce_id\",\"Message\",TO_CHAR(\"Datetime\", 'DD MON YYYY') as \"Date\" FROM \"Announce\" ORDER BY \"Announce_id\" ";
                 OracleCommand oraclecom2 = new OracleCommand(query2);
                 oraclecom2.Connection = oraclecon;
                 OracleDataReader oracleReader2 = oraclecom2.ExecuteReader();
@@ -67,7 +66,6 @@ namespace MASdemo.Controllers
                         {
                             Announce_id = oracleReader2.GetInt32(oracleReader2.GetOrdinal("Announce_id")),
                             Message = oracleReader2["Message"].ToString(),
-                            Admin_id = oracleReader2.GetInt32(oracleReader2.GetOrdinal("Admin_id")),
                             Date = oracleReader2["Date"].ToString()
                         });
                     }
@@ -78,38 +76,7 @@ namespace MASdemo.Controllers
             {
                 string result = "Fail" + fail;
             }
-
-            SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-            foreach (var ann in announces)
-            {
-                try
-                {
-                    sqlcon.Open();
-                    string query1 = "SELECT * FROM Admin WHERE Admin_id = " + ann.Admin_id + " AND Status = 1 ";
-                    SqlCommand sqlcom1 = new SqlCommand(query1);
-                    sqlcom1.Connection = sqlcon;
-                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                    if (sqlReader1.HasRows)
-                    {
-                        while (sqlReader1.Read())
-                        {
-                            announceMains.Add(new AnnounceMain()
-                            {
-                                Announce_id = ann.Announce_id,
-                                Message = ann.Message,
-                                Admin_name = sqlReader1["Name"].ToString(),
-                                Date = ann.Date
-                            });
-                        }
-                    }
-                    sqlcon.Close();
-                }
-                catch (Exception fails)
-                {
-                    string failss = "" + fails;
-                }
-            }
-            ViewBag.Announce = announceMains;
+            ViewBag.Announce = announces;
             ViewBag.Promotion = promotions;
             return View();
         }
