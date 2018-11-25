@@ -12,7 +12,8 @@ Layout = null;
     <script src="~/js/sweetalert2.all.min.js"></script>
     <script src="~/js/sweetalert2.min.js"></script>
     <meta name="viewport" content="width=device-width" />
-    <title>AddRT</title>
+    <title>เพิ่มประเภทห้อง</title>
+  
 </head>
 
 <body>
@@ -62,8 +63,8 @@ Layout = null;
                         <p class="h4 mb-3 text-info">ระบุจำนวนประเภทห้องที่ต้องการ</p>
                         <div class="col-sm-6 in-center">
                             <div class="input-group  text-center">
-                                <input type="text" maxlength="2" placeholder="ห้องมีทั้งหมดกี่ประเภท" aria-describedby="colored-addon3"
-                                    autocomplete="off" class="input100 form-control" name="myrt" id="myrt" />
+                                <input type="number" maxlength="2" placeholder="ห้องมีทั้งหมดกี่ประเภท" aria-describedby="colored-addon3"
+                                    autocomplete="off" class="input100 form-control" name="myrt" id="myrt" min="1" max="10"/>
                                 <span class="col-sm-3 btn  btn-default  bg-info border-info text-white"><i class="mdi mdi-table-column-plus-after mdi-24px text-white"></i></span>
                             </div>
                         </div>
@@ -81,8 +82,8 @@ Layout = null;
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="rt_price_@i" autocomplete="off"
-                                            value="" placeholder="ราคาห้อง">
+                                        <input class="form-control" type="number" name="rt_price_@i" autocomplete="off"
+                                            value="" placeholder="ราคาห้อง" min="1" max="100000">
                                     </div>
                                 </div>
                             </div>

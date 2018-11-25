@@ -56,18 +56,6 @@ namespace MASdemo.Controllers
                 result = "Fail" + fail;
                 result = "Fail";
             }
-            if (result == "Login OK")
-            {
-                var myactivities = "เข้าสู่ระบบ";
-                string mydate = ToChristianDateString(DateTime.Today);
-                sqlcon.Open();
-                string query2 = "INSERT INTO admin_log (activities, datetime , Admin_id) VALUES('" + myactivities + "', '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "' , '" + HttpContext.Session.GetInt32("AdminID") + "' )";
-                SqlCommand sqlcom2 = new SqlCommand(query2);
-                sqlcom2.Connection = sqlcon;
-                SqlDataReader sqlReader2 = sqlcom2.ExecuteReader();
-                result = "OK";
-                sqlcon.Close();
-            }
             return Json(result);
         }
 
@@ -92,16 +80,6 @@ namespace MASdemo.Controllers
             }
             else
             {
-                var myactivities = "ออกจากระบบ";
-                string mydate = ToChristianDateString(DateTime.Today);
-                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                sqlcon.Open();
-                string query2 = "INSERT INTO admin_log (activities, datetime , Admin_id) VALUES('" + myactivities + "', '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "' , '" + HttpContext.Session.GetInt32("AdminID") + "' )";
-                SqlCommand sqlcom2 = new SqlCommand(query2);
-                sqlcom2.Connection = sqlcon;
-                SqlDataReader sqlReader2 = sqlcom2.ExecuteReader();
-                sqlcon.Close();
-
                 HttpContext.Session.SetString("Log", "0");
                 ViewBag.myLog = HttpContext.Session.GetString("Log");
                 HttpContext.Session.Clear();
@@ -229,77 +207,76 @@ namespace MASdemo.Controllers
 
         public IActionResult ReportList()
         {
-            string result = "Fail";
-            List<ReportList> reportlists = new List<ReportList>();
-            try
+            if (HttpContext.Session.GetInt32("AdminID") == null)
             {
-                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                sqlcon.Open();
-                string query1 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id2 , * FROM Report WHERE status = 1";
-                SqlCommand sqlcom1 = new SqlCommand(query1);
-                sqlcom1.Connection = sqlcon;
-                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                if (sqlReader1.HasRows)
-                {
-                    while (sqlReader1.Read())
-                    {
-                        reportlists.Add(new ReportList()
-                        {
-                            Report_id2 = "R" + sqlReader1["Report_id2"].ToString(),
-                            Report_id = sqlReader1.GetInt32(sqlReader1.GetOrdinal("Report_id")),
-                            Report_message = sqlReader1["message"].ToString(),
-                            Report_datetime = sqlReader1["datetime"].ToString(),
-                            Report_Owner = sqlReader1["Owner_email"].ToString()
-                        });
-                    }
-                }
-                sqlcon.Close();
+                return RedirectToAction("Login", "Admin");
             }
-            catch (Exception fail)
-            {
-                result = "Fail" + fail;
-                result = "Fail";
+            else
+            { 
+                string result = "Fail"; 
+                List<ReportList> reportlists = new List<ReportList>(); 
+                try 
+                { 
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True"); 
+                    sqlcon.Open(); 
+                    string query2 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id2 , o.Email as Owner_email , r.message , r.datetime , r.report_id  FROM Report r " + 
+                        "INNER JOIN owner o ON r.owner_id = o.oid " + 
+                        "WHERE status = 1 "; 
+                    SqlCommand sqlcom2 = new SqlCommand(query2); 
+                    sqlcom2.Connection = sqlcon; 
+                    SqlDataReader sqlReader2 = sqlcom2.ExecuteReader(); 
+                    if (sqlReader2.HasRows) 
+                    { 
+                        while (sqlReader2.Read()) 
+                        { 
+                            reportlists.Add(new ReportList() 
+                            { 
+                                Report_id2 = "R" + sqlReader2["Report_id2"].ToString(), 
+                                Report_id = sqlReader2.GetInt32(sqlReader2.GetOrdinal("Report_id")), 
+                                Report_message = sqlReader2["message"].ToString(), 
+                                Report_datetime = sqlReader2["datetime"].ToString(), 
+                                Owner_email = sqlReader2["Owner_email"].ToString() 
+                            }); 
+                        } 
+                    } 
+                    sqlcon.Close(); 
+                } 
+                catch (Exception fail) 
+                { 
+                    result = "Fail" + fail; 
+                    result = "Fail"; 
+                } 
+                return Json(reportlists); 
             }
-            return Json(reportlists);
         }
 
         public IActionResult AddReport(int report_id)
         {
             string result = "Fail";
-            try
+            if (HttpContext.Session.GetInt32("AdminID") == null)
             {
-                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                sqlcon.Open();
-                string query1 = "UPDATE Report SET Status=2 WHERE Report_id = " + report_id + " ";
-                SqlCommand sqlcom1 = new SqlCommand(query1);
-                sqlcom1.Connection = sqlcon;
-                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                result = "Add OK";
-                sqlcon.Close();
-                sqlcon.Open();
-                string query2 = "INSERT INTO Work (Admin_id, Report_id) VALUES('" + HttpContext.Session.GetInt32("AdminID") + "', '" + report_id + "') ";
-                SqlCommand sqlcom2 = new SqlCommand(query2);
-                sqlcom2.Connection = sqlcon;
-                SqlDataReader sqlReader2 = sqlcom2.ExecuteReader();
-                result = "OK";
-                sqlcon.Close();
-
-                var myactivities = "เพิ่มรายงาน report id : " + report_id;
-                string mydate = ToChristianDateString(DateTime.Today);
-                sqlcon.Open();
-                string query3 = "INSERT INTO admin_log (activities, datetime , Admin_id) VALUES('" + myactivities + "', '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "' , '" + HttpContext.Session.GetInt32("AdminID") + "' )";
-                SqlCommand sqlcom3 = new SqlCommand(query3);
-                sqlcom3.Connection = sqlcon;
-                SqlDataReader sqlReader3 = sqlcom3.ExecuteReader();
-
-                sqlcon.Close();
+                return RedirectToAction("Login", "Admin");
             }
-            catch (Exception fail)
-            {
-                result = "Fail" + fail;
-                result = "Fail";
+            else
+            { 
+                try 
+                { 
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True"); 
+                    sqlcon.Open(); 
+                    string query1 = "UPDATE Report SET Status=2,Admin_id=" + HttpContext.Session.GetInt32("AdminID") + " WHERE Report_id = " + report_id + " "; 
+                    SqlCommand sqlcom1 = new SqlCommand(query1); 
+                    sqlcom1.Connection = sqlcon; 
+                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader(); 
+                    result = "Add OK"; 
+                    sqlcon.Close(); 
+                } 
+                catch (Exception fail) 
+                { 
+                    result = "Fail" + fail; 
+                    result = "Fail"; 
+                } 
+                return Json(result); 
             }
-            return Json(result);
         }
 
         public string ToChristianDateString(DateTime dateTime)
@@ -334,30 +311,28 @@ namespace MASdemo.Controllers
                 string result = "Fail";
                 try
                 {
-                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                    sqlcon.Open();
-                    string query1 = "SELECT RIGHT('000' + CAST([Work_id] AS varchar(5)) , 4) as Work_ids , r.Owner_email , r.report_id , r.status , r.message , r.datetime  FROM [Work] w " +
-                        "INNER JOIN Report r on w.Report_id = r.Report_id " +
-                        "WHERE r.status = 2 " +
-                        "AND w.Admin_id = " + HttpContext.Session.GetInt32("AdminID") + " ";
-                    SqlCommand sqlcom1 = new SqlCommand(query1);
-                    sqlcom1.Connection = sqlcon;
-                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                    if (sqlReader1.HasRows)
-                    {
-                        while (sqlReader1.Read())
-                        {
-                            workalls.Add(new WorkAll()
-                            {
-                                Work_id = "W" + sqlReader1["Work_ids"].ToString(),
-                                Report_id = sqlReader1.GetInt32(sqlReader1.GetOrdinal("report_id")),
-                                Report_Owner = sqlReader1["Owner_email"].ToString(),
-                                Report_message = sqlReader1["message"].ToString(),
-                                Report_datetime = sqlReader1["datetime"].ToString()
-                            });
-                        }
-                    }
-                    sqlcon.Close();
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True"); 
+                        sqlcon.Open(); 
+                        string query2 = " SELECT RIGHT('0000' + CAST([Report_id] AS varchar(5)) , 4) as Report_ids ,Report_id, Admin_id , message , datetime , o.Email as Owner_email FROM [Report] r INNER JOIN owner o ON r.owner_id = o.oid WHERE Admin_id = "+ HttpContext.Session.GetInt32("AdminID") + " AND Status = 2 "; 
+                        SqlCommand sqlcom2 = new SqlCommand(query2); 
+                        sqlcom2.Connection = sqlcon; 
+                        SqlDataReader sqlReader2 = sqlcom2.ExecuteReader(); 
+                        if (sqlReader2.HasRows) 
+                        { 
+                            while (sqlReader2.Read()) 
+                            { 
+                                workalls.Add(new WorkAll() 
+                                { 
+ 
+                                    Report_ids = "R" + sqlReader2["Report_ids"].ToString(), 
+                                    Report_id = sqlReader2.GetInt32(sqlReader2.GetOrdinal("Report_id")), 
+                                    Owner_email = sqlReader2["Owner_email"].ToString(), 
+                                    Report_message = sqlReader2["message"].ToString(), 
+                                    Report_datetime = sqlReader2["datetime"].ToString() 
+                                }); 
+                            } 
+                        } 
+                        sqlcon.Close();
                 }
                 catch (Exception fail)
                 {
@@ -371,33 +346,30 @@ namespace MASdemo.Controllers
         public IActionResult Complete(int report_id)
         {
             string result = "Fail";
-            try
+            if (HttpContext.Session.GetInt32("AdminID") == null)
             {
-                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                sqlcon.Open();
-                string query1 = "UPDATE Report SET Status=3 WHERE Report_id = " + report_id + " ";
-                SqlCommand sqlcom1 = new SqlCommand(query1);
-                sqlcom1.Connection = sqlcon;
-                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                result = "Add OK";
-                sqlcon.Close();
-
-                var myactivities = "งานเสร็จสิ้น report id : " + report_id;
-                string mydate = ToChristianDateString(DateTime.Today);
-                sqlcon.Open();
-                string query3 = "INSERT INTO admin_log (activities, datetime , Admin_id) VALUES('" + myactivities + "', '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "' , '" + HttpContext.Session.GetInt32("AdminID") + "' )";
-                SqlCommand sqlcom3 = new SqlCommand(query3);
-                sqlcom3.Connection = sqlcon;
-                SqlDataReader sqlReader3 = sqlcom3.ExecuteReader();
-
-                sqlcon.Close();
+                return RedirectToAction("Login", "Admin");
             }
-            catch (Exception fail)
-            {
-                result = "Fail" + fail;
-                result = "Fail";
+            else
+            { 
+                try 
+                { 
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True"); 
+                    sqlcon.Open(); 
+                    string query1 = "UPDATE Report SET Status=3 WHERE Report_id = " + report_id + " "; 
+                    SqlCommand sqlcom1 = new SqlCommand(query1); 
+                    sqlcom1.Connection = sqlcon; 
+                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader(); 
+                    result = "Add OK"; 
+                    sqlcon.Close(); 
+                } 
+                catch (Exception fail) 
+                { 
+                    result = "Fail" + fail; 
+                    result = "Fail"; 
+                } 
+                return Json(result); 
             }
-            return Json(result);
         }
 
         public IActionResult Promotion()
@@ -427,7 +399,7 @@ namespace MASdemo.Controllers
                 {
                     OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
                     oraclecon.Open();
-                    string query1 = "insert into \"Promotion\" (\"Promotion_id\",\"Title\",\"Detail\",\"Price\",\"Startdate\", \"Enddate\") values(to_char(sequence_promotion.nextval,'FM00000'),'" + title + "','" + detail + "'," + price + ",TO_DATE('" + startdate + " 23:59:59" + "', 'yyyy-mm-dd HH24:MI:SS'),TO_DATE('" + enddate + " 23:59:59" + "', 'yyyy-mm-dd HH24:MI:SS'))";
+                    string query1 = "insert into \"Promotion\" (\"Promotion_id\",\"Title\",\"Detail\",\"Price\",\"Startdate\", \"Enddate\") values(to_char(sequence_promotion.nextval,'FM00000'),'" + title + "','" + detail + "'," + price + ",TO_DATE('" + startdate + "', 'yyyy-mm-dd'),TO_DATE('" + enddate + "', 'yyyy-mm-dd'))";
                     OracleCommand oraclecom1 = new OracleCommand(query1);
                     oraclecom1.Connection = oraclecon;
                     OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
@@ -458,7 +430,7 @@ namespace MASdemo.Controllers
                 {
                     OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
                     oraclecon.Open();
-                    string query1 = "SELECT \"Promotion_id\",\"Title\",\"Detail\",\"Price\",TO_CHAR(\"Startdate\", 'dd-MM-yyyy hh:mm:ss') as \"Startdate\" , TO_CHAR(\"Enddate\", 'dd-MM-yyyy hh:mm:ss') as \"Enddate\" FROM \"Promotion\" ORDER BY \"Promotion_id\" ";
+                    string query1 = "SELECT \"Promotion_id\",\"Title\",\"Detail\",\"Price\",TO_CHAR(\"Startdate\", 'DD MON YYYY') as \"Startdate\" , TO_CHAR(\"Enddate\", 'DD MON YYYY') as \"Enddate\" FROM \"Promotion\" ORDER BY \"Promotion_id\" ";
                     OracleCommand oraclecom1 = new OracleCommand(query1);
                     oraclecom1.Connection = oraclecon;
                     OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
@@ -517,5 +489,148 @@ namespace MASdemo.Controllers
                 return Json(result);
             }
         }
+
+        public IActionResult Announce()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+            }
+            return View();
+        }
+
+        public IActionResult LoadAnnounce()
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                List<Announce> announces = new List<Announce>();
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "SELECT \"Announce_id\",\"Message\",TO_CHAR(\"Datetime\", 'DD MON YYYY') as \"Date\" FROM \"Announce\" ORDER BY \"Announce_id\" ";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    if (oracleReader1.HasRows)
+                    {
+                        while (oracleReader1.Read())
+                        {
+                            announces.Add(new Announce()
+                            {
+                                Announce_id = oracleReader1.GetInt32(oracleReader1.GetOrdinal("Announce_id")),
+                                Message = oracleReader1["Message"].ToString(),
+                                Date = oracleReader1["Date"].ToString()
+                            });
+                        }
+                    }
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+                return Json(announces);
+            }
+        } 
+ 
+        public IActionResult AddAnnounce(string message)
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "insert into \"Announce\" (\"Announce_id\", \"Message\",\"Datetime\") values(to_char(sequence_announce.nextval,'FM00000'),'"+message+"',TO_DATE(SYSDATE, 'dd-mm-yyyy')) ";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    result = "Insert OK";
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+
+                return Json(result);
+            }
+        } 
+ 
+        public IActionResult DeleteAnnounce(int announce_id)
+        {
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                ViewBag.myName = HttpContext.Session.GetString("AdminName");
+                try
+                {
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;");
+                    oraclecon.Open();
+                    string query1 = "DELETE FROM \"Announce\" WHERE \"Announce_id\" = " + announce_id + " ";
+                    OracleCommand oraclecom1 = new OracleCommand(query1);
+                    oraclecom1.Connection = oraclecon;
+                    OracleDataReader oracleReader1 = oraclecom1.ExecuteReader();
+                    result = "Delete";
+                    oraclecon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                }
+
+                return Json(result);
+            }
+        }
+
+        public IActionResult UpdateAnnounce(int aid , string message) 
+        { 
+            if (HttpContext.Session.GetInt32("AdminID") == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            { 
+                string result = "Fail"; 
+                try 
+                { 
+                    OracleConnection oraclecon = new OracleConnection("Pooling=false;User Id=masoracle;Password=1234;Data Source=localhost:1521/xe;"); 
+                    oraclecon.Open(); 
+                    string query1 = " UPDATE \"Announce\" SET \"Message\" = '" + message + "' WHERE \"Announce_id\" = " + aid + " "; 
+                    OracleCommand oraclecom1 = new OracleCommand(query1); 
+                    oraclecom1.Connection = oraclecon; 
+                    oraclecom1.ExecuteReader(); 
+                    result = "UPDATE OK"; 
+                    oraclecon.Close(); 
+                } 
+                catch (Exception fail) 
+                { 
+                    result = "Fail" + fail; 
+                } 
+                return Json(result); 
+            } 
+        }
+
     }
 }

@@ -1,0 +1,211 @@
+ 
+@{ 
+    Layout = "_LayoutAdmin"; 
+} 
+ 
+<!DOCTYPE html> 
+ 
+<html> 
+<head> 
+    <meta name="viewport" content="width=device-width" /> 
+    <title>Promotion</title> 
+</head> 
+<body> 
+    <div class="main-panel"> 
+        <div class="content-wrapper"> 
+            <div class="col-12 grid-margin"> 
+                <div class="card"> 
+                    <div class="card-body"> 
+                        <h1 class="text-primary text-center">จัดการโปรโมชัน</h1> 
+ 
+                        <br /> 
+                        <table id="Announce" class="table table-hover" style="table-layout: fixed;"> 
+                            <thead> 
+                                <tr> 
+                                    <th class="h2 productth text-primary" width="70%">ข้อความ</th> 
+                                    <th class="h2 productth text-primary">วันที่</th> 
+                                    <th class="h2 productth text-primary text-center">จัดการ</th> 
+                                </tr> 
+                            </thead> 
+                            <tbody></tbody> 
+                        </table> 
+ 
+                        <div class="progress mt-4 mb-4"> 
+                            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" 
+                                 style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"> 
+                            </div> 
+                        </div> 
+                        <div class="row"> 
+                            <div class="col-md-11"> 
+                                <div class="form-group row"> 
+                                    <label class="col-sm-3 col-form-label">ข้อความ</label> 
+                                    <div class="col-sm-9"> 
+                                        <div class="input-group"> 
+                                            <input name="message" id="message" required type="text" class="form-control" 
+                                                   placeholder="กรุณากรอกข้อความประกาศ" autocomplete="off"> 
+                                            <div class="input-group-append bg-info border-primary"> 
+                                                <span class="input-group-text bg-transparent"> 
+                                                    <i class="mdi mdi-city mdi-24px text-white"></i> 
+                                                </span> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                        </div> 
+                        <button id="b1" type="button" class="mt-3 btn btn-1 btn-success btn-rounded btn-block btn-fw"> <i class="mdi mdi-approval"></i>ประกาศ 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+    <script>$(document).ready(function () { 
+            LoadAnnounce(); 
+        }); 
+ 
+        $("#b1").click(function () { 
+            var message = $("#message").val(); 
+            if (message != "") { 
+                AddAnnounce(message); 
+            } else { 
+                swal({ 
+                    position: 'center', 
+                    type: 'error', 
+                    title: 'กรุณากรอกข้อมูลให้ครบ', 
+                    showConfirmButton: false, 
+                    timer: 3000 
+                }); 
+            } 
+        }); 
+ 
+        function AddAnnounce(message) { 
+            $.ajax({ 
+                type: "post", 
+                url: "../Admin/AddAnnounce?message=" + message, 
+                success: function (result) { 
+                    if (result == "Fail") { 
+                        swal({ 
+                            position: 'center', 
+                            type: 'error', 
+                            title: 'เพิ่มประกาศล้มเหลว', 
+                            showConfirmButton: false, 
+                            timer: 3000 
+                        }); 
+                    } else { 
+                        swal({ 
+                            position: 'center', 
+                            type: 'success', 
+                            title: 'เพิ่มประกาศสำเร็จ', 
+                            showConfirmButton: false, 
+                            timer: 2000 
+                        }); 
+                        LoadAnnounce(); 
+                    } 
+                } 
+            }); 
+        } 
+ 
+        function LoadAnnounce() { 
+            $("#Announce tbody tr").remove(); 
+            $.ajax({ 
+                type: 'post', 
+                url: '../Admin/LoadAnnounce', 
+                dataType: 'json', 
+                success: function (promotions) { 
+                    var items = ''; 
+                    $.each(promotions, function (i, item) { 
+                        var rows = "<tr>" 
+                            + "<td>" + item.message + "</td>" 
+                            + "<td>" + item.date + "</td>" 
+                            + "<td class='text-center'><a class = 'badge badge-danger' href='#' onclick='deleteAnnounce(" + item.announce_id + ")'>ลบ</a>   <a class = 'badge badge-warning' href='#' onclick='editAnnounce(" + item.announce_id + ")'>แก้ไข</a></td>" 
+                            + "</tr>"; 
+                        $('#Announce tbody').append(rows); 
+                    }); 
+                }, 
+                error: function (ex) { 
+                    var r = jQuery.parseJSON(response.responseText); 
+                    alert("Message: " + r.Message); 
+                    alert("StackTrace: " + r.StackTrace); 
+                    alert("ExceptionType: " + r.ExceptionType); 
+                } 
+            }); 
+        } 
+ 
+        function deleteAnnounce(aid) { 
+            $.ajax({ 
+                type: "post", 
+                url: "../Admin/DeleteAnnounce?announce_id=" + aid, 
+                success: function (result) { 
+                    if (result == "Fail") { 
+                        swal({ 
+                            position: 'center', 
+                            type: 'error', 
+                            title: 'ลบประกาศล้มเหลว', 
+                            showConfirmButton: false, 
+                            timer: 3000 
+                        }); 
+                    } else { 
+                        swal({ 
+                            position: 'center', 
+                            type: 'success', 
+                            title: 'ลบประกาศเรียบร้อย', 
+                            showConfirmButton: false, 
+                            timer: 2000 
+                        }); 
+                        LoadAnnounce(); 
+                    } 
+                } 
+            }); 
+        } 
+ 
+        function editAnnounce(aid) { 
+            swal.mixin({ 
+                input: 'text', 
+                confirmButtonText: 'ตกลง', 
+                showCancelButton: true, 
+                progressSteps: ['1'] 
+            }).queue([ 
+                { 
+                    title: 'แก้ไข', 
+                    text: 'กรุณาใส่ข้อความประกาศใหม่' 
+                } 
+            ]).then((result) => { 
+                if (result.value != "") { 
+                    $.ajax({ 
+                        type: "post", 
+                        url: "../Admin/UpdateAnnounce?aid=" + aid + "&message=" + result.value, 
+                        success: function (result) { 
+                            if (result == "Fail") { 
+                                swal({ 
+                                    position: 'center', 
+                                    type: 'error', 
+                                    title: 'แก้ไขประกาศล้มเหลว', 
+                                    showConfirmButton: false, 
+                                    timer: 3000 
+                                }); 
+                            } else { 
+                                swal({ 
+                                    position: 'center', 
+                                    type: 'success', 
+                                    title: 'แก้ไขประกาศสำเร็จ', 
+                                    showConfirmButton: false, 
+                                    timer: 2000 
+                                }); 
+                                LoadAnnounce(); 
+                            } 
+                        } 
+                    }); 
+                } else { 
+                    swal({ 
+                        position: 'center', 
+                        type: 'error', 
+                        title: 'ไม่พบข้อความกรุณาพิมพ์ใหม่', 
+                        showConfirmButton: false, 
+                        timer: 3000 
+                    }); 
+                } 
+            }) 
+        } 
+    </script> 
+</body> 
+</html> 

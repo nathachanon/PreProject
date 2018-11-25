@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.IO; 
+using System.IO;
 using System.Linq;
 using System.Threading;
 using MASdemo.Context;
 using MASdemo.Models;
 using MASdemo.Security;
-using Microsoft.AspNetCore.Hosting; 
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols;
@@ -20,10 +20,10 @@ namespace MASdemo.Controllers
 
     public class UserController : Controller
     {
-        private readonly IHostingEnvironment he; 
-        public UserController(IHostingEnvironment e) 
-        { 
-            he = e; 
+        private readonly IHostingEnvironment he;
+        public UserController(IHostingEnvironment e)
+        {
+            he = e;
         }
 
         [HttpGet]
@@ -47,13 +47,13 @@ namespace MASdemo.Controllers
                 HttpContext.Session.SetString("Email", DataItem.Email);
                 HttpContext.Session.SetString("Surname", DataItem.Surname);
                 HttpContext.Session.SetString("Tel", DataItem.Tel);
-               if(DataItem.Picture == null) 
-                { 
-                    HttpContext.Session.SetString("Picture", "1"); 
-                } 
-                else 
-                { 
-                    HttpContext.Session.SetString("Picture", DataItem.Picture); 
+                if (DataItem.Picture == null)
+                {
+                    HttpContext.Session.SetString("Picture", "1");
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Picture", DataItem.Picture);
                 }
                 HttpContext.Session.SetString("Log", "1");
                 result = "Success";
@@ -82,6 +82,15 @@ namespace MASdemo.Controllers
                 var adduser = new Owner { Email = auser.email, Password = enpass, Name = auser.name, Surname = auser.surname, Tel = auser.tel };
                 context.Add(adduser);
                 context.SaveChanges();
+
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                sqlcon.Open();
+                string query1 = "INSERT INTO owner (Email, Password, Name, Surname , Tel) VALUES('" + auser.email + "', '" + enpass + "', '" + auser.name + "','" + auser.surname + "','" + auser.tel + "')";
+                SqlCommand sqlcom1 = new SqlCommand(query1);
+                sqlcom1.Connection = sqlcon;
+                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                result = "OK";
+                sqlcon.Close();
             }
 
             return Json(result);
@@ -144,12 +153,22 @@ namespace MASdemo.Controllers
                 else
                 {
                     string ennewpassword = Encryption.EncryptedPass(newpassword);
-                    string query2 = "UPDATE `owner` SET `Password`='" + ennewpassword + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + "";
+                    string query2 = "UPDATE `owner` SET `Password`='" + ennewpassword + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
                     mysqlcon.Open();
                     MySqlCommand com2 = new MySqlCommand(query2);
                     com2.Connection = mysqlcon;
                     MySqlDataReader reader2 = com2.ExecuteReader();
                     mysqlcon.Close();
+
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                    sqlcon.Open();
+
+                    string query1 = "UPDATE owner SET Password='" + ennewpassword + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                    SqlCommand sqlcom1 = new SqlCommand(query1);
+                    sqlcom1.Connection = sqlcon;
+                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                    result = "Add OK";
+                    sqlcon.Close();
                     result = "Ok";
                     return Json(result);
                 }
@@ -172,7 +191,7 @@ namespace MASdemo.Controllers
             return View();
         }
 
-        public IActionResult GetReport(string Email)
+        public IActionResult GetReport()
         {
             if (HttpContext.Session.GetInt32("Oid") == null)
             {
@@ -189,7 +208,9 @@ namespace MASdemo.Controllers
                 {
                     SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
                     sqlcon.Open();
-                    string query1 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id, message , status , datetime FROM Report WHERE Owner_email = '" + Email + "' ";
+                    string query1 = " SELECT RIGHT('0000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id , message , status, datetime, detail  FROM [Report] r " +
+                                    "INNER JOIN status s ON s.status_id = r.status " +
+                                    "WHERE Owner_id = " + HttpContext.Session.GetInt32("Oid") + " ";
                     SqlCommand sqlcom1 = new SqlCommand(query1);
                     sqlcom1.Connection = sqlcon;
                     SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
@@ -197,12 +218,16 @@ namespace MASdemo.Controllers
                     {
                         while (sqlReader1.Read())
                         {
+                            Console.WriteLine("testest");
                             reports.Add(new Report()
                             {
                                 Report_id = "R" + sqlReader1["Report_id"].ToString(),
+
                                 Report_message = sqlReader1["message"].ToString(),
                                 Report_datetime = sqlReader1["datetime"].ToString(),
-                                Report_status = sqlReader1.GetInt32(sqlReader1.GetOrdinal("status"))
+                                Report_status = sqlReader1.GetInt32(sqlReader1.GetOrdinal("status")),
+                                Report_sdetail = sqlReader1["detail"].ToString()
+
                             });
                         }
                     }
@@ -234,10 +259,10 @@ namespace MASdemo.Controllers
                     string mydate = ToChristianDateString(DateTime.Today);
                     SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
                     sqlcon.Open();
-                    string query1 = "INSERT INTO Report (message, status, datetime, Owner_email) VALUES('" + message + "', 1, '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "', '" + HttpContext.Session.GetString("Email") + "')";
+                    string query1 = " INSERT INTO Report (message, status, datetime, Owner_id) VALUES('" + message + "', 1, '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "', " + HttpContext.Session.GetInt32("Oid") + " ) ";
                     SqlCommand sqlcom1 = new SqlCommand(query1);
                     sqlcom1.Connection = sqlcon;
-                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                    sqlcom1.ExecuteReader();
                     result = "OK";
                     sqlcon.Close();
                 }
@@ -257,8 +282,8 @@ namespace MASdemo.Controllers
 
         }
 
-        public IActionResult EditProfile() 
-        { 
+        public IActionResult EditProfile()
+        {
             if (HttpContext.Session.GetInt32("Oid") == null)
             {
                 return RedirectToAction("Login", "User");
@@ -275,101 +300,126 @@ namespace MASdemo.Controllers
                 com.Connection = mysqlcon;
                 MySqlDataReader reader = com.ExecuteReader();
                 List<Profile> profiles = new List<Profile>();
-                if(reader.HasRows) 
-                { 
-                    while (reader.Read()) 
-                    { 
-                        profiles.Add(new Profile() 
-                        { 
-                            Name = reader["Name"].ToString(), 
-                            Surname = reader["Surname"].ToString(), 
-                            Tel = reader["Tel"].ToString(), 
-                            Picture = reader["Picture"].ToString() 
-                        }); 
-                    } 
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        profiles.Add(new Profile()
+                        {
+                            Name = reader["Name"].ToString(),
+                            Surname = reader["Surname"].ToString(),
+                            Tel = reader["Tel"].ToString(),
+                            Picture = reader["Picture"].ToString()
+                        });
+                    }
                 }
                 mysqlcon.Close();
                 ViewBag.profiles = profiles;
                 return View();
-            } 
+            }
         }
 
         [HttpPost]
-        public IActionResult EditProfiles(ProfileEdit pf,IFormFile picture) 
-        { 
-            var context = new masdatabaseContext(); 
-            if (HttpContext.Session.GetInt32("Oid") == null) 
-            { 
-                return RedirectToAction("Login", "User"); 
-            } 
-            else 
-            { 
-                if (picture != null) 
-                { 
-                    var fileName = ""; 
-                    var uploads = Path.Combine(he.WebRootPath, "uploads\\img_profile"); 
-                    fileName = Guid.NewGuid().ToString().Substring(0, 10) + Path.GetExtension(picture.FileName); 
-                    picture.CopyTo(new FileStream(Path.Combine(uploads, fileName), FileMode.Create)); 
- 
-                    if (pf.Picture != null) 
-                    { 
-                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid")); 
-                        editOwner.Name = pf.Name; 
-                        editOwner.Surname = pf.Surname; 
-                        editOwner.Tel = pf.Tel; 
-                        context.SaveChanges(); 
-                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
-                        HttpContext.Session.SetString("Name", pf.Name); 
-                        HttpContext.Session.SetString("Surname", pf.Surname); 
-                        HttpContext.Session.SetString("Tel", pf.Tel); 
-                        return RedirectToAction("ManageDorm", "Manage"); 
-                    } 
-                    else 
-                    { 
-                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid")); 
-                        editOwner.Name = pf.Name; 
-                        editOwner.Surname = pf.Surname; 
-                        editOwner.Tel = pf.Tel; 
-                        editOwner.Picture = fileName; 
-                        context.SaveChanges(); 
-                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
-                        HttpContext.Session.SetString("Name", pf.Name); 
-                        HttpContext.Session.SetString("Surname", pf.Surname); 
-                        HttpContext.Session.SetString("Tel", pf.Tel); 
-                        HttpContext.Session.SetString("Picture", fileName); 
-                        return RedirectToAction("ManageDorm", "Manage"); 
-                    } 
-                } 
-                else 
-                { 
-                    if (pf.Picture != null) 
-                    { 
-                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid")); 
-                        editOwner.Name = pf.Name; 
-                        editOwner.Surname = pf.Surname; 
-                        editOwner.Tel = pf.Tel; 
-                        context.SaveChanges(); 
-                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
-                        HttpContext.Session.SetString("Name", pf.Name); 
-                        HttpContext.Session.SetString("Surname", pf.Surname); 
-                        HttpContext.Session.SetString("Tel", pf.Tel); 
-                        return RedirectToAction("ManageDorm", "Manage"); 
-                    } 
-                    else 
-                    { 
-                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid")); 
-                        editOwner.Name = pf.Name; 
-                        editOwner.Surname = pf.Surname; 
-                        editOwner.Tel = pf.Tel; 
-                        context.SaveChanges(); 
-                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>"; 
-                        HttpContext.Session.SetString("Name", pf.Name); 
-                        HttpContext.Session.SetString("Surname", pf.Surname); 
-                        HttpContext.Session.SetString("Tel", pf.Tel); 
-                        return RedirectToAction("ManageDorm", "Manage"); 
-                    } 
-                } 
-            } 
+        public IActionResult EditProfiles(ProfileEdit pf, IFormFile picture)
+        {
+            var context = new masdatabaseContext();
+            if (HttpContext.Session.GetInt32("Oid") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                if (picture != null)
+                {
+                    var fileName = "";
+                    var uploads = Path.Combine(he.WebRootPath, "uploads\\img_profile");
+                    fileName = Guid.NewGuid().ToString().Substring(0, 10) + Path.GetExtension(picture.FileName);
+                    picture.CopyTo(new FileStream(Path.Combine(uploads, fileName), FileMode.Create));
+
+                    if (pf.Picture != null)
+                    {
+                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid"));
+                        editOwner.Name = pf.Name;
+                        editOwner.Surname = pf.Surname;
+                        editOwner.Tel = pf.Tel;
+                        context.SaveChanges();
+                        sqlcon.Open();
+                        string query1 = "UPDATE owner SET Name='" + pf.Name + "',Surname='" + pf.Surname + "',Tel='" + pf.Tel + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        sqlcon.Close();
+                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
+                        HttpContext.Session.SetString("Name", pf.Name);
+                        HttpContext.Session.SetString("Surname", pf.Surname);
+                        HttpContext.Session.SetString("Tel", pf.Tel);
+                        return RedirectToAction("ManageDorm", "Manage");
+                    }
+                    else
+                    {
+                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid"));
+                        editOwner.Name = pf.Name;
+                        editOwner.Surname = pf.Surname;
+                        editOwner.Tel = pf.Tel;
+                        editOwner.Picture = fileName;
+                        context.SaveChanges();
+                        sqlcon.Open();
+                        string query1 = "UPDATE owner SET Name='" + pf.Name + "',Surname='" + pf.Surname + "',Tel='" + pf.Tel + "',Picture='" + fileName + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        sqlcon.Close();
+                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
+                        HttpContext.Session.SetString("Name", pf.Name);
+                        HttpContext.Session.SetString("Surname", pf.Surname);
+                        HttpContext.Session.SetString("Tel", pf.Tel);
+                        HttpContext.Session.SetString("Picture", fileName);
+                        return RedirectToAction("ManageDorm", "Manage");
+                    }
+                }
+                else
+                {
+                    if (pf.Picture != null)
+                    {
+                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid"));
+                        editOwner.Name = pf.Name;
+                        editOwner.Surname = pf.Surname;
+                        editOwner.Tel = pf.Tel;
+                        context.SaveChanges();
+                        sqlcon.Open();
+                        string query1 = "UPDATE owner SET Name='" + pf.Name + "',Surname='" + pf.Surname + "',Tel='" + pf.Tel + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        sqlcon.Close();
+                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
+                        HttpContext.Session.SetString("Name", pf.Name);
+                        HttpContext.Session.SetString("Surname", pf.Surname);
+                        HttpContext.Session.SetString("Tel", pf.Tel);
+                        return RedirectToAction("ManageDorm", "Manage");
+                    }
+                    else
+                    {
+                        var editOwner = context.Owner.First(a => a.Oid == HttpContext.Session.GetInt32("Oid"));
+                        editOwner.Name = pf.Name;
+                        editOwner.Surname = pf.Surname;
+                        editOwner.Tel = pf.Tel;
+                        context.SaveChanges();
+                        sqlcon.Open();
+                        string query1 = "UPDATE owner SET Name='" + pf.Name + "',Surname='" + pf.Surname + "',Tel='" + pf.Tel + "' WHERE Oid = " + HttpContext.Session.GetInt32("Oid") + " ";
+                        SqlCommand sqlcom1 = new SqlCommand(query1);
+                        sqlcom1.Connection = sqlcon;
+                        SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                        sqlcon.Close();
+                        TempData["EditSuccessful"] = "<script>swal({type: 'success', title: 'แก้ไขข้อมูลสำเร็จ', showConfirmButton: false,  timer: 1500,backdrop: 'rgba(0,0, 26,0.8)' })</script>";
+                        HttpContext.Session.SetString("Name", pf.Name);
+                        HttpContext.Session.SetString("Surname", pf.Surname);
+                        HttpContext.Session.SetString("Tel", pf.Tel);
+                        return RedirectToAction("ManageDorm", "Manage");
+                    }
+                }
+            }
         }
     }
 }

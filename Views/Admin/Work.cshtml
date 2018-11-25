@@ -17,14 +17,14 @@
                 <div class="card"> 
                     <div class="card-body"> 
                         <br /> 
-                        <table id="tblReport" class="table table-bordered"> 
+                        <table id="tblReport" class="table table-hover"> 
                             <thead> 
                                 <tr> 
-                                    <th align="left" class="h2 productth text-primary">รหัสงาน</th> 
-                                    <th align="left" class="h2 productth text-primary">ผู้ส่ง</th> 
-                                    <th align="left" class="h2 productth text-primary">ข้อความ</th> 
-                                    <th align="left" class="h2 productth text-primary">วันเวลาที่ส่ง</th> 
-                                    <th align="left" class="h2 productth text-primary text-center">จัดการ</th> 
+                                    <th class="h2 productth text-primary">รหัสงาน</th> 
+                                    <th class="h2 productth text-primary">ผู้ส่ง</th> 
+                                    <th class="h2 productth text-primary">ข้อความ</th> 
+                                    <th class="h2 productth text-primary">วันเวลาที่ส่ง</th> 
+                                    <th class="h2 productth text-primary text-center">จัดการ</th> 
                                 </tr> 
                             </thead> 
                             <tbody></tbody> 
@@ -42,35 +42,34 @@
         setInterval('LoadReport()', 10000); 
  
         function LoadReport() { 
-        $("#tblReport tbody tr").remove(); 
-        $.ajax({ 
-            type: 'post', 
-            url: '../Admin/CheckWork', 
-            dataType: 'json', 
-            success: function (workalls) { 
-                var items = ''; 
-                $.each(workalls, function (i, item) { 
-                    var rows = "<tr>" 
-                        + "<td class='prtoducttd'>" + item.work_id + "</td>" 
-                        + "<td class='prtoducttd'>" + item.report_Owner + "</td>" 
-                        + "<td class='prtoducttd'>" + item.report_message + "</td>" 
-                        + "<td class='prtoducttd'>" + item.report_datetime + "</td>" 
-                        + "<td class='prtoducttd text-center'><a class = 'badge badge-primary' href='#' onclick='complete(" + item.report_id + ")'>เสร็จสิ้น</a></td>" 
-                        + "</tr>"; 
-                    $('#tblReport tbody').append(rows); 
-                }); 
-            }, 
-            error: function (ex) { 
-                var r = jQuery.parseJSON(response.responseText); 
-                alert("Message: " + r.Message); 
-                alert("StackTrace: " + r.StackTrace); 
-                alert("ExceptionType: " + r.ExceptionType); 
-            } 
+            $("#tblReport tbody tr").remove(); 
+            $.ajax({ 
+                type: 'post', 
+                url: '../Admin/CheckWork', 
+                dataType: 'json', 
+                success: function (workalls) { 
+                    var items = ''; 
+                    $.each(workalls, function (i, item) { 
+                        var rows = "<tr>" 
+                            + "<td class='prtoducttd'>" + item.report_id + "</td>" 
+                            + "<td class='prtoducttd'>" + item.owner_email + "</td>" 
+                            + "<td class='prtoducttd'>" + item.report_message + "</td>" 
+                            + "<td class='prtoducttd'>" + item.report_datetime + "</td>" 
+                            + "<td class='prtoducttd text-center'><a class = 'badge badge-primary' href='#' onclick='complete(" + item.report_id + ")'>เสร็จสิ้น</a></td>" 
+                            + "</tr>"; 
+                        $('#tblReport tbody').append(rows); 
                     }); 
+                }, 
+                error: function (ex) { 
+                    var r = jQuery.parseJSON(response.responseText); 
+                    alert("Message: " + r.Message); 
+                    alert("StackTrace: " + r.StackTrace); 
+                    alert("ExceptionType: " + r.ExceptionType); 
+                } 
+            }); 
         } 
  
-        function complete(report_id) 
-        { 
+        function complete(report_id) { 
             $.ajax({ 
                 type: "post", 
                 url: "../Admin/Complete?report_id=" + report_id, 

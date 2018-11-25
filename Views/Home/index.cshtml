@@ -57,17 +57,15 @@ Layout = null;
             <div class="container"> 
                 <div class="row"> 
                     <div class="col-xs-2"> 
-                        <div id="fh5co-logo"><a class="brand-logo-mini h2 " href="#">M<img src="../images/logo-mini.svg" alt="logo" />S</a></div> 
+                        <div id="fh5co-logo"><a class="brand-logo-mini h2 " asp-controller="Home" asp-action="Index">M<img src="../images/logo-mini.svg" alt="logo" />S</a></div> 
  
                     </div> 
                     <div class="col-xs-10 text-right menu-1"> 
                         <ul> 
-                            <li><a href="#">หน้าหลัก</a></li> 
-                            <li><a href="#">บริการ</a></li>                    
-                            <li><a href="#">ฟีเจอร์</a></li> 
-                              <li><a href="#fh5co-bg-section">เกี่ยวกับ</a></li> 
+                             <li><a href="#fh5co-section">บริการ</a></li>                    
+                            <li><a href="#fh5co-features-2">ฟีเจอร์</a></li> 
+                              <li><a href="#fh5co-about-section">เกี่ยวกับ</a></li> 
                             <li  ><a asp-controller="User" asp-action="Login">เข้าสู่ระบบ</a>
-                            
                             <li><a asp-controller="User" asp-action="Register">สมัครสมาชิก</a></li> 
                         </ul> 
                     </div> 
@@ -84,7 +82,7 @@ Layout = null;
                             <div class="display-tc animate-box" data-animate-effect="fadeIn"> 
                                 <h1>Mansion Assistant System</h1> 
                                 <h2>เว็บแอปพลิเคชัน ผู้ช่วยบริหารหอพัก </h2> 
-                                <p><a href="#" class="btn btn-default">การทำงานของระบบ</a></p> 
+                                <p><a href="#fh5co-features-2" class="btn btn-default">การทำงานของระบบ</a></p> 
                             </div> 
                         </div> 
                     </div> 
@@ -101,66 +99,30 @@ Layout = null;
                             <div class="section-title center">
                             <h1>บริการ</h1>
                             <hr>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit duis sed dapibus leonec.</p>
+                            <p></p>
                             </div>
-                            <div class="row">
-                            <div class="col-md-4 col-sm-4 animate-box">
-                                <div class="pricing-table">
-                                <div class="plan-name">
-                                    <h3>Basic</h3>
-                                </div>
-                                <div class="plan-price">
-                                    <div class="price-value">299 ฿</div>
-                                </div>
-                                <div class="plan-list">
-                                    <ul>
-                                     <li><strong>ใช้ได้ 2 หอ 50 ห้อง</strong></li>
-                                     <li><strong>ระยะเวลาโปรโมชัน</strong></li>
-                                    </ul>
-                                </div>
-                                <div class="plan-signup"> <a href="#" class="btn-system">Order Now</a> </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4 col-sm-4 text-center animate-box">
-                                <div class="pricing-table ">
-                                <div class="plan-name">
-                                    <h3>Standard</h3>
-                                </div>
-                                <div class="plan-price">
-                                    <div class="price-value">399 ฿</div>
-                                </div>
-                                <div class="plan-list ">
-                                    <ul>
-                                    <li><strong>ใช้ได้ 2 หอ 50 ห้อง</strong></li>
-                                    <li><strong>ระยะเวลาโปรโมชัน</strong></li>
-                                    
-                                    </ul>
-                                </div>
-                                <div class="plan-signup"> <a href="#" class="btn-system ">Order Now</a> </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4 col-sm-4 animate-box">
-                                <div class="pricing-table">
-                                <div class="plan-name">
-                                    <h3>Professional</h3>
-                                </div>
-                                <div class="plan-price">
-                                    <div class="price-value">499 ฿</div>
-                                </div>
-                                <div class="plan-list">
-                                    <ul>
-                                     <li><strong>ใช้ได้ 2 หอ 50 ห้อง</strong></li>
-                                     <li><strong>ระยะเวลาโปรโมชัน</strong></li>
-                                    </ul>
-                                </div>
-                                <div class="plan-signup"> <a href="#" class="btn-system">Order Now</a> </div>
-                                </div>
-                            </div>
-
+                            <div class="row"> 
+                                @foreach (var p in ViewBag.Promotion) 
+                                { 
+                                    <div class="col-md-4 col-sm-4 text-center animate-box"> 
+                                        <div class="pricing-table "> 
+                                            <div class="plan-name"> 
+                                                <h3>@p.Title</h3> 
+                                            </div> 
+                                            <div class="plan-price"> 
+                                                <div class="price-value">@p.Price ฿</div> 
+                                            </div> 
+                                            <div class="plan-list "> 
+                                                <ul> 
+                                                    <li><strong>@p.Detail</strong></li> 
+                                                    <li><strong>สิ้นสุดโปรโมชั่น @p.EndDate</strong></li> 
+ 
+                                                </ul> 
+                                            </div> 
+                                            <div class="plan-signup"> <a href="#" class="btn-system ">จองเลย !</a> </div> 
+                                        </div> 
+                                    </div>
+                                } 
                             </div>
                         </div>
                         </div>
@@ -177,7 +139,7 @@ Layout = null;
                     <div id="fh5co-features-2"> 
                         <div class="col-feature-9"> 
                             <div class="row"> 
-                                <div class="col-md-12 fh5co-heading animate-box"> 
+                                <div id="feture" class="col-md-12 fh5co-heading animate-box"> 
                                     <h2>ฟีเจอร์</h2> 
                                     <p> 
                                         Mansion Assistant System คือ Web Application ที่จะเข้ามาเปลี่ยนการบริหารจัดการหอพักแบบเดิมๆ ที่ต้องจดบันทึกข้อมูลต่างๆลงบนแผ่นกระดาษ 
@@ -282,10 +244,8 @@ Layout = null;
                                 <p>โดยระบบจะทำการคำนวณจาก จำนวนห้องที่มีผู้ใช้อยู่ในเดือนปัจจุบัน แล้วนำผลที่ได้ไปบวกกับจำนวนการใช้น้ำและไฟ โดยเฉลี่ยย้อนหลัง 3 เดือน ซึ่งการคาดการณ์รายได้ จะทำให้ผู้ใช้</p> <br><br>
                                 <ul class="list-nav"> 
                                     <li><i class="icon-check"></i>สาามารถวางแผนทางการเงินในเดือนถัดไปได้</li> 
-                                    <li><i class="icon-check"></i>There live the blind texts</li> 
-                                    <li><i class="icon-check"></i>Separated they live in bookmarksgrove</li> 
-                                    <li><i class="icon-check"></i>Semantics a large language ocean</li> 
-                                    <li><i class="icon-check"></i>A small river named Duden</li> 
+                                    <li><i class="icon-check"></i>สามารถทำให้ทราบปริมาณการใช้น้ำและไฟได้</li> 
+                                
                                 </ul> 
                             </div> 
                         </div> 
@@ -322,66 +282,86 @@ Layout = null;
                         <h2>ประกาศจากผู้พัฒนา</h2> 
                     </div> 
                 </div> 
-                <div class="row"> 
-                    <div class="col-md-4 animate-box"> 
-                        <div class="testimony"> 
-                            <blockquote> 
-                                &ldquo;Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius&rdquo; 
-                            </blockquote> 
-                            <p class="author"><cite>John Doe</cite></p> 
-                        </div> 
-                    </div> 
-                    <div class="col-md-4 animate-box"> 
-                        <div class="testimony"> 
-                            <blockquote> 
-                                &ldquo;Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius&rdquo; 
-                            </blockquote> 
-                            <p class="author"><cite>Rob Smith</cite></p> 
-                        </div> 
-                    </div> 
-                    <div class="col-md-4 animate-box"> 
-                        <div class="testimony"> 
-                            <blockquote> 
-                                &ldquo;Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius&rdquo; 
-                            </blockquote> 
-                            <p class="author"><cite>Jane Doe</cite></p> 
-                        </div> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
- 
-        <div id="fh5co-started"> 
-            <div class="container"> 
-                <div class="row animate-box"> 
-                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading"> 
-                        <h2>Newsletter</h2> 
-                        <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p> 
-                    </div> 
-                </div> 
-                <div class="row animate-box"> 
-                    <div class="col-md-8 col-md-offset-2"> 
-                        <form class="form-inline"> 
-                            <div class="col-md-6 col-sm-6"> 
-                                <div class="form-group"> 
-                                    <label for="email" class="sr-only">Email</label> 
-                                    <input type="email" class="form-control" id="email" placeholder="Email"> 
+                    <div class="row"> 
+                        @foreach (var a in ViewBag.Announce) 
+                        { 
+                            <div class="col-md-4 animate-box"> 
+                                <div class="testimony"> 
+                                    <blockquote> 
+                                        &ldquo;@a.Message&rdquo; 
+                                    </blockquote> 
+                                    <p class="author"><cite>Developer Team</cite></p> 
                                 </div> 
                             </div> 
-                            <div class="col-md-6 col-sm-6"> 
-                                <button type="submit" class="btn btn-default btn-block">Subscribe</button> 
-                            </div> 
-                        </form> 
+                        } 
                     </div> 
-                </div> 
-            </div> 
+            </div>
         </div> 
+
+
+	<div id="fh5co-about-section">
+		<div class="container">
+			<div class="about-content">
+				
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<h2>ผู้พัฒนา</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="../home/images/person1.jpg" alt="Free HTML5 Templates by FreeHTML5.co">
+						<h3>Nathachanon Sumranjai</h3>
+						<strong class="role">Web Designer</strong>
+						<p>นักศึกษาภาควิชาวิศวกรรมคอมพิวเตอร์<br> วิทยาลัยนวัตกรรมด้านเทคโนโลยีและวิศวกรรมศาสตร์ <br>มหาวิทยาลัยธุรกิจบัณฑิตย์<br>ชั้นปีที่ 3</p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							<li><a href="#"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="../home/images/person2.jpg" alt="Free HTML5 Templates by FreeHTML5.co">
+						<h3>phuwarin kanokpornpaiboon</h3>
+						<strong class="role">Front-end Developer</strong>
+						<p>นักศึกษาภาควิชาวิศวกรรมคอมพิวเตอร์<br> วิทยาลัยนวัตกรรมด้านเทคโนโลยีและวิศวกรรมศาสตร์ <br>มหาวิทยาลัยธุรกิจบัณฑิตย์<br>ชั้นปีที่ 3</p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							<li><a href="#"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="../home/images/person3.jpg" alt="Free HTML5 Templates by FreeHTML5.co">
+						<h3>noparat pasomporn</h3>
+						<strong class="role">Back-end Developer</strong>
+						<p>นักศึกษาภาควิชาวิศวกรรมคอมพิวเตอร์<br> วิทยาลัยนวัตกรรมด้านเทคโนโลยีและวิศวกรรมศาสตร์ <br>มหาวิทยาลัยธุรกิจบัณฑิตย์<br>ชั้นปีที่ 3</p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							<li><a href="#"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
         <footer id="fh5co-footer" role="contentinfo"> 
             <div class="container"> 
               
                 <div class="row copyright"> 
                     <div class="col-md-12 text-center"> 
- 
+ 	                        <p>
+						<small class="block">&copy; Msnsion Assistant System</small> 
+					</p>
                         <p> 
                             <ul class="fh5co-social-icons"> 
                                 <li><a href="#"><i class="icon-twitter"></i></a></li> 
@@ -396,7 +376,7 @@ Layout = null;
         </footer> 
     </div> 
     <div class="gototop js-top"> 
-        <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a> 
+        <a href="#fh5co-header" class="js-gotop"><i class="icon-arrow-up"></i></a> 
     </div> 
     <!-- jQuery --> 
     <script src="../home/js/jquery.min.js"></script> 
@@ -415,6 +395,17 @@ Layout = null;
     <script src="../home/js/main.js"></script> 
  
     <script> 
+        $("a[href^='#']").click(function(e) {
+	e.preventDefault();
+	
+	var position = $($(this).attr("href")).offset().top;
+
+	$("body, html").animate({
+		scrollTop: position
+	} );
+});
+
+
         $(document).ready(function () { 
             LoadData(); 
             LoadPromotionEX(); 

@@ -17,14 +17,14 @@
                 <div class="card"> 
                     <div class="card-body"> 
                         <br /> 
-                        <table id="tblReport" class="table table-bordered"> 
+                        <table id="tblReport" class="table table-hover"> 
                             <thead> 
                                 <tr> 
-                                    <th align="left" class="h2 productth text-primary">รหัสร้องเรียน</th> 
-                                    <th align="left" class="h2 productth text-primary">ผู้ส่ง</th> 
-                                    <th align="left" class="h2 productth text-primary">ข้อความ</th> 
-                                    <th align="left" class="h2 productth text-primary">วันเวลาที่ส่ง</th> 
-                                    <th align="left" class="h2 productth text-primary text-center">จัดการ</th> 
+                                    <th>รหัสร้องเรียน</th> 
+                                    <th>ผู้ส่ง</th> 
+                                    <th>ข้อความ</th> 
+                                    <th>วันเวลาที่ส่ง</th> 
+                                    <th class="text-center">จัดการ</th> 
                                 </tr> 
                             </thead> 
                             <tbody></tbody> 
@@ -42,35 +42,34 @@
         setInterval('LoadReport()', 10000); 
  
         function LoadReport() { 
-        $("#tblReport tbody tr").remove(); 
-        $.ajax({ 
-            type: 'post', 
-            url: '../Admin/ReportList', 
-            dataType: 'json', 
-            success: function (reports) { 
-                var items = ''; 
-                $.each(reports, function (i, item) { 
-                    var rows = "<tr>" 
-                        + "<td class='prtoducttd'>" + item.report_id2 + "</td>" 
-                        + "<td class='prtoducttd'>" + item.report_Owner + "</td>" 
-                        + "<td class='prtoducttd'>" + item.report_message + "</td>" 
-                        + "<td class='prtoducttd'>" + item.report_datetime + "</td>" 
-                        + "<td class='prtoducttd text-center'><a class = 'badge badge-primary' href='#' onclick='addReport(" + item.report_id + ")'>รับเรื่อง</a></td>"  
-                        + "</tr>"; 
-                    $('#tblReport tbody').append(rows); 
-                }); 
-            }, 
-            error: function (ex) { 
-                var r = jQuery.parseJSON(response.responseText); 
-                alert("Message: " + r.Message); 
-                alert("StackTrace: " + r.StackTrace); 
-                alert("ExceptionType: " + r.ExceptionType); 
-            } 
+            $("#tblReport tbody tr").remove(); 
+            $.ajax({ 
+                type: 'post', 
+                url: '../Admin/ReportList', 
+                dataType: 'json', 
+                success: function (reports) { 
+                    var items = ''; 
+                    $.each(reports, function (i, item) { 
+                        var rows = "<tr>" 
+                            + "<td class='prtoducttd'>" + item.report_id2 + "</td>" 
+                            + "<td class='prtoducttd'>" + item.owner_email + "</td>" 
+                            + "<td class='prtoducttd'>" + item.report_message + "</td>" 
+                            + "<td class='prtoducttd'>" + item.report_datetime + "</td>" 
+                            + "<td class='prtoducttd text-center'><a class = 'badge badge-primary' href='#' onclick='addReport(" + item.report_id + ")'>รับเรื่อง</a></td>" 
+                            + "</tr>"; 
+                        $('#tblReport tbody').append(rows); 
                     }); 
+                }, 
+                error: function (ex) { 
+                    var r = jQuery.parseJSON(response.responseText); 
+                    alert("Message: " + r.Message); 
+                    alert("StackTrace: " + r.StackTrace); 
+                    alert("ExceptionType: " + r.ExceptionType); 
+                } 
+            }); 
         } 
  
-        function addReport(report_id) 
-        { 
+        function addReport(report_id) { 
             $.ajax({ 
                 type: "post", 
                 url: "../Admin/AddReport?report_id=" + report_id, 

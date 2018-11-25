@@ -461,7 +461,6 @@ namespace MASdemo.Controllers
                         "WHERE o.Oid = " + myOid + " AND d.DID = " + did + " " +
                         "GROUP BY c.Date " +
                         "ORDER BY c.Date DESC " +
-                        "LIMIT 3 " +
                         ") Extrapolate";
                     MySqlCommand com = new MySqlCommand(query);
                     com.Connection = mysqlcon;
@@ -522,7 +521,7 @@ namespace MASdemo.Controllers
                             "INNER JOIN room r ON r.DID = d.DID " +
                             "INNER JOIN cal_info_room c ON c.RID = r.RID " +
                             "WHERE o.Oid = " + HttpContext.Session.GetInt32("Oid") + " AND d.DID = " + did + " " +
-                            "GROUP BY c.Date ORDER BY c.Date DESC LIMIT 3";
+                            "GROUP BY c.Date ORDER BY c.Date ASC ";
                         MySqlCommand com3 = new MySqlCommand(query3);
                         com3.Connection = mysqlcon;
                         MySqlDataReader reader3 = com3.ExecuteReader();

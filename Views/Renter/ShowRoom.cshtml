@@ -17,6 +17,7 @@
     <link href="~/css/imgFile.css" rel="stylesheet" /> 
     <link href="~/css/switch.css" rel="stylesheet" /> 
     <script src="~/js/imgFile.js"></script> 
+   
 </head> 
 <body> 
     @Html.Raw(TempData["EditSuccessful"]) 
@@ -64,14 +65,17 @@
                                                             <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                             <div class="float-left "> 
                                                                 <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                            </div> 
-                                                            <div class="float-right"> 
-                                                                <div class="fluid-container"> 
-                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                        <h4 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h4> 
-                                                                    </a> 
-                                                                </div> 
+                                                                <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                                <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                                      
+                                                                            </div>
                                                                 <form id="mystatus_@rooms.Rid"> 
                                                                     <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
                                                                 </form> 
@@ -119,12 +123,20 @@
                                                                 <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                 <div class="float-left "> 
                                                                     <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                    <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                </div> 
-                                                                <div class="float-right"> 
-                                                                    <div class="fluid-container"> 
-                                                                        <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                    </div> 
+                                                                    <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
+                                                                            <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                                        </div> 
+                                                                        <div class="float-right"> 
+                                                                            <div class="fluid-container"> 
+                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
+                                                                            </div>
                                                                     <form id="mystatus_@rooms.Rid"> 
                                                                         <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
                                                                     </form> 
@@ -186,13 +198,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a>  
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -241,11 +258,19 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
                                                                             </div> 
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -307,13 +332,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a> 
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -362,11 +392,19 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
                                                                             </div> 
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -429,13 +467,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a>  
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -484,11 +527,19 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
                                                                             </div> 
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -551,13 +602,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a> 
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -606,11 +662,19 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
                                                                             </div> 
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -673,13 +737,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a> 
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -728,11 +797,19 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
                                                                             </div> 
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -795,13 +872,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <<h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a> 
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -850,12 +932,20 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </div> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
+                                                                            </div>
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
                                                                             </form> 
@@ -917,13 +1007,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a>  
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -972,11 +1067,19 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
                                                                             </div> 
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -1039,13 +1142,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a>  
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -1094,11 +1202,19 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
                                                                             </div> 
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -1145,7 +1261,7 @@
  
                                 } 
                                 else if (i == 10) 
-                                { 
+                               { 
                                     <div id="floor10" class="row" style="display: none"> 
                                         @foreach (var rooms in ViewBag.rooms) 
                                         { 
@@ -1161,13 +1277,18 @@
                                                                     <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                     <div class="float-left "> 
                                                                         <i class="mdi mdi-account-card-details text-success icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
-                                                                        <h4 class="mt-3 text-left">สถานะห้อง</h4> 
-                                                                    </div> 
-                                                                    <div class="float-right"> 
-                                                                        <div class="fluid-container"> 
-                                                                            <a class="dropdown-item" href="#" onclick="nodata()"> 
-                                                                                <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
-                                                                            </a> 
+                                                                        <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                <h4 class="mt-3 text-left">เบอร์</h4>
+                                                                <h4 class="mt-3 text-left">สถานะห้อง</h4> 
+                                                            </div> 
+                                                            <div class="float-right"> 
+                                                                <div class="fluid-container"> 
+                                                                    <a class="dropdown-item" href="#" onclick="nodata()"> 
+                                                                       
+                                                                        <h3 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h3>
+                                                                        <h4 class="font-weight-medium  mt-2 text-right mb-2">ว่าง</h4>
+                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">ว่าง</h4>
+                                                                    </a>  
                                                                         </div> 
                                                                         <form id="mystatus_@rooms.Rid"> 
                                                                             <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -1216,11 +1337,19 @@
                                                                         <h3 class="text-center ">ข้อมูลผู้เช่า</h3> 
                                                                         <div class="float-left "> 
                                                                             <i class="mdi mdi-account-card-details text-danger icon-md ">ห้อง</i>   <!-- ตรงนี้ text-success คือไอคอนสีเขียว , text-danger คือ ไอคอนสีแดง --> 
+                                                                            <h4 class="mt-3 text-left">ชื่อ</h4>
+                                                                            <h4 class="mt-3 text-left">เบอร์</h4>  
                                                                             <h4 class="mt-3 text-left">สถานะห้อง</h4> 
                                                                         </div> 
                                                                         <div class="float-right"> 
                                                                             <div class="fluid-container"> 
                                                                                 <h1 class="font-weight-medium display-3 text-right mb-1">@rooms.RoomNumber</h1> 
+                                                                                    @foreach (var renter in ViewBag.renters) {
+                                                                                    if(renter.Rid == rooms.Rid){
+                                                                                        <h4 class="font-weight-medium mt-2 text-right mb-2">@renter.RenName</h4> 
+                                                                                        <h4 class="font-weight-medium mt-3 text-right mb-3">@renter.RenTel</h4> 
+                                                                                }
+                                                                                    }   
                                                                             </div> 
                                                                             <form id="mystatus_@rooms.Rid"> 
                                                                                 <input type="text" name="status" hidden="hidden" value="@rooms.Rid"><input value="@ViewBag.did" name="did" hidden="hidden" /> 
@@ -1265,7 +1394,7 @@
                                         } 
                                     </div> 
  
-                                } 
+                                }  
  
                             } 
                                                    
@@ -1502,11 +1631,11 @@
                                             <div class="col-sm-8"> 
                                                 @if (renter.RenAge == null) 
                                                 { 
-                                                    <input autocomplete="off" id="renage_@renter.Rid" value="" name="RenAge" type="number" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" /> 
+                                                    <input autocomplete="off" id="renage_@renter.Rid" value="" name="RenAge" type="number" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" min="15" max="60"/> 
                                                 } 
                                                 else 
                                                 { 
-                                                    <input autocomplete="off" id="renage_@renter.Rid" value="@renter.RenAge" name="RenAge" type="number" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" /> 
+                                                    <input autocomplete="off" id="renage_@renter.Rid" value="@renter.RenAge" name="RenAge" type="number" class="form-control" required oninvalid="this.setCustomValidity('กรุณาใส่อายุ')" oninput="setCustomValidity('')" min="15" max="60"/> 
                                                 } 
                                             </div> 
                                         </div> 
@@ -1535,11 +1664,11 @@
                                                 <div class="input-group "> 
                                                     @if (renter.StartWaterMeter == null) 
                                                     { 
-                                                        <input autocomplete="off" id="meterwater_@renter.Rid" value="" name="StartWaterMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')"> 
+                                                        <input autocomplete="off" id="meterwater_@renter.Rid" value="" name="StartWaterMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')" min="1" max="10000000"> 
                                                     } 
                                                     else 
                                                     { 
-                                                        <input autocomplete="off" id="meterwater_@renter.Rid" value="@renter.StartWaterMeter" name="StartWaterMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')"> 
+                                                        <input autocomplete="off" id="meterwater_@renter.Rid" value="@renter.StartWaterMeter" name="StartWaterMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์น้ำเริ่มต้น')" oninput="setCustomValidity('')" min="1" max="10000000"> 
                                                     } 
                                                     <span class="input-group-btn"> 
                                                         <div class=" text-preview-input"> 
@@ -1559,11 +1688,11 @@
                                                 <div class="input-group "> 
                                                     @if (renter.StartElecMeter == null) 
                                                     { 
-                                                        <input autocomplete="off" id="meterelec_@renter.Rid" value="" name="StartElecMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')"> 
+                                                        <input autocomplete="off" id="meterelec_@renter.Rid" value="" name="StartElecMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')" min="1" max="10000000"> 
                                                     } 
                                                     else 
                                                     { 
-                                                        <input autocomplete="off" id="meterelec_@renter.Rid" value="@renter.StartElecMeter" name="StartElecMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')"> 
+                                                        <input autocomplete="off" id="meterelec_@renter.Rid" value="@renter.StartElecMeter" name="StartElecMeter" type="number" class="form-control " required oninvalid="this.setCustomValidity('กรุณาใส่มิเตอร์ไฟเริ่มต้น')" oninput="setCustomValidity('')" min="1" max="10000000"> 
                                                     } 
                                                     <span class="input-group-btn"> 
                                                         <div class=" text-preview-input"> 
