@@ -53,10 +53,9 @@
             if (message != "") {
                 $.ajax({
                     type: "post",
-                    url: "/User/sendReport?message=" + message,
+                    url: '/User/sendReport?message=' + message,
                     success: function (result) {
                         if (result == "Fail") {
-                            $('#email').val("");
                             swal({
                                 position: 'center',
                                 type: 'error',
@@ -91,7 +90,7 @@
         $("#tblReport tbody tr").remove();
         $.ajax({
             type: 'post',
-            url: '/User/GetReport?Email=@ViewBag.Email',
+            url: '/User/GetReport',
             dataType: 'json',
             success: function (reports) {
                 var items = '';

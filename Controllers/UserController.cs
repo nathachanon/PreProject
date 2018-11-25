@@ -191,7 +191,7 @@ namespace MASdemo.Controllers
             return View();
         }
 
-        public IActionResult GetReport(string Email)
+        public IActionResult GetReport()
         {
             if (HttpContext.Session.GetInt32("Oid") == null)
             {
@@ -208,7 +208,7 @@ namespace MASdemo.Controllers
                 {
                     SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
                     sqlcon.Open();
-                    string query1 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id, message , status , datetime FROM Report WHERE Owner_id = '" + HttpContext.Session.GetInt32("Oid") + "' ";
+                    string query1 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id, message , status , datetime FROM Report WHERE Owner_id = " + HttpContext.Session.GetInt32("Oid") + " ";
                     SqlCommand sqlcom1 = new SqlCommand(query1);
                     sqlcom1.Connection = sqlcon;
                     SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
@@ -253,10 +253,10 @@ namespace MASdemo.Controllers
                     string mydate = ToChristianDateString(DateTime.Today);
                     SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
                     sqlcon.Open();
-                    string query1 = "INSERT INTO Report (message, status, datetime, Owner_id) VALUES('" + message + "', 1, '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "', '" + HttpContext.Session.GetInt32("Oid") + "')";
+                    string query1 = " INSERT INTO Report (message, status, datetime, Owner_id) VALUES('" + message + "', 1, '" + mydate + " " + string.Format("{0:HH:mm:ss tt}", DateTime.Now) + "', " + HttpContext.Session.GetInt32("Oid") + " ) ";
                     SqlCommand sqlcom1 = new SqlCommand(query1);
                     sqlcom1.Connection = sqlcon;
-                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                    sqlcom1.ExecuteReader();
                     result = "OK";
                     sqlcon.Close();
                 }

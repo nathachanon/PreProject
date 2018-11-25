@@ -207,35 +207,21 @@ namespace MASdemo.Controllers
 
         public IActionResult ReportList()
         {
-            string result = "Fail";
-            List<ReportList> reportlists = new List<ReportList>();
-            List<OwnerEmail> ownerEmails = new List<OwnerEmail>();
-            try
+            if (HttpContext.Session.GetInt32("AdminID") == null)
             {
-                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                sqlcon.Open();
-                string query1 = "SELECT Owner_id FROM Report WHERE status = 1";
-                SqlCommand sqlcom1 = new SqlCommand(query1);
-                sqlcom1.Connection = sqlcon;
-                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                if (sqlReader1.HasRows)
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                string result = "Fail";
+                List<ReportList> reportlists = new List<ReportList>();
+                try
                 {
-                    while (sqlReader1.Read())
-                    {
-                        ownerEmails.Add(new OwnerEmail()
-                        {
-                            Owner_id = sqlReader1.GetInt32(sqlReader1.GetOrdinal("Owner_id"))
-                        });
-                    }
-                }
-                sqlcon.Close();
-
-                foreach(var o in ownerEmails)
-                {
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
                     sqlcon.Open();
                     string query2 = "SELECT RIGHT('000' + CAST([Report_id] AS varchar(5)) , 4) as Report_id2 , o.Email as Owner_email , r.message , r.datetime , r.report_id  FROM Report r " +
                         "INNER JOIN owner o ON r.owner_id = o.oid " +
-                        "WHERE status = 1 AND r.owner_id = "+o.Owner_id+" ";
+                        "WHERE status = 1 ";
                     SqlCommand sqlcom2 = new SqlCommand(query2);
                     sqlcom2.Connection = sqlcon;
                     SqlDataReader sqlReader2 = sqlcom2.ExecuteReader();
@@ -255,35 +241,42 @@ namespace MASdemo.Controllers
                     }
                     sqlcon.Close();
                 }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                    result = "Fail";
+                }
+                return Json(reportlists);
             }
-            catch (Exception fail)
-            {
-                result = "Fail" + fail;
-                result = "Fail";
-            }
-            return Json(reportlists);
         }
 
         public IActionResult AddReport(int report_id)
         {
             string result = "Fail";
-            try
+            if (HttpContext.Session.GetInt32("AdminID") == null)
             {
-                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                sqlcon.Open();
-                string query1 = "UPDATE Report SET Status=2,Admin_id=" + HttpContext.Session.GetInt32("AdminID") + " WHERE Report_id = " + report_id + " ";
-                SqlCommand sqlcom1 = new SqlCommand(query1);
-                sqlcom1.Connection = sqlcon;
-                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                result = "Add OK";
-                sqlcon.Close();
+                return RedirectToAction("Login", "Admin");
             }
-            catch (Exception fail)
+            else
             {
-                result = "Fail" + fail;
-                result = "Fail";
+                try
+                {
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                    sqlcon.Open();
+                    string query1 = "UPDATE Report SET Status=2,Admin_id=" + HttpContext.Session.GetInt32("AdminID") + " WHERE Report_id = " + report_id + " ";
+                    SqlCommand sqlcom1 = new SqlCommand(query1);
+                    sqlcom1.Connection = sqlcon;
+                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                    result = "Add OK";
+                    sqlcon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                    result = "Fail";
+                }
+                return Json(result);
             }
-            return Json(result);
         }
 
         public string ToChristianDateString(DateTime dateTime)
@@ -315,32 +308,12 @@ namespace MASdemo.Controllers
             else
             {
                 List<WorkAll> workalls = new List<WorkAll>();
-                List<OwnerEmail> ownerEmails = new List<OwnerEmail>();
                 string result = "Fail";
                 try
                 {
                     SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                    sqlcon.Open();
-                    string query1 = " SELECT RIGHT('0000' + CAST([Report_id] AS varchar(5)) , 4) as Report_ids ,Report_id, Admin_id , message , datetime , owner_id FROM [Report] WHERE Admin_id = " + HttpContext.Session.GetInt32("AdminID") + " AND Status = 2 ";
-                    SqlCommand sqlcom1 = new SqlCommand(query1);
-                    sqlcom1.Connection = sqlcon;
-                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                    if (sqlReader1.HasRows)
-                    {
-                        while (sqlReader1.Read())
-                        {
-                            ownerEmails.Add(new OwnerEmail()
-                            {
-                                Owner_id = sqlReader1.GetInt32(sqlReader1.GetOrdinal("Owner_id"))
-                            });
-                        }
-                    }
-                    sqlcon.Close();
-
-                    foreach (var o in ownerEmails)
-                    {
                         sqlcon.Open();
-                        string query2 = " SELECT RIGHT('0000' + CAST([Report_id] AS varchar(5)) , 4) as Report_ids ,Report_id, Admin_id , message , datetime , o.Email as Owner_email FROM [Report] r INNER JOIN owner o ON r.owner_id = o.oid WHERE Admin_id = "+ HttpContext.Session.GetInt32("AdminID") + " AND Status = 2 AND o.oid = "+o.Owner_id+" ";
+                        string query2 = " SELECT RIGHT('0000' + CAST([Report_id] AS varchar(5)) , 4) as Report_ids ,Report_id, Admin_id , message , datetime , o.Email as Owner_email FROM [Report] r INNER JOIN owner o ON r.owner_id = o.oid WHERE Admin_id = "+ HttpContext.Session.GetInt32("AdminID") + " AND Status = 2 ";
                         SqlCommand sqlcom2 = new SqlCommand(query2);
                         sqlcom2.Connection = sqlcon;
                         SqlDataReader sqlReader2 = sqlcom2.ExecuteReader();
@@ -360,7 +333,6 @@ namespace MASdemo.Controllers
                             }
                         }
                         sqlcon.Close();
-                    }
                 }
                 catch (Exception fail)
                 {
@@ -374,23 +346,30 @@ namespace MASdemo.Controllers
         public IActionResult Complete(int report_id)
         {
             string result = "Fail";
-            try
+            if (HttpContext.Session.GetInt32("AdminID") == null)
             {
-                SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
-                sqlcon.Open();
-                string query1 = "UPDATE Report SET Status=3 WHERE Report_id = " + report_id + " ";
-                SqlCommand sqlcom1 = new SqlCommand(query1);
-                sqlcom1.Connection = sqlcon;
-                SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
-                result = "Add OK";
-                sqlcon.Close();
+                return RedirectToAction("Login", "Admin");
             }
-            catch (Exception fail)
+            else
             {
-                result = "Fail" + fail;
-                result = "Fail";
+                try
+                {
+                    SqlConnection sqlcon = new SqlConnection("Data Source=(LocalDb)\\MSSQLLocalDb;Initial Catalog=MasSql;Integrated Security=True");
+                    sqlcon.Open();
+                    string query1 = "UPDATE Report SET Status=3 WHERE Report_id = " + report_id + " ";
+                    SqlCommand sqlcom1 = new SqlCommand(query1);
+                    sqlcom1.Connection = sqlcon;
+                    SqlDataReader sqlReader1 = sqlcom1.ExecuteReader();
+                    result = "Add OK";
+                    sqlcon.Close();
+                }
+                catch (Exception fail)
+                {
+                    result = "Fail" + fail;
+                    result = "Fail";
+                }
+                return Json(result);
             }
-            return Json(result);
         }
 
         public IActionResult Promotion()
